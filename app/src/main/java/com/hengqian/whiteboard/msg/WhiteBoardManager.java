@@ -7,6 +7,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -144,17 +145,17 @@ public class WhiteBoardManager {
                                 handler.sendMessage(msg);
                             }
 
-                            try {
-                                Thread.sleep(10); //sleep and then try again
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+//                            try {
+//                                Thread.sleep(10); //sleep and then try again
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            }
                         }
                         channel.close();
                         connection.close();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
-                        if (channel!=null) {
+                        if (channel != null) {
                             try {
                                 channel.close();
                             } catch (IOException e1) {
@@ -163,7 +164,7 @@ public class WhiteBoardManager {
                                 e1.printStackTrace();
                             }
                         }
-                        if (connection!=null) {
+                        if (connection != null) {
                             try {
                                 connection.close();
                             } catch (IOException e1) {
@@ -215,6 +216,9 @@ public class WhiteBoardManager {
                         channel.queueDeclare(send_mqname, durable, false, false, null);
 
                         while (true) {
+                            if (isStoped) {
+                                break;
+                            }
                             synchronized (lock) {
                                 int size = msgArrayList.size();
                                 if (size > 0) {
@@ -222,11 +226,6 @@ public class WhiteBoardManager {
                                     msgArrayList.remove(0);
                                     Log.i(TAG, "send thread send message. msg: " + msg.toString());
                                     channel.basicPublish("", send_mqname, null, msg.toByteArray());
-
-                                    // 退出白板
-                                    if (msg.getType() == Whiteboardmsg.TypeCommand.DrawQuit) {
-                                        break;
-                                    }
                                 } else {
                                     // 等待新的消息加入
                                     lock.wait();
@@ -237,14 +236,14 @@ public class WhiteBoardManager {
                         connection.close();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
-                        if (channel!=null) {
+                        if (channel != null) {
                             try {
                                 channel.close();
                             } catch (Exception e1) {
                                 e1.printStackTrace();
                             }
                         }
-                        if (connection!=null) {
+                        if (connection != null) {
                             try {
                                 connection.close();
                             } catch (Exception e1) {
@@ -284,33 +283,49 @@ public class WhiteBoardManager {
      */
     public Whiteboardmsg.WhiteBoardMsg newMsg(Whiteboardmsg.TypeCommand type,
                                               List<Point> points, Whiteboardmsg.TouchEvent touchEvent,
-                                              int paintWidth, int paintColor, int paintAlpha) {
+                                              int paintWidth, int paintColor, int paintAlpha,
+                                              int width, int height) {
         Whiteboardmsg.WhiteBoardMsg.Builder b = Whiteboardmsg.WhiteBoardMsg.newBuilder();
         b.setType(type);
         b.setUid(getUserId());
+        WhiteBoardMsg.Size.Builder size = Whiteboardmsg.WhiteBoardMsg.Size.newBuilder();
+        size.setW(width);
+        size.setH(height);
+        b.setSize(size);
+        // DrawPoint
+        WhiteBoardMsg.DrawPoint.Builder drawPoint = Whiteboardmsg.WhiteBoardMsg.DrawPoint.newBuilder();
+        // Paint
+        WhiteBoardMsg.DrawPoint.Paint.Builder paint = Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint.newBuilder();
+        paint.setAlpha(paintAlpha);
+        paint.setColor(paintColor);
+        paint.setWidth(paintWidth);
 
-        b.setPaintAlpha(paintAlpha);
-        b.setPaintColor(paintColor);
-        b.setPaintWidth(paintWidth);
+        drawPoint.setPaint(paint);
+        drawPoint.setTouchEvent(touchEvent);
 
         // 可选参数
-        b.setTouchEvent(touchEvent);
         for (int j = 0; j < points.size(); j++) {
-            Whiteboardmsg.WhiteBoardMsg.Point.Builder wbpb = Whiteboardmsg.WhiteBoardMsg.Point.newBuilder();
+            Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point.Builder wbpb = Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point.newBuilder();
             wbpb.setX(points.get(j).x);
             wbpb.setY(points.get(j).y);
-            b.addPoint(wbpb.build());
+            drawPoint.addPoint(wbpb.build());
         }
+        b.setDrawPoint(drawPoint);
+
         return b.build();
     }
 
     /**
      * 场景1 一个P向queue发送一个message，一个C从该queue接收message
      */
-    public Whiteboardmsg.WhiteBoardMsg newMsg(Whiteboardmsg.TypeCommand type) {
+    public Whiteboardmsg.WhiteBoardMsg newMsg(Whiteboardmsg.TypeCommand type, int width, int height) {
         Whiteboardmsg.WhiteBoardMsg.Builder b = Whiteboardmsg.WhiteBoardMsg.newBuilder();
         b.setType(type);
         b.setUid(getUserId());
+        WhiteBoardMsg.Size.Builder size = Whiteboardmsg.WhiteBoardMsg.Size.newBuilder();
+        size.setW(width);
+        size.setH(height);
+        b.setSize(size);
         return b.build();
     }
 

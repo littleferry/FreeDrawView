@@ -14,81 +14,64 @@ public final class Whiteboardmsg {
   public enum TypeCommand
       implements com.google.protobuf.ProtocolMessageEnum {
     /**
-     * <code>DrawPoint = 10001;</code>
-     *
-     * <pre>
-     * 画点
-     * </pre>
-     */
-    DrawPoint(0, 10001),
-    /**
-     * <code>DrawUndo = 10002;</code>
+     * <code>DrawUndo = 10000;</code>
      *
      * <pre>
      * 撤销一步
      * </pre>
      */
-    DrawUndo(1, 10002),
+    DrawUndo(0, 10000),
     /**
-     * <code>DrawClearAll = 10003;</code>
+     * <code>DrawClearAll = 10001;</code>
      *
      * <pre>
      * 清屏
      * </pre>
      */
-    DrawClearAll(2, 10003),
+    DrawClearAll(1, 10001),
     /**
-     * <code>DrawQuit = 10004;</code>
+     * <code>DrawPoint = 10100;</code>
      *
      * <pre>
-     * 退出
+     * 画点
      * </pre>
      */
-    DrawQuit(3, 10004),
+    DrawPoint(2, 10100),
     ;
 
     /**
-     * <code>DrawPoint = 10001;</code>
-     *
-     * <pre>
-     * 画点
-     * </pre>
-     */
-    public static final int DrawPoint_VALUE = 10001;
-    /**
-     * <code>DrawUndo = 10002;</code>
+     * <code>DrawUndo = 10000;</code>
      *
      * <pre>
      * 撤销一步
      * </pre>
      */
-    public static final int DrawUndo_VALUE = 10002;
+    public static final int DrawUndo_VALUE = 10000;
     /**
-     * <code>DrawClearAll = 10003;</code>
+     * <code>DrawClearAll = 10001;</code>
      *
      * <pre>
      * 清屏
      * </pre>
      */
-    public static final int DrawClearAll_VALUE = 10003;
+    public static final int DrawClearAll_VALUE = 10001;
     /**
-     * <code>DrawQuit = 10004;</code>
+     * <code>DrawPoint = 10100;</code>
      *
      * <pre>
-     * 退出
+     * 画点
      * </pre>
      */
-    public static final int DrawQuit_VALUE = 10004;
+    public static final int DrawPoint_VALUE = 10100;
 
 
     public final int getNumber() { return value; }
 
     public static TypeCommand valueOf(int value) {
       switch (value) {
-        case 10001: return DrawPoint;
-        case 10002: return DrawUndo;
-        case 10003: return DrawClearAll;
-        case 10004: return DrawQuit;
+        case 10000: return DrawUndo;
+        case 10001: return DrawClearAll;
+        case 10100: return DrawPoint;
         default: return null;
       }
     }
@@ -261,92 +244,87 @@ public final class Whiteboardmsg {
     // required .com.hengqian.whiteboard.msg.TypeCommand type = 1;
     /**
      * <code>required .com.hengqian.whiteboard.msg.TypeCommand type = 1;</code>
+     *
+     * <pre>
+     * 消息类型，由TypeCommand定义
+     * </pre>
      */
     boolean hasType();
     /**
      * <code>required .com.hengqian.whiteboard.msg.TypeCommand type = 1;</code>
+     *
+     * <pre>
+     * 消息类型，由TypeCommand定义
+     * </pre>
      */
     com.hengqian.whiteboard.msg.Whiteboardmsg.TypeCommand getType();
 
     // required string uid = 2;
     /**
      * <code>required string uid = 2;</code>
+     *
+     * <pre>
+     * 发送者uid
+     * </pre>
      */
     boolean hasUid();
     /**
      * <code>required string uid = 2;</code>
+     *
+     * <pre>
+     * 发送者uid
+     * </pre>
      */
     java.lang.String getUid();
     /**
      * <code>required string uid = 2;</code>
+     *
+     * <pre>
+     * 发送者uid
+     * </pre>
      */
     com.google.protobuf.ByteString
         getUidBytes();
 
-    // optional .com.hengqian.whiteboard.msg.TouchEvent touchEvent = 3;
+    // required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;
     /**
-     * <code>optional .com.hengqian.whiteboard.msg.TouchEvent touchEvent = 3;</code>
+     * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
+     *
+     * <pre>
+     * 屏幕画布尺寸
+     * </pre>
      */
-    boolean hasTouchEvent();
+    boolean hasSize();
     /**
-     * <code>optional .com.hengqian.whiteboard.msg.TouchEvent touchEvent = 3;</code>
+     * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
+     *
+     * <pre>
+     * 屏幕画布尺寸
+     * </pre>
      */
-    com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent getTouchEvent();
+    com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size getSize();
+    /**
+     * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
+     *
+     * <pre>
+     * 屏幕画布尺寸
+     * </pre>
+     */
+    com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.SizeOrBuilder getSizeOrBuilder();
 
-    // optional int32 paintColor = 4;
+    // optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;
     /**
-     * <code>optional int32 paintColor = 4;</code>
+     * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
      */
-    boolean hasPaintColor();
+    boolean hasDrawPoint();
     /**
-     * <code>optional int32 paintColor = 4;</code>
+     * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
      */
-    int getPaintColor();
-
-    // optional int32 paintAlpha = 5;
+    com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint getDrawPoint();
     /**
-     * <code>optional int32 paintAlpha = 5;</code>
+     * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
      */
-    boolean hasPaintAlpha();
-    /**
-     * <code>optional int32 paintAlpha = 5;</code>
-     */
-    int getPaintAlpha();
-
-    // optional int32 paintWidth = 6;
-    /**
-     * <code>optional int32 paintWidth = 6;</code>
-     */
-    boolean hasPaintWidth();
-    /**
-     * <code>optional int32 paintWidth = 6;</code>
-     */
-    int getPaintWidth();
-
-    // repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;
-    /**
-     * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-     */
-    java.util.List<com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point> 
-        getPointList();
-    /**
-     * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-     */
-    com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point getPoint(int index);
-    /**
-     * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-     */
-    int getPointCount();
-    /**
-     * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-     */
-    java.util.List<? extends com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.PointOrBuilder> 
-        getPointOrBuilderList();
-    /**
-     * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-     */
-    com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.PointOrBuilder getPointOrBuilder(
-        int index);
+    com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPointOrBuilder getDrawPointOrBuilder();
   }
   /**
    * Protobuf type {@code com.hengqian.whiteboard.msg.WhiteBoardMsg}
@@ -415,38 +393,30 @@ public final class Whiteboardmsg {
               uid_ = input.readBytes();
               break;
             }
-            case 24: {
-              int rawValue = input.readEnum();
-              com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent value = com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent.valueOf(rawValue);
-              if (value == null) {
-                unknownFields.mergeVarintField(3, rawValue);
-              } else {
-                bitField0_ |= 0x00000004;
-                touchEvent_ = value;
+            case 26: {
+              com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000004) == 0x00000004)) {
+                subBuilder = size_.toBuilder();
               }
+              size_ = input.readMessage(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(size_);
+                size_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000004;
               break;
             }
-            case 32: {
+            case 34: {
+              com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000008) == 0x00000008)) {
+                subBuilder = drawPoint_.toBuilder();
+              }
+              drawPoint_ = input.readMessage(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(drawPoint_);
+                drawPoint_ = subBuilder.buildPartial();
+              }
               bitField0_ |= 0x00000008;
-              paintColor_ = input.readInt32();
-              break;
-            }
-            case 40: {
-              bitField0_ |= 0x00000010;
-              paintAlpha_ = input.readInt32();
-              break;
-            }
-            case 48: {
-              bitField0_ |= 0x00000020;
-              paintWidth_ = input.readInt32();
-              break;
-            }
-            case 58: {
-              if (!((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
-                point_ = new java.util.ArrayList<com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point>();
-                mutable_bitField0_ |= 0x00000040;
-              }
-              point_.add(input.readMessage(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point.PARSER, extensionRegistry));
               break;
             }
           }
@@ -457,9 +427,6 @@ public final class Whiteboardmsg {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e.getMessage()).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
-          point_ = java.util.Collections.unmodifiableList(point_);
-        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
@@ -491,48 +458,64 @@ public final class Whiteboardmsg {
       return PARSER;
     }
 
-    public interface PointOrBuilder
+    public interface SizeOrBuilder
         extends com.google.protobuf.MessageOrBuilder {
 
-      // required int32 x = 1;
+      // required int32 w = 1;
       /**
-       * <code>required int32 x = 1;</code>
+       * <code>required int32 w = 1;</code>
+       *
+       * <pre>
+       * 屏幕画布宽度，单位像素
+       * </pre>
        */
-      boolean hasX();
+      boolean hasW();
       /**
-       * <code>required int32 x = 1;</code>
+       * <code>required int32 w = 1;</code>
+       *
+       * <pre>
+       * 屏幕画布宽度，单位像素
+       * </pre>
        */
-      int getX();
+      int getW();
 
-      // required int32 y = 2;
+      // required int32 h = 2;
       /**
-       * <code>required int32 y = 2;</code>
+       * <code>required int32 h = 2;</code>
+       *
+       * <pre>
+       * 屏幕画布高度，单位像素
+       * </pre>
        */
-      boolean hasY();
+      boolean hasH();
       /**
-       * <code>required int32 y = 2;</code>
+       * <code>required int32 h = 2;</code>
+       *
+       * <pre>
+       * 屏幕画布高度，单位像素
+       * </pre>
        */
-      int getY();
+      int getH();
     }
     /**
-     * Protobuf type {@code com.hengqian.whiteboard.msg.WhiteBoardMsg.Point}
+     * Protobuf type {@code com.hengqian.whiteboard.msg.WhiteBoardMsg.Size}
      */
-    public static final class Point extends
+    public static final class Size extends
         com.google.protobuf.GeneratedMessage
-        implements PointOrBuilder {
-      // Use Point.newBuilder() to construct.
-      private Point(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+        implements SizeOrBuilder {
+      // Use Size.newBuilder() to construct.
+      private Size(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
         this.unknownFields = builder.getUnknownFields();
       }
-      private Point(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+      private Size(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
 
-      private static final Point defaultInstance;
-      public static Point getDefaultInstance() {
+      private static final Size defaultInstance;
+      public static Size getDefaultInstance() {
         return defaultInstance;
       }
 
-      public Point getDefaultInstanceForType() {
+      public Size getDefaultInstanceForType() {
         return defaultInstance;
       }
 
@@ -542,7 +525,7 @@ public final class Whiteboardmsg {
           getUnknownFields() {
         return this.unknownFields;
       }
-      private Point(
+      private Size(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
@@ -567,12 +550,12 @@ public final class Whiteboardmsg {
               }
               case 8: {
                 bitField0_ |= 0x00000001;
-                x_ = input.readInt32();
+                w_ = input.readInt32();
                 break;
               }
               case 16: {
                 bitField0_ |= 0x00000002;
-                y_ = input.readInt32();
+                h_ = input.readInt32();
                 break;
               }
             }
@@ -589,78 +572,94 @@ public final class Whiteboardmsg {
       }
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_Point_descriptor;
+        return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_Size_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_Point_fieldAccessorTable
+        return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_Size_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point.class, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point.Builder.class);
+                com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size.class, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size.Builder.class);
       }
 
-      public static com.google.protobuf.Parser<Point> PARSER =
-          new com.google.protobuf.AbstractParser<Point>() {
-        public Point parsePartialFrom(
+      public static com.google.protobuf.Parser<Size> PARSER =
+          new com.google.protobuf.AbstractParser<Size>() {
+        public Size parsePartialFrom(
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-          return new Point(input, extensionRegistry);
+          return new Size(input, extensionRegistry);
         }
       };
 
       @java.lang.Override
-      public com.google.protobuf.Parser<Point> getParserForType() {
+      public com.google.protobuf.Parser<Size> getParserForType() {
         return PARSER;
       }
 
       private int bitField0_;
-      // required int32 x = 1;
-      public static final int X_FIELD_NUMBER = 1;
-      private int x_;
+      // required int32 w = 1;
+      public static final int W_FIELD_NUMBER = 1;
+      private int w_;
       /**
-       * <code>required int32 x = 1;</code>
+       * <code>required int32 w = 1;</code>
+       *
+       * <pre>
+       * 屏幕画布宽度，单位像素
+       * </pre>
        */
-      public boolean hasX() {
+      public boolean hasW() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>required int32 x = 1;</code>
+       * <code>required int32 w = 1;</code>
+       *
+       * <pre>
+       * 屏幕画布宽度，单位像素
+       * </pre>
        */
-      public int getX() {
-        return x_;
+      public int getW() {
+        return w_;
       }
 
-      // required int32 y = 2;
-      public static final int Y_FIELD_NUMBER = 2;
-      private int y_;
+      // required int32 h = 2;
+      public static final int H_FIELD_NUMBER = 2;
+      private int h_;
       /**
-       * <code>required int32 y = 2;</code>
+       * <code>required int32 h = 2;</code>
+       *
+       * <pre>
+       * 屏幕画布高度，单位像素
+       * </pre>
        */
-      public boolean hasY() {
+      public boolean hasH() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>required int32 y = 2;</code>
+       * <code>required int32 h = 2;</code>
+       *
+       * <pre>
+       * 屏幕画布高度，单位像素
+       * </pre>
        */
-      public int getY() {
-        return y_;
+      public int getH() {
+        return h_;
       }
 
       private void initFields() {
-        x_ = 0;
-        y_ = 0;
+        w_ = 0;
+        h_ = 0;
       }
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized != -1) return isInitialized == 1;
 
-        if (!hasX()) {
+        if (!hasW()) {
           memoizedIsInitialized = 0;
           return false;
         }
-        if (!hasY()) {
+        if (!hasH()) {
           memoizedIsInitialized = 0;
           return false;
         }
@@ -672,10 +671,10 @@ public final class Whiteboardmsg {
                           throws java.io.IOException {
         getSerializedSize();
         if (((bitField0_ & 0x00000001) == 0x00000001)) {
-          output.writeInt32(1, x_);
+          output.writeInt32(1, w_);
         }
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
-          output.writeInt32(2, y_);
+          output.writeInt32(2, h_);
         }
         getUnknownFields().writeTo(output);
       }
@@ -688,11 +687,11 @@ public final class Whiteboardmsg {
         size = 0;
         if (((bitField0_ & 0x00000001) == 0x00000001)) {
           size += com.google.protobuf.CodedOutputStream
-            .computeInt32Size(1, x_);
+            .computeInt32Size(1, w_);
         }
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
           size += com.google.protobuf.CodedOutputStream
-            .computeInt32Size(2, y_);
+            .computeInt32Size(2, h_);
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSerializedSize = size;
@@ -706,53 +705,53 @@ public final class Whiteboardmsg {
         return super.writeReplace();
       }
 
-      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point parseFrom(
+      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size parseFrom(
           com.google.protobuf.ByteString data)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data);
       }
-      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point parseFrom(
+      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size parseFrom(
           com.google.protobuf.ByteString data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data, extensionRegistry);
       }
-      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point parseFrom(byte[] data)
+      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size parseFrom(byte[] data)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data);
       }
-      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point parseFrom(
+      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size parseFrom(
           byte[] data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data, extensionRegistry);
       }
-      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point parseFrom(java.io.InputStream input)
+      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size parseFrom(java.io.InputStream input)
           throws java.io.IOException {
         return PARSER.parseFrom(input);
       }
-      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point parseFrom(
+      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size parseFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
         return PARSER.parseFrom(input, extensionRegistry);
       }
-      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point parseDelimitedFrom(java.io.InputStream input)
+      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size parseDelimitedFrom(java.io.InputStream input)
           throws java.io.IOException {
         return PARSER.parseDelimitedFrom(input);
       }
-      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point parseDelimitedFrom(
+      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size parseDelimitedFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
         return PARSER.parseDelimitedFrom(input, extensionRegistry);
       }
-      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point parseFrom(
+      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size parseFrom(
           com.google.protobuf.CodedInputStream input)
           throws java.io.IOException {
         return PARSER.parseFrom(input);
       }
-      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point parseFrom(
+      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size parseFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
@@ -761,7 +760,7 @@ public final class Whiteboardmsg {
 
       public static Builder newBuilder() { return Builder.create(); }
       public Builder newBuilderForType() { return newBuilder(); }
-      public static Builder newBuilder(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point prototype) {
+      public static Builder newBuilder(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size prototype) {
         return newBuilder().mergeFrom(prototype);
       }
       public Builder toBuilder() { return newBuilder(this); }
@@ -773,24 +772,24 @@ public final class Whiteboardmsg {
         return builder;
       }
       /**
-       * Protobuf type {@code com.hengqian.whiteboard.msg.WhiteBoardMsg.Point}
+       * Protobuf type {@code com.hengqian.whiteboard.msg.WhiteBoardMsg.Size}
        */
       public static final class Builder extends
           com.google.protobuf.GeneratedMessage.Builder<Builder>
-         implements com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.PointOrBuilder {
+         implements com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.SizeOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
-          return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_Point_descriptor;
+          return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_Size_descriptor;
         }
 
         protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
             internalGetFieldAccessorTable() {
-          return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_Point_fieldAccessorTable
+          return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_Size_fieldAccessorTable
               .ensureFieldAccessorsInitialized(
-                  com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point.class, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point.Builder.class);
+                  com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size.class, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size.Builder.class);
         }
 
-        // Construct using com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point.newBuilder()
+        // Construct using com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size.newBuilder()
         private Builder() {
           maybeForceBuilderInitialization();
         }
@@ -810,9 +809,9 @@ public final class Whiteboardmsg {
 
         public Builder clear() {
           super.clear();
-          x_ = 0;
+          w_ = 0;
           bitField0_ = (bitField0_ & ~0x00000001);
-          y_ = 0;
+          h_ = 0;
           bitField0_ = (bitField0_ & ~0x00000002);
           return this;
         }
@@ -823,65 +822,65 @@ public final class Whiteboardmsg {
 
         public com.google.protobuf.Descriptors.Descriptor
             getDescriptorForType() {
-          return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_Point_descriptor;
+          return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_Size_descriptor;
         }
 
-        public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point getDefaultInstanceForType() {
-          return com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point.getDefaultInstance();
+        public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size getDefaultInstanceForType() {
+          return com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size.getDefaultInstance();
         }
 
-        public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point build() {
-          com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point result = buildPartial();
+        public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size build() {
+          com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size result = buildPartial();
           if (!result.isInitialized()) {
             throw newUninitializedMessageException(result);
           }
           return result;
         }
 
-        public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point buildPartial() {
-          com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point result = new com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point(this);
+        public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size buildPartial() {
+          com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size result = new com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size(this);
           int from_bitField0_ = bitField0_;
           int to_bitField0_ = 0;
           if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
             to_bitField0_ |= 0x00000001;
           }
-          result.x_ = x_;
+          result.w_ = w_;
           if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
             to_bitField0_ |= 0x00000002;
           }
-          result.y_ = y_;
+          result.h_ = h_;
           result.bitField0_ = to_bitField0_;
           onBuilt();
           return result;
         }
 
         public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point) {
-            return mergeFrom((com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point)other);
+          if (other instanceof com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size) {
+            return mergeFrom((com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size)other);
           } else {
             super.mergeFrom(other);
             return this;
           }
         }
 
-        public Builder mergeFrom(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point other) {
-          if (other == com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point.getDefaultInstance()) return this;
-          if (other.hasX()) {
-            setX(other.getX());
+        public Builder mergeFrom(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size other) {
+          if (other == com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size.getDefaultInstance()) return this;
+          if (other.hasW()) {
+            setW(other.getW());
           }
-          if (other.hasY()) {
-            setY(other.getY());
+          if (other.hasH()) {
+            setH(other.getH());
           }
           this.mergeUnknownFields(other.getUnknownFields());
           return this;
         }
 
         public final boolean isInitialized() {
-          if (!hasX()) {
+          if (!hasW()) {
             
             return false;
           }
-          if (!hasY()) {
+          if (!hasH()) {
             
             return false;
           }
@@ -892,11 +891,11 @@ public final class Whiteboardmsg {
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws java.io.IOException {
-          com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point parsedMessage = null;
+          com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size parsedMessage = null;
           try {
             parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
           } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point) e.getUnfinishedMessage();
+            parsedMessage = (com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size) e.getUnfinishedMessage();
             throw e;
           } finally {
             if (parsedMessage != null) {
@@ -907,81 +906,2547 @@ public final class Whiteboardmsg {
         }
         private int bitField0_;
 
+        // required int32 w = 1;
+        private int w_ ;
+        /**
+         * <code>required int32 w = 1;</code>
+         *
+         * <pre>
+         * 屏幕画布宽度，单位像素
+         * </pre>
+         */
+        public boolean hasW() {
+          return ((bitField0_ & 0x00000001) == 0x00000001);
+        }
+        /**
+         * <code>required int32 w = 1;</code>
+         *
+         * <pre>
+         * 屏幕画布宽度，单位像素
+         * </pre>
+         */
+        public int getW() {
+          return w_;
+        }
+        /**
+         * <code>required int32 w = 1;</code>
+         *
+         * <pre>
+         * 屏幕画布宽度，单位像素
+         * </pre>
+         */
+        public Builder setW(int value) {
+          bitField0_ |= 0x00000001;
+          w_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>required int32 w = 1;</code>
+         *
+         * <pre>
+         * 屏幕画布宽度，单位像素
+         * </pre>
+         */
+        public Builder clearW() {
+          bitField0_ = (bitField0_ & ~0x00000001);
+          w_ = 0;
+          onChanged();
+          return this;
+        }
+
+        // required int32 h = 2;
+        private int h_ ;
+        /**
+         * <code>required int32 h = 2;</code>
+         *
+         * <pre>
+         * 屏幕画布高度，单位像素
+         * </pre>
+         */
+        public boolean hasH() {
+          return ((bitField0_ & 0x00000002) == 0x00000002);
+        }
+        /**
+         * <code>required int32 h = 2;</code>
+         *
+         * <pre>
+         * 屏幕画布高度，单位像素
+         * </pre>
+         */
+        public int getH() {
+          return h_;
+        }
+        /**
+         * <code>required int32 h = 2;</code>
+         *
+         * <pre>
+         * 屏幕画布高度，单位像素
+         * </pre>
+         */
+        public Builder setH(int value) {
+          bitField0_ |= 0x00000002;
+          h_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>required int32 h = 2;</code>
+         *
+         * <pre>
+         * 屏幕画布高度，单位像素
+         * </pre>
+         */
+        public Builder clearH() {
+          bitField0_ = (bitField0_ & ~0x00000002);
+          h_ = 0;
+          onChanged();
+          return this;
+        }
+
+        // @@protoc_insertion_point(builder_scope:com.hengqian.whiteboard.msg.WhiteBoardMsg.Size)
+      }
+
+      static {
+        defaultInstance = new Size(true);
+        defaultInstance.initFields();
+      }
+
+      // @@protoc_insertion_point(class_scope:com.hengqian.whiteboard.msg.WhiteBoardMsg.Size)
+    }
+
+    public interface DrawPointOrBuilder
+        extends com.google.protobuf.MessageOrBuilder {
+
+      // required .com.hengqian.whiteboard.msg.TouchEvent touchEvent = 1;
+      /**
+       * <code>required .com.hengqian.whiteboard.msg.TouchEvent touchEvent = 1;</code>
+       *
+       * <pre>
+       * 触摸事件，由TouchEvent定义
+       * </pre>
+       */
+      boolean hasTouchEvent();
+      /**
+       * <code>required .com.hengqian.whiteboard.msg.TouchEvent touchEvent = 1;</code>
+       *
+       * <pre>
+       * 触摸事件，由TouchEvent定义
+       * </pre>
+       */
+      com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent getTouchEvent();
+
+      // required .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Paint paint = 2;
+      /**
+       * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Paint paint = 2;</code>
+       *
+       * <pre>
+       * 画笔设置
+       * </pre>
+       */
+      boolean hasPaint();
+      /**
+       * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Paint paint = 2;</code>
+       *
+       * <pre>
+       * 画笔设置
+       * </pre>
+       */
+      com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint getPaint();
+      /**
+       * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Paint paint = 2;</code>
+       *
+       * <pre>
+       * 画笔设置
+       * </pre>
+       */
+      com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.PaintOrBuilder getPaintOrBuilder();
+
+      // repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;
+      /**
+       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+       *
+       * <pre>
+       * 要画的点数组
+       * </pre>
+       */
+      java.util.List<com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point> 
+          getPointList();
+      /**
+       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+       *
+       * <pre>
+       * 要画的点数组
+       * </pre>
+       */
+      com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point getPoint(int index);
+      /**
+       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+       *
+       * <pre>
+       * 要画的点数组
+       * </pre>
+       */
+      int getPointCount();
+      /**
+       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+       *
+       * <pre>
+       * 要画的点数组
+       * </pre>
+       */
+      java.util.List<? extends com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.PointOrBuilder> 
+          getPointOrBuilderList();
+      /**
+       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+       *
+       * <pre>
+       * 要画的点数组
+       * </pre>
+       */
+      com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.PointOrBuilder getPointOrBuilder(
+          int index);
+    }
+    /**
+     * Protobuf type {@code com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint}
+     */
+    public static final class DrawPoint extends
+        com.google.protobuf.GeneratedMessage
+        implements DrawPointOrBuilder {
+      // Use DrawPoint.newBuilder() to construct.
+      private DrawPoint(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+        super(builder);
+        this.unknownFields = builder.getUnknownFields();
+      }
+      private DrawPoint(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+      private static final DrawPoint defaultInstance;
+      public static DrawPoint getDefaultInstance() {
+        return defaultInstance;
+      }
+
+      public DrawPoint getDefaultInstanceForType() {
+        return defaultInstance;
+      }
+
+      private final com.google.protobuf.UnknownFieldSet unknownFields;
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+          getUnknownFields() {
+        return this.unknownFields;
+      }
+      private DrawPoint(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        initFields();
+        int mutable_bitField0_ = 0;
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder();
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              default: {
+                if (!parseUnknownField(input, unknownFields,
+                                       extensionRegistry, tag)) {
+                  done = true;
+                }
+                break;
+              }
+              case 8: {
+                int rawValue = input.readEnum();
+                com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent value = com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent.valueOf(rawValue);
+                if (value == null) {
+                  unknownFields.mergeVarintField(1, rawValue);
+                } else {
+                  bitField0_ |= 0x00000001;
+                  touchEvent_ = value;
+                }
+                break;
+              }
+              case 18: {
+                com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint.Builder subBuilder = null;
+                if (((bitField0_ & 0x00000002) == 0x00000002)) {
+                  subBuilder = paint_.toBuilder();
+                }
+                paint_ = input.readMessage(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint.PARSER, extensionRegistry);
+                if (subBuilder != null) {
+                  subBuilder.mergeFrom(paint_);
+                  paint_ = subBuilder.buildPartial();
+                }
+                bitField0_ |= 0x00000002;
+                break;
+              }
+              case 26: {
+                if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+                  point_ = new java.util.ArrayList<com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point>();
+                  mutable_bitField0_ |= 0x00000004;
+                }
+                point_.add(input.readMessage(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point.PARSER, extensionRegistry));
+                break;
+              }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e.getMessage()).setUnfinishedMessage(this);
+        } finally {
+          if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+            point_ = java.util.Collections.unmodifiableList(point_);
+          }
+          this.unknownFields = unknownFields.build();
+          makeExtensionsImmutable();
+        }
+      }
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.class, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Builder.class);
+      }
+
+      public static com.google.protobuf.Parser<DrawPoint> PARSER =
+          new com.google.protobuf.AbstractParser<DrawPoint>() {
+        public DrawPoint parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return new DrawPoint(input, extensionRegistry);
+        }
+      };
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<DrawPoint> getParserForType() {
+        return PARSER;
+      }
+
+      public interface PaintOrBuilder
+          extends com.google.protobuf.MessageOrBuilder {
+
+        // required int32 color = 1;
+        /**
+         * <code>required int32 color = 1;</code>
+         *
+         * <pre>
+         * 画笔颜色
+         * </pre>
+         */
+        boolean hasColor();
+        /**
+         * <code>required int32 color = 1;</code>
+         *
+         * <pre>
+         * 画笔颜色
+         * </pre>
+         */
+        int getColor();
+
+        // required int32 alpha = 2;
+        /**
+         * <code>required int32 alpha = 2;</code>
+         *
+         * <pre>
+         * 透明度
+         * </pre>
+         */
+        boolean hasAlpha();
+        /**
+         * <code>required int32 alpha = 2;</code>
+         *
+         * <pre>
+         * 透明度
+         * </pre>
+         */
+        int getAlpha();
+
+        // required int32 width = 3;
+        /**
+         * <code>required int32 width = 3;</code>
+         *
+         * <pre>
+         * 线宽
+         * </pre>
+         */
+        boolean hasWidth();
+        /**
+         * <code>required int32 width = 3;</code>
+         *
+         * <pre>
+         * 线宽
+         * </pre>
+         */
+        int getWidth();
+      }
+      /**
+       * Protobuf type {@code com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Paint}
+       */
+      public static final class Paint extends
+          com.google.protobuf.GeneratedMessage
+          implements PaintOrBuilder {
+        // Use Paint.newBuilder() to construct.
+        private Paint(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+          super(builder);
+          this.unknownFields = builder.getUnknownFields();
+        }
+        private Paint(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+        private static final Paint defaultInstance;
+        public static Paint getDefaultInstance() {
+          return defaultInstance;
+        }
+
+        public Paint getDefaultInstanceForType() {
+          return defaultInstance;
+        }
+
+        private final com.google.protobuf.UnknownFieldSet unknownFields;
+        @java.lang.Override
+        public final com.google.protobuf.UnknownFieldSet
+            getUnknownFields() {
+          return this.unknownFields;
+        }
+        private Paint(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          initFields();
+          int mutable_bitField0_ = 0;
+          com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+              com.google.protobuf.UnknownFieldSet.newBuilder();
+          try {
+            boolean done = false;
+            while (!done) {
+              int tag = input.readTag();
+              switch (tag) {
+                case 0:
+                  done = true;
+                  break;
+                default: {
+                  if (!parseUnknownField(input, unknownFields,
+                                         extensionRegistry, tag)) {
+                    done = true;
+                  }
+                  break;
+                }
+                case 8: {
+                  bitField0_ |= 0x00000001;
+                  color_ = input.readInt32();
+                  break;
+                }
+                case 16: {
+                  bitField0_ |= 0x00000002;
+                  alpha_ = input.readInt32();
+                  break;
+                }
+                case 24: {
+                  bitField0_ |= 0x00000004;
+                  width_ = input.readInt32();
+                  break;
+                }
+              }
+            }
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            throw e.setUnfinishedMessage(this);
+          } catch (java.io.IOException e) {
+            throw new com.google.protobuf.InvalidProtocolBufferException(
+                e.getMessage()).setUnfinishedMessage(this);
+          } finally {
+            this.unknownFields = unknownFields.build();
+            makeExtensionsImmutable();
+          }
+        }
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_Paint_descriptor;
+        }
+
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_Paint_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint.class, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint.Builder.class);
+        }
+
+        public static com.google.protobuf.Parser<Paint> PARSER =
+            new com.google.protobuf.AbstractParser<Paint>() {
+          public Paint parsePartialFrom(
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws com.google.protobuf.InvalidProtocolBufferException {
+            return new Paint(input, extensionRegistry);
+          }
+        };
+
+        @java.lang.Override
+        public com.google.protobuf.Parser<Paint> getParserForType() {
+          return PARSER;
+        }
+
+        private int bitField0_;
+        // required int32 color = 1;
+        public static final int COLOR_FIELD_NUMBER = 1;
+        private int color_;
+        /**
+         * <code>required int32 color = 1;</code>
+         *
+         * <pre>
+         * 画笔颜色
+         * </pre>
+         */
+        public boolean hasColor() {
+          return ((bitField0_ & 0x00000001) == 0x00000001);
+        }
+        /**
+         * <code>required int32 color = 1;</code>
+         *
+         * <pre>
+         * 画笔颜色
+         * </pre>
+         */
+        public int getColor() {
+          return color_;
+        }
+
+        // required int32 alpha = 2;
+        public static final int ALPHA_FIELD_NUMBER = 2;
+        private int alpha_;
+        /**
+         * <code>required int32 alpha = 2;</code>
+         *
+         * <pre>
+         * 透明度
+         * </pre>
+         */
+        public boolean hasAlpha() {
+          return ((bitField0_ & 0x00000002) == 0x00000002);
+        }
+        /**
+         * <code>required int32 alpha = 2;</code>
+         *
+         * <pre>
+         * 透明度
+         * </pre>
+         */
+        public int getAlpha() {
+          return alpha_;
+        }
+
+        // required int32 width = 3;
+        public static final int WIDTH_FIELD_NUMBER = 3;
+        private int width_;
+        /**
+         * <code>required int32 width = 3;</code>
+         *
+         * <pre>
+         * 线宽
+         * </pre>
+         */
+        public boolean hasWidth() {
+          return ((bitField0_ & 0x00000004) == 0x00000004);
+        }
+        /**
+         * <code>required int32 width = 3;</code>
+         *
+         * <pre>
+         * 线宽
+         * </pre>
+         */
+        public int getWidth() {
+          return width_;
+        }
+
+        private void initFields() {
+          color_ = 0;
+          alpha_ = 0;
+          width_ = 0;
+        }
+        private byte memoizedIsInitialized = -1;
+        public final boolean isInitialized() {
+          byte isInitialized = memoizedIsInitialized;
+          if (isInitialized != -1) return isInitialized == 1;
+
+          if (!hasColor()) {
+            memoizedIsInitialized = 0;
+            return false;
+          }
+          if (!hasAlpha()) {
+            memoizedIsInitialized = 0;
+            return false;
+          }
+          if (!hasWidth()) {
+            memoizedIsInitialized = 0;
+            return false;
+          }
+          memoizedIsInitialized = 1;
+          return true;
+        }
+
+        public void writeTo(com.google.protobuf.CodedOutputStream output)
+                            throws java.io.IOException {
+          getSerializedSize();
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            output.writeInt32(1, color_);
+          }
+          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+            output.writeInt32(2, alpha_);
+          }
+          if (((bitField0_ & 0x00000004) == 0x00000004)) {
+            output.writeInt32(3, width_);
+          }
+          getUnknownFields().writeTo(output);
+        }
+
+        private int memoizedSerializedSize = -1;
+        public int getSerializedSize() {
+          int size = memoizedSerializedSize;
+          if (size != -1) return size;
+
+          size = 0;
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            size += com.google.protobuf.CodedOutputStream
+              .computeInt32Size(1, color_);
+          }
+          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+            size += com.google.protobuf.CodedOutputStream
+              .computeInt32Size(2, alpha_);
+          }
+          if (((bitField0_ & 0x00000004) == 0x00000004)) {
+            size += com.google.protobuf.CodedOutputStream
+              .computeInt32Size(3, width_);
+          }
+          size += getUnknownFields().getSerializedSize();
+          memoizedSerializedSize = size;
+          return size;
+        }
+
+        private static final long serialVersionUID = 0L;
+        @java.lang.Override
+        protected java.lang.Object writeReplace()
+            throws java.io.ObjectStreamException {
+          return super.writeReplace();
+        }
+
+        public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint parseFrom(
+            com.google.protobuf.ByteString data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return PARSER.parseFrom(data);
+        }
+        public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint parseFrom(
+            com.google.protobuf.ByteString data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return PARSER.parseFrom(data, extensionRegistry);
+        }
+        public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint parseFrom(byte[] data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return PARSER.parseFrom(data);
+        }
+        public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint parseFrom(
+            byte[] data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return PARSER.parseFrom(data, extensionRegistry);
+        }
+        public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint parseFrom(java.io.InputStream input)
+            throws java.io.IOException {
+          return PARSER.parseFrom(input);
+        }
+        public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint parseFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          return PARSER.parseFrom(input, extensionRegistry);
+        }
+        public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint parseDelimitedFrom(java.io.InputStream input)
+            throws java.io.IOException {
+          return PARSER.parseDelimitedFrom(input);
+        }
+        public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint parseDelimitedFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          return PARSER.parseDelimitedFrom(input, extensionRegistry);
+        }
+        public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint parseFrom(
+            com.google.protobuf.CodedInputStream input)
+            throws java.io.IOException {
+          return PARSER.parseFrom(input);
+        }
+        public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint parseFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          return PARSER.parseFrom(input, extensionRegistry);
+        }
+
+        public static Builder newBuilder() { return Builder.create(); }
+        public Builder newBuilderForType() { return newBuilder(); }
+        public static Builder newBuilder(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint prototype) {
+          return newBuilder().mergeFrom(prototype);
+        }
+        public Builder toBuilder() { return newBuilder(this); }
+
+        @java.lang.Override
+        protected Builder newBuilderForType(
+            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+          Builder builder = new Builder(parent);
+          return builder;
+        }
+        /**
+         * Protobuf type {@code com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Paint}
+         */
+        public static final class Builder extends
+            com.google.protobuf.GeneratedMessage.Builder<Builder>
+           implements com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.PaintOrBuilder {
+          public static final com.google.protobuf.Descriptors.Descriptor
+              getDescriptor() {
+            return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_Paint_descriptor;
+          }
+
+          protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+              internalGetFieldAccessorTable() {
+            return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_Paint_fieldAccessorTable
+                .ensureFieldAccessorsInitialized(
+                    com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint.class, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint.Builder.class);
+          }
+
+          // Construct using com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint.newBuilder()
+          private Builder() {
+            maybeForceBuilderInitialization();
+          }
+
+          private Builder(
+              com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+            super(parent);
+            maybeForceBuilderInitialization();
+          }
+          private void maybeForceBuilderInitialization() {
+            if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+            }
+          }
+          private static Builder create() {
+            return new Builder();
+          }
+
+          public Builder clear() {
+            super.clear();
+            color_ = 0;
+            bitField0_ = (bitField0_ & ~0x00000001);
+            alpha_ = 0;
+            bitField0_ = (bitField0_ & ~0x00000002);
+            width_ = 0;
+            bitField0_ = (bitField0_ & ~0x00000004);
+            return this;
+          }
+
+          public Builder clone() {
+            return create().mergeFrom(buildPartial());
+          }
+
+          public com.google.protobuf.Descriptors.Descriptor
+              getDescriptorForType() {
+            return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_Paint_descriptor;
+          }
+
+          public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint getDefaultInstanceForType() {
+            return com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint.getDefaultInstance();
+          }
+
+          public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint build() {
+            com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint result = buildPartial();
+            if (!result.isInitialized()) {
+              throw newUninitializedMessageException(result);
+            }
+            return result;
+          }
+
+          public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint buildPartial() {
+            com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint result = new com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint(this);
+            int from_bitField0_ = bitField0_;
+            int to_bitField0_ = 0;
+            if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+              to_bitField0_ |= 0x00000001;
+            }
+            result.color_ = color_;
+            if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+              to_bitField0_ |= 0x00000002;
+            }
+            result.alpha_ = alpha_;
+            if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+              to_bitField0_ |= 0x00000004;
+            }
+            result.width_ = width_;
+            result.bitField0_ = to_bitField0_;
+            onBuilt();
+            return result;
+          }
+
+          public Builder mergeFrom(com.google.protobuf.Message other) {
+            if (other instanceof com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint) {
+              return mergeFrom((com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint)other);
+            } else {
+              super.mergeFrom(other);
+              return this;
+            }
+          }
+
+          public Builder mergeFrom(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint other) {
+            if (other == com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint.getDefaultInstance()) return this;
+            if (other.hasColor()) {
+              setColor(other.getColor());
+            }
+            if (other.hasAlpha()) {
+              setAlpha(other.getAlpha());
+            }
+            if (other.hasWidth()) {
+              setWidth(other.getWidth());
+            }
+            this.mergeUnknownFields(other.getUnknownFields());
+            return this;
+          }
+
+          public final boolean isInitialized() {
+            if (!hasColor()) {
+              
+              return false;
+            }
+            if (!hasAlpha()) {
+              
+              return false;
+            }
+            if (!hasWidth()) {
+              
+              return false;
+            }
+            return true;
+          }
+
+          public Builder mergeFrom(
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws java.io.IOException {
+            com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint parsedMessage = null;
+            try {
+              parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+              parsedMessage = (com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint) e.getUnfinishedMessage();
+              throw e;
+            } finally {
+              if (parsedMessage != null) {
+                mergeFrom(parsedMessage);
+              }
+            }
+            return this;
+          }
+          private int bitField0_;
+
+          // required int32 color = 1;
+          private int color_ ;
+          /**
+           * <code>required int32 color = 1;</code>
+           *
+           * <pre>
+           * 画笔颜色
+           * </pre>
+           */
+          public boolean hasColor() {
+            return ((bitField0_ & 0x00000001) == 0x00000001);
+          }
+          /**
+           * <code>required int32 color = 1;</code>
+           *
+           * <pre>
+           * 画笔颜色
+           * </pre>
+           */
+          public int getColor() {
+            return color_;
+          }
+          /**
+           * <code>required int32 color = 1;</code>
+           *
+           * <pre>
+           * 画笔颜色
+           * </pre>
+           */
+          public Builder setColor(int value) {
+            bitField0_ |= 0x00000001;
+            color_ = value;
+            onChanged();
+            return this;
+          }
+          /**
+           * <code>required int32 color = 1;</code>
+           *
+           * <pre>
+           * 画笔颜色
+           * </pre>
+           */
+          public Builder clearColor() {
+            bitField0_ = (bitField0_ & ~0x00000001);
+            color_ = 0;
+            onChanged();
+            return this;
+          }
+
+          // required int32 alpha = 2;
+          private int alpha_ ;
+          /**
+           * <code>required int32 alpha = 2;</code>
+           *
+           * <pre>
+           * 透明度
+           * </pre>
+           */
+          public boolean hasAlpha() {
+            return ((bitField0_ & 0x00000002) == 0x00000002);
+          }
+          /**
+           * <code>required int32 alpha = 2;</code>
+           *
+           * <pre>
+           * 透明度
+           * </pre>
+           */
+          public int getAlpha() {
+            return alpha_;
+          }
+          /**
+           * <code>required int32 alpha = 2;</code>
+           *
+           * <pre>
+           * 透明度
+           * </pre>
+           */
+          public Builder setAlpha(int value) {
+            bitField0_ |= 0x00000002;
+            alpha_ = value;
+            onChanged();
+            return this;
+          }
+          /**
+           * <code>required int32 alpha = 2;</code>
+           *
+           * <pre>
+           * 透明度
+           * </pre>
+           */
+          public Builder clearAlpha() {
+            bitField0_ = (bitField0_ & ~0x00000002);
+            alpha_ = 0;
+            onChanged();
+            return this;
+          }
+
+          // required int32 width = 3;
+          private int width_ ;
+          /**
+           * <code>required int32 width = 3;</code>
+           *
+           * <pre>
+           * 线宽
+           * </pre>
+           */
+          public boolean hasWidth() {
+            return ((bitField0_ & 0x00000004) == 0x00000004);
+          }
+          /**
+           * <code>required int32 width = 3;</code>
+           *
+           * <pre>
+           * 线宽
+           * </pre>
+           */
+          public int getWidth() {
+            return width_;
+          }
+          /**
+           * <code>required int32 width = 3;</code>
+           *
+           * <pre>
+           * 线宽
+           * </pre>
+           */
+          public Builder setWidth(int value) {
+            bitField0_ |= 0x00000004;
+            width_ = value;
+            onChanged();
+            return this;
+          }
+          /**
+           * <code>required int32 width = 3;</code>
+           *
+           * <pre>
+           * 线宽
+           * </pre>
+           */
+          public Builder clearWidth() {
+            bitField0_ = (bitField0_ & ~0x00000004);
+            width_ = 0;
+            onChanged();
+            return this;
+          }
+
+          // @@protoc_insertion_point(builder_scope:com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Paint)
+        }
+
+        static {
+          defaultInstance = new Paint(true);
+          defaultInstance.initFields();
+        }
+
+        // @@protoc_insertion_point(class_scope:com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Paint)
+      }
+
+      public interface PointOrBuilder
+          extends com.google.protobuf.MessageOrBuilder {
+
         // required int32 x = 1;
-        private int x_ ;
         /**
          * <code>required int32 x = 1;</code>
+         *
+         * <pre>
+         * x坐标
+         * </pre>
+         */
+        boolean hasX();
+        /**
+         * <code>required int32 x = 1;</code>
+         *
+         * <pre>
+         * x坐标
+         * </pre>
+         */
+        int getX();
+
+        // required int32 y = 2;
+        /**
+         * <code>required int32 y = 2;</code>
+         *
+         * <pre>
+         * y坐标
+         * </pre>
+         */
+        boolean hasY();
+        /**
+         * <code>required int32 y = 2;</code>
+         *
+         * <pre>
+         * y坐标
+         * </pre>
+         */
+        int getY();
+      }
+      /**
+       * Protobuf type {@code com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point}
+       */
+      public static final class Point extends
+          com.google.protobuf.GeneratedMessage
+          implements PointOrBuilder {
+        // Use Point.newBuilder() to construct.
+        private Point(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+          super(builder);
+          this.unknownFields = builder.getUnknownFields();
+        }
+        private Point(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+        private static final Point defaultInstance;
+        public static Point getDefaultInstance() {
+          return defaultInstance;
+        }
+
+        public Point getDefaultInstanceForType() {
+          return defaultInstance;
+        }
+
+        private final com.google.protobuf.UnknownFieldSet unknownFields;
+        @java.lang.Override
+        public final com.google.protobuf.UnknownFieldSet
+            getUnknownFields() {
+          return this.unknownFields;
+        }
+        private Point(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          initFields();
+          int mutable_bitField0_ = 0;
+          com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+              com.google.protobuf.UnknownFieldSet.newBuilder();
+          try {
+            boolean done = false;
+            while (!done) {
+              int tag = input.readTag();
+              switch (tag) {
+                case 0:
+                  done = true;
+                  break;
+                default: {
+                  if (!parseUnknownField(input, unknownFields,
+                                         extensionRegistry, tag)) {
+                    done = true;
+                  }
+                  break;
+                }
+                case 8: {
+                  bitField0_ |= 0x00000001;
+                  x_ = input.readInt32();
+                  break;
+                }
+                case 16: {
+                  bitField0_ |= 0x00000002;
+                  y_ = input.readInt32();
+                  break;
+                }
+              }
+            }
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            throw e.setUnfinishedMessage(this);
+          } catch (java.io.IOException e) {
+            throw new com.google.protobuf.InvalidProtocolBufferException(
+                e.getMessage()).setUnfinishedMessage(this);
+          } finally {
+            this.unknownFields = unknownFields.build();
+            makeExtensionsImmutable();
+          }
+        }
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_Point_descriptor;
+        }
+
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_Point_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point.class, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point.Builder.class);
+        }
+
+        public static com.google.protobuf.Parser<Point> PARSER =
+            new com.google.protobuf.AbstractParser<Point>() {
+          public Point parsePartialFrom(
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws com.google.protobuf.InvalidProtocolBufferException {
+            return new Point(input, extensionRegistry);
+          }
+        };
+
+        @java.lang.Override
+        public com.google.protobuf.Parser<Point> getParserForType() {
+          return PARSER;
+        }
+
+        private int bitField0_;
+        // required int32 x = 1;
+        public static final int X_FIELD_NUMBER = 1;
+        private int x_;
+        /**
+         * <code>required int32 x = 1;</code>
+         *
+         * <pre>
+         * x坐标
+         * </pre>
          */
         public boolean hasX() {
           return ((bitField0_ & 0x00000001) == 0x00000001);
         }
         /**
          * <code>required int32 x = 1;</code>
+         *
+         * <pre>
+         * x坐标
+         * </pre>
          */
         public int getX() {
           return x_;
         }
-        /**
-         * <code>required int32 x = 1;</code>
-         */
-        public Builder setX(int value) {
-          bitField0_ |= 0x00000001;
-          x_ = value;
-          onChanged();
-          return this;
-        }
-        /**
-         * <code>required int32 x = 1;</code>
-         */
-        public Builder clearX() {
-          bitField0_ = (bitField0_ & ~0x00000001);
-          x_ = 0;
-          onChanged();
-          return this;
-        }
 
         // required int32 y = 2;
-        private int y_ ;
+        public static final int Y_FIELD_NUMBER = 2;
+        private int y_;
         /**
          * <code>required int32 y = 2;</code>
+         *
+         * <pre>
+         * y坐标
+         * </pre>
          */
         public boolean hasY() {
           return ((bitField0_ & 0x00000002) == 0x00000002);
         }
         /**
          * <code>required int32 y = 2;</code>
+         *
+         * <pre>
+         * y坐标
+         * </pre>
          */
         public int getY() {
           return y_;
         }
+
+        private void initFields() {
+          x_ = 0;
+          y_ = 0;
+        }
+        private byte memoizedIsInitialized = -1;
+        public final boolean isInitialized() {
+          byte isInitialized = memoizedIsInitialized;
+          if (isInitialized != -1) return isInitialized == 1;
+
+          if (!hasX()) {
+            memoizedIsInitialized = 0;
+            return false;
+          }
+          if (!hasY()) {
+            memoizedIsInitialized = 0;
+            return false;
+          }
+          memoizedIsInitialized = 1;
+          return true;
+        }
+
+        public void writeTo(com.google.protobuf.CodedOutputStream output)
+                            throws java.io.IOException {
+          getSerializedSize();
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            output.writeInt32(1, x_);
+          }
+          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+            output.writeInt32(2, y_);
+          }
+          getUnknownFields().writeTo(output);
+        }
+
+        private int memoizedSerializedSize = -1;
+        public int getSerializedSize() {
+          int size = memoizedSerializedSize;
+          if (size != -1) return size;
+
+          size = 0;
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            size += com.google.protobuf.CodedOutputStream
+              .computeInt32Size(1, x_);
+          }
+          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+            size += com.google.protobuf.CodedOutputStream
+              .computeInt32Size(2, y_);
+          }
+          size += getUnknownFields().getSerializedSize();
+          memoizedSerializedSize = size;
+          return size;
+        }
+
+        private static final long serialVersionUID = 0L;
+        @java.lang.Override
+        protected java.lang.Object writeReplace()
+            throws java.io.ObjectStreamException {
+          return super.writeReplace();
+        }
+
+        public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point parseFrom(
+            com.google.protobuf.ByteString data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return PARSER.parseFrom(data);
+        }
+        public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point parseFrom(
+            com.google.protobuf.ByteString data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return PARSER.parseFrom(data, extensionRegistry);
+        }
+        public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point parseFrom(byte[] data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return PARSER.parseFrom(data);
+        }
+        public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point parseFrom(
+            byte[] data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return PARSER.parseFrom(data, extensionRegistry);
+        }
+        public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point parseFrom(java.io.InputStream input)
+            throws java.io.IOException {
+          return PARSER.parseFrom(input);
+        }
+        public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point parseFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          return PARSER.parseFrom(input, extensionRegistry);
+        }
+        public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point parseDelimitedFrom(java.io.InputStream input)
+            throws java.io.IOException {
+          return PARSER.parseDelimitedFrom(input);
+        }
+        public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point parseDelimitedFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          return PARSER.parseDelimitedFrom(input, extensionRegistry);
+        }
+        public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point parseFrom(
+            com.google.protobuf.CodedInputStream input)
+            throws java.io.IOException {
+          return PARSER.parseFrom(input);
+        }
+        public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point parseFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          return PARSER.parseFrom(input, extensionRegistry);
+        }
+
+        public static Builder newBuilder() { return Builder.create(); }
+        public Builder newBuilderForType() { return newBuilder(); }
+        public static Builder newBuilder(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point prototype) {
+          return newBuilder().mergeFrom(prototype);
+        }
+        public Builder toBuilder() { return newBuilder(this); }
+
+        @java.lang.Override
+        protected Builder newBuilderForType(
+            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+          Builder builder = new Builder(parent);
+          return builder;
+        }
         /**
-         * <code>required int32 y = 2;</code>
+         * Protobuf type {@code com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point}
          */
-        public Builder setY(int value) {
-          bitField0_ |= 0x00000002;
-          y_ = value;
+        public static final class Builder extends
+            com.google.protobuf.GeneratedMessage.Builder<Builder>
+           implements com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.PointOrBuilder {
+          public static final com.google.protobuf.Descriptors.Descriptor
+              getDescriptor() {
+            return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_Point_descriptor;
+          }
+
+          protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+              internalGetFieldAccessorTable() {
+            return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_Point_fieldAccessorTable
+                .ensureFieldAccessorsInitialized(
+                    com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point.class, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point.Builder.class);
+          }
+
+          // Construct using com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point.newBuilder()
+          private Builder() {
+            maybeForceBuilderInitialization();
+          }
+
+          private Builder(
+              com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+            super(parent);
+            maybeForceBuilderInitialization();
+          }
+          private void maybeForceBuilderInitialization() {
+            if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+            }
+          }
+          private static Builder create() {
+            return new Builder();
+          }
+
+          public Builder clear() {
+            super.clear();
+            x_ = 0;
+            bitField0_ = (bitField0_ & ~0x00000001);
+            y_ = 0;
+            bitField0_ = (bitField0_ & ~0x00000002);
+            return this;
+          }
+
+          public Builder clone() {
+            return create().mergeFrom(buildPartial());
+          }
+
+          public com.google.protobuf.Descriptors.Descriptor
+              getDescriptorForType() {
+            return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_Point_descriptor;
+          }
+
+          public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point getDefaultInstanceForType() {
+            return com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point.getDefaultInstance();
+          }
+
+          public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point build() {
+            com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point result = buildPartial();
+            if (!result.isInitialized()) {
+              throw newUninitializedMessageException(result);
+            }
+            return result;
+          }
+
+          public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point buildPartial() {
+            com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point result = new com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point(this);
+            int from_bitField0_ = bitField0_;
+            int to_bitField0_ = 0;
+            if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+              to_bitField0_ |= 0x00000001;
+            }
+            result.x_ = x_;
+            if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+              to_bitField0_ |= 0x00000002;
+            }
+            result.y_ = y_;
+            result.bitField0_ = to_bitField0_;
+            onBuilt();
+            return result;
+          }
+
+          public Builder mergeFrom(com.google.protobuf.Message other) {
+            if (other instanceof com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point) {
+              return mergeFrom((com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point)other);
+            } else {
+              super.mergeFrom(other);
+              return this;
+            }
+          }
+
+          public Builder mergeFrom(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point other) {
+            if (other == com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point.getDefaultInstance()) return this;
+            if (other.hasX()) {
+              setX(other.getX());
+            }
+            if (other.hasY()) {
+              setY(other.getY());
+            }
+            this.mergeUnknownFields(other.getUnknownFields());
+            return this;
+          }
+
+          public final boolean isInitialized() {
+            if (!hasX()) {
+              
+              return false;
+            }
+            if (!hasY()) {
+              
+              return false;
+            }
+            return true;
+          }
+
+          public Builder mergeFrom(
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws java.io.IOException {
+            com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point parsedMessage = null;
+            try {
+              parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+              parsedMessage = (com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point) e.getUnfinishedMessage();
+              throw e;
+            } finally {
+              if (parsedMessage != null) {
+                mergeFrom(parsedMessage);
+              }
+            }
+            return this;
+          }
+          private int bitField0_;
+
+          // required int32 x = 1;
+          private int x_ ;
+          /**
+           * <code>required int32 x = 1;</code>
+           *
+           * <pre>
+           * x坐标
+           * </pre>
+           */
+          public boolean hasX() {
+            return ((bitField0_ & 0x00000001) == 0x00000001);
+          }
+          /**
+           * <code>required int32 x = 1;</code>
+           *
+           * <pre>
+           * x坐标
+           * </pre>
+           */
+          public int getX() {
+            return x_;
+          }
+          /**
+           * <code>required int32 x = 1;</code>
+           *
+           * <pre>
+           * x坐标
+           * </pre>
+           */
+          public Builder setX(int value) {
+            bitField0_ |= 0x00000001;
+            x_ = value;
+            onChanged();
+            return this;
+          }
+          /**
+           * <code>required int32 x = 1;</code>
+           *
+           * <pre>
+           * x坐标
+           * </pre>
+           */
+          public Builder clearX() {
+            bitField0_ = (bitField0_ & ~0x00000001);
+            x_ = 0;
+            onChanged();
+            return this;
+          }
+
+          // required int32 y = 2;
+          private int y_ ;
+          /**
+           * <code>required int32 y = 2;</code>
+           *
+           * <pre>
+           * y坐标
+           * </pre>
+           */
+          public boolean hasY() {
+            return ((bitField0_ & 0x00000002) == 0x00000002);
+          }
+          /**
+           * <code>required int32 y = 2;</code>
+           *
+           * <pre>
+           * y坐标
+           * </pre>
+           */
+          public int getY() {
+            return y_;
+          }
+          /**
+           * <code>required int32 y = 2;</code>
+           *
+           * <pre>
+           * y坐标
+           * </pre>
+           */
+          public Builder setY(int value) {
+            bitField0_ |= 0x00000002;
+            y_ = value;
+            onChanged();
+            return this;
+          }
+          /**
+           * <code>required int32 y = 2;</code>
+           *
+           * <pre>
+           * y坐标
+           * </pre>
+           */
+          public Builder clearY() {
+            bitField0_ = (bitField0_ & ~0x00000002);
+            y_ = 0;
+            onChanged();
+            return this;
+          }
+
+          // @@protoc_insertion_point(builder_scope:com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point)
+        }
+
+        static {
+          defaultInstance = new Point(true);
+          defaultInstance.initFields();
+        }
+
+        // @@protoc_insertion_point(class_scope:com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point)
+      }
+
+      private int bitField0_;
+      // required .com.hengqian.whiteboard.msg.TouchEvent touchEvent = 1;
+      public static final int TOUCHEVENT_FIELD_NUMBER = 1;
+      private com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent touchEvent_;
+      /**
+       * <code>required .com.hengqian.whiteboard.msg.TouchEvent touchEvent = 1;</code>
+       *
+       * <pre>
+       * 触摸事件，由TouchEvent定义
+       * </pre>
+       */
+      public boolean hasTouchEvent() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>required .com.hengqian.whiteboard.msg.TouchEvent touchEvent = 1;</code>
+       *
+       * <pre>
+       * 触摸事件，由TouchEvent定义
+       * </pre>
+       */
+      public com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent getTouchEvent() {
+        return touchEvent_;
+      }
+
+      // required .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Paint paint = 2;
+      public static final int PAINT_FIELD_NUMBER = 2;
+      private com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint paint_;
+      /**
+       * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Paint paint = 2;</code>
+       *
+       * <pre>
+       * 画笔设置
+       * </pre>
+       */
+      public boolean hasPaint() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Paint paint = 2;</code>
+       *
+       * <pre>
+       * 画笔设置
+       * </pre>
+       */
+      public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint getPaint() {
+        return paint_;
+      }
+      /**
+       * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Paint paint = 2;</code>
+       *
+       * <pre>
+       * 画笔设置
+       * </pre>
+       */
+      public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.PaintOrBuilder getPaintOrBuilder() {
+        return paint_;
+      }
+
+      // repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;
+      public static final int POINT_FIELD_NUMBER = 3;
+      private java.util.List<com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point> point_;
+      /**
+       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+       *
+       * <pre>
+       * 要画的点数组
+       * </pre>
+       */
+      public java.util.List<com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point> getPointList() {
+        return point_;
+      }
+      /**
+       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+       *
+       * <pre>
+       * 要画的点数组
+       * </pre>
+       */
+      public java.util.List<? extends com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.PointOrBuilder> 
+          getPointOrBuilderList() {
+        return point_;
+      }
+      /**
+       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+       *
+       * <pre>
+       * 要画的点数组
+       * </pre>
+       */
+      public int getPointCount() {
+        return point_.size();
+      }
+      /**
+       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+       *
+       * <pre>
+       * 要画的点数组
+       * </pre>
+       */
+      public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point getPoint(int index) {
+        return point_.get(index);
+      }
+      /**
+       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+       *
+       * <pre>
+       * 要画的点数组
+       * </pre>
+       */
+      public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.PointOrBuilder getPointOrBuilder(
+          int index) {
+        return point_.get(index);
+      }
+
+      private void initFields() {
+        touchEvent_ = com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent.DOWN;
+        paint_ = com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint.getDefaultInstance();
+        point_ = java.util.Collections.emptyList();
+      }
+      private byte memoizedIsInitialized = -1;
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized != -1) return isInitialized == 1;
+
+        if (!hasTouchEvent()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+        if (!hasPaint()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+        if (!getPaint().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+        for (int i = 0; i < getPointCount(); i++) {
+          if (!getPoint(i).isInitialized()) {
+            memoizedIsInitialized = 0;
+            return false;
+          }
+        }
+        memoizedIsInitialized = 1;
+        return true;
+      }
+
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        getSerializedSize();
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          output.writeEnum(1, touchEvent_.getNumber());
+        }
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          output.writeMessage(2, paint_);
+        }
+        for (int i = 0; i < point_.size(); i++) {
+          output.writeMessage(3, point_.get(i));
+        }
+        getUnknownFields().writeTo(output);
+      }
+
+      private int memoizedSerializedSize = -1;
+      public int getSerializedSize() {
+        int size = memoizedSerializedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeEnumSize(1, touchEvent_.getNumber());
+        }
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeMessageSize(2, paint_);
+        }
+        for (int i = 0; i < point_.size(); i++) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeMessageSize(3, point_.get(i));
+        }
+        size += getUnknownFields().getSerializedSize();
+        memoizedSerializedSize = size;
+        return size;
+      }
+
+      private static final long serialVersionUID = 0L;
+      @java.lang.Override
+      protected java.lang.Object writeReplace()
+          throws java.io.ObjectStreamException {
+        return super.writeReplace();
+      }
+
+      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return PARSER.parseFrom(input);
+      }
+      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return PARSER.parseFrom(input, extensionRegistry);
+      }
+      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return PARSER.parseDelimitedFrom(input);
+      }
+      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return PARSER.parseDelimitedFrom(input, extensionRegistry);
+      }
+      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return PARSER.parseFrom(input);
+      }
+      public static com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return PARSER.parseFrom(input, extensionRegistry);
+      }
+
+      public static Builder newBuilder() { return Builder.create(); }
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint prototype) {
+        return newBuilder().mergeFrom(prototype);
+      }
+      public Builder toBuilder() { return newBuilder(this); }
+
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      /**
+       * Protobuf type {@code com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint}
+       */
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessage.Builder<Builder>
+         implements com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPointOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_descriptor;
+        }
+
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.class, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Builder.class);
+        }
+
+        // Construct using com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+            getPaintFieldBuilder();
+            getPointFieldBuilder();
+          }
+        }
+        private static Builder create() {
+          return new Builder();
+        }
+
+        public Builder clear() {
+          super.clear();
+          touchEvent_ = com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent.DOWN;
+          bitField0_ = (bitField0_ & ~0x00000001);
+          if (paintBuilder_ == null) {
+            paint_ = com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint.getDefaultInstance();
+          } else {
+            paintBuilder_.clear();
+          }
+          bitField0_ = (bitField0_ & ~0x00000002);
+          if (pointBuilder_ == null) {
+            point_ = java.util.Collections.emptyList();
+            bitField0_ = (bitField0_ & ~0x00000004);
+          } else {
+            pointBuilder_.clear();
+          }
+          return this;
+        }
+
+        public Builder clone() {
+          return create().mergeFrom(buildPartial());
+        }
+
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return com.hengqian.whiteboard.msg.Whiteboardmsg.internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_descriptor;
+        }
+
+        public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint getDefaultInstanceForType() {
+          return com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.getDefaultInstance();
+        }
+
+        public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint build() {
+          com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+
+        public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint buildPartial() {
+          com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint result = new com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint(this);
+          int from_bitField0_ = bitField0_;
+          int to_bitField0_ = 0;
+          if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+            to_bitField0_ |= 0x00000001;
+          }
+          result.touchEvent_ = touchEvent_;
+          if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+            to_bitField0_ |= 0x00000002;
+          }
+          if (paintBuilder_ == null) {
+            result.paint_ = paint_;
+          } else {
+            result.paint_ = paintBuilder_.build();
+          }
+          if (pointBuilder_ == null) {
+            if (((bitField0_ & 0x00000004) == 0x00000004)) {
+              point_ = java.util.Collections.unmodifiableList(point_);
+              bitField0_ = (bitField0_ & ~0x00000004);
+            }
+            result.point_ = point_;
+          } else {
+            result.point_ = pointBuilder_.build();
+          }
+          result.bitField0_ = to_bitField0_;
+          onBuilt();
+          return result;
+        }
+
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint) {
+            return mergeFrom((com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+
+        public Builder mergeFrom(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint other) {
+          if (other == com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.getDefaultInstance()) return this;
+          if (other.hasTouchEvent()) {
+            setTouchEvent(other.getTouchEvent());
+          }
+          if (other.hasPaint()) {
+            mergePaint(other.getPaint());
+          }
+          if (pointBuilder_ == null) {
+            if (!other.point_.isEmpty()) {
+              if (point_.isEmpty()) {
+                point_ = other.point_;
+                bitField0_ = (bitField0_ & ~0x00000004);
+              } else {
+                ensurePointIsMutable();
+                point_.addAll(other.point_);
+              }
+              onChanged();
+            }
+          } else {
+            if (!other.point_.isEmpty()) {
+              if (pointBuilder_.isEmpty()) {
+                pointBuilder_.dispose();
+                pointBuilder_ = null;
+                point_ = other.point_;
+                bitField0_ = (bitField0_ & ~0x00000004);
+                pointBuilder_ = 
+                  com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                     getPointFieldBuilder() : null;
+              } else {
+                pointBuilder_.addAllMessages(other.point_);
+              }
+            }
+          }
+          this.mergeUnknownFields(other.getUnknownFields());
+          return this;
+        }
+
+        public final boolean isInitialized() {
+          if (!hasTouchEvent()) {
+            
+            return false;
+          }
+          if (!hasPaint()) {
+            
+            return false;
+          }
+          if (!getPaint().isInitialized()) {
+            
+            return false;
+          }
+          for (int i = 0; i < getPointCount(); i++) {
+            if (!getPoint(i).isInitialized()) {
+              
+              return false;
+            }
+          }
+          return true;
+        }
+
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint) e.getUnfinishedMessage();
+            throw e;
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
+            }
+          }
+          return this;
+        }
+        private int bitField0_;
+
+        // required .com.hengqian.whiteboard.msg.TouchEvent touchEvent = 1;
+        private com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent touchEvent_ = com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent.DOWN;
+        /**
+         * <code>required .com.hengqian.whiteboard.msg.TouchEvent touchEvent = 1;</code>
+         *
+         * <pre>
+         * 触摸事件，由TouchEvent定义
+         * </pre>
+         */
+        public boolean hasTouchEvent() {
+          return ((bitField0_ & 0x00000001) == 0x00000001);
+        }
+        /**
+         * <code>required .com.hengqian.whiteboard.msg.TouchEvent touchEvent = 1;</code>
+         *
+         * <pre>
+         * 触摸事件，由TouchEvent定义
+         * </pre>
+         */
+        public com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent getTouchEvent() {
+          return touchEvent_;
+        }
+        /**
+         * <code>required .com.hengqian.whiteboard.msg.TouchEvent touchEvent = 1;</code>
+         *
+         * <pre>
+         * 触摸事件，由TouchEvent定义
+         * </pre>
+         */
+        public Builder setTouchEvent(com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent value) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          bitField0_ |= 0x00000001;
+          touchEvent_ = value;
           onChanged();
           return this;
         }
         /**
-         * <code>required int32 y = 2;</code>
+         * <code>required .com.hengqian.whiteboard.msg.TouchEvent touchEvent = 1;</code>
+         *
+         * <pre>
+         * 触摸事件，由TouchEvent定义
+         * </pre>
          */
-        public Builder clearY() {
-          bitField0_ = (bitField0_ & ~0x00000002);
-          y_ = 0;
+        public Builder clearTouchEvent() {
+          bitField0_ = (bitField0_ & ~0x00000001);
+          touchEvent_ = com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent.DOWN;
           onChanged();
           return this;
         }
 
-        // @@protoc_insertion_point(builder_scope:com.hengqian.whiteboard.msg.WhiteBoardMsg.Point)
+        // required .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Paint paint = 2;
+        private com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint paint_ = com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint.getDefaultInstance();
+        private com.google.protobuf.SingleFieldBuilder<
+            com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint.Builder, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.PaintOrBuilder> paintBuilder_;
+        /**
+         * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Paint paint = 2;</code>
+         *
+         * <pre>
+         * 画笔设置
+         * </pre>
+         */
+        public boolean hasPaint() {
+          return ((bitField0_ & 0x00000002) == 0x00000002);
+        }
+        /**
+         * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Paint paint = 2;</code>
+         *
+         * <pre>
+         * 画笔设置
+         * </pre>
+         */
+        public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint getPaint() {
+          if (paintBuilder_ == null) {
+            return paint_;
+          } else {
+            return paintBuilder_.getMessage();
+          }
+        }
+        /**
+         * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Paint paint = 2;</code>
+         *
+         * <pre>
+         * 画笔设置
+         * </pre>
+         */
+        public Builder setPaint(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint value) {
+          if (paintBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            paint_ = value;
+            onChanged();
+          } else {
+            paintBuilder_.setMessage(value);
+          }
+          bitField0_ |= 0x00000002;
+          return this;
+        }
+        /**
+         * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Paint paint = 2;</code>
+         *
+         * <pre>
+         * 画笔设置
+         * </pre>
+         */
+        public Builder setPaint(
+            com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint.Builder builderForValue) {
+          if (paintBuilder_ == null) {
+            paint_ = builderForValue.build();
+            onChanged();
+          } else {
+            paintBuilder_.setMessage(builderForValue.build());
+          }
+          bitField0_ |= 0x00000002;
+          return this;
+        }
+        /**
+         * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Paint paint = 2;</code>
+         *
+         * <pre>
+         * 画笔设置
+         * </pre>
+         */
+        public Builder mergePaint(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint value) {
+          if (paintBuilder_ == null) {
+            if (((bitField0_ & 0x00000002) == 0x00000002) &&
+                paint_ != com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint.getDefaultInstance()) {
+              paint_ =
+                com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint.newBuilder(paint_).mergeFrom(value).buildPartial();
+            } else {
+              paint_ = value;
+            }
+            onChanged();
+          } else {
+            paintBuilder_.mergeFrom(value);
+          }
+          bitField0_ |= 0x00000002;
+          return this;
+        }
+        /**
+         * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Paint paint = 2;</code>
+         *
+         * <pre>
+         * 画笔设置
+         * </pre>
+         */
+        public Builder clearPaint() {
+          if (paintBuilder_ == null) {
+            paint_ = com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint.getDefaultInstance();
+            onChanged();
+          } else {
+            paintBuilder_.clear();
+          }
+          bitField0_ = (bitField0_ & ~0x00000002);
+          return this;
+        }
+        /**
+         * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Paint paint = 2;</code>
+         *
+         * <pre>
+         * 画笔设置
+         * </pre>
+         */
+        public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint.Builder getPaintBuilder() {
+          bitField0_ |= 0x00000002;
+          onChanged();
+          return getPaintFieldBuilder().getBuilder();
+        }
+        /**
+         * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Paint paint = 2;</code>
+         *
+         * <pre>
+         * 画笔设置
+         * </pre>
+         */
+        public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.PaintOrBuilder getPaintOrBuilder() {
+          if (paintBuilder_ != null) {
+            return paintBuilder_.getMessageOrBuilder();
+          } else {
+            return paint_;
+          }
+        }
+        /**
+         * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Paint paint = 2;</code>
+         *
+         * <pre>
+         * 画笔设置
+         * </pre>
+         */
+        private com.google.protobuf.SingleFieldBuilder<
+            com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint.Builder, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.PaintOrBuilder> 
+            getPaintFieldBuilder() {
+          if (paintBuilder_ == null) {
+            paintBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+                com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Paint.Builder, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.PaintOrBuilder>(
+                    paint_,
+                    getParentForChildren(),
+                    isClean());
+            paint_ = null;
+          }
+          return paintBuilder_;
+        }
+
+        // repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;
+        private java.util.List<com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point> point_ =
+          java.util.Collections.emptyList();
+        private void ensurePointIsMutable() {
+          if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+            point_ = new java.util.ArrayList<com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point>(point_);
+            bitField0_ |= 0x00000004;
+           }
+        }
+
+        private com.google.protobuf.RepeatedFieldBuilder<
+            com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point.Builder, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.PointOrBuilder> pointBuilder_;
+
+        /**
+         * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+         *
+         * <pre>
+         * 要画的点数组
+         * </pre>
+         */
+        public java.util.List<com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point> getPointList() {
+          if (pointBuilder_ == null) {
+            return java.util.Collections.unmodifiableList(point_);
+          } else {
+            return pointBuilder_.getMessageList();
+          }
+        }
+        /**
+         * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+         *
+         * <pre>
+         * 要画的点数组
+         * </pre>
+         */
+        public int getPointCount() {
+          if (pointBuilder_ == null) {
+            return point_.size();
+          } else {
+            return pointBuilder_.getCount();
+          }
+        }
+        /**
+         * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+         *
+         * <pre>
+         * 要画的点数组
+         * </pre>
+         */
+        public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point getPoint(int index) {
+          if (pointBuilder_ == null) {
+            return point_.get(index);
+          } else {
+            return pointBuilder_.getMessage(index);
+          }
+        }
+        /**
+         * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+         *
+         * <pre>
+         * 要画的点数组
+         * </pre>
+         */
+        public Builder setPoint(
+            int index, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point value) {
+          if (pointBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            ensurePointIsMutable();
+            point_.set(index, value);
+            onChanged();
+          } else {
+            pointBuilder_.setMessage(index, value);
+          }
+          return this;
+        }
+        /**
+         * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+         *
+         * <pre>
+         * 要画的点数组
+         * </pre>
+         */
+        public Builder setPoint(
+            int index, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point.Builder builderForValue) {
+          if (pointBuilder_ == null) {
+            ensurePointIsMutable();
+            point_.set(index, builderForValue.build());
+            onChanged();
+          } else {
+            pointBuilder_.setMessage(index, builderForValue.build());
+          }
+          return this;
+        }
+        /**
+         * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+         *
+         * <pre>
+         * 要画的点数组
+         * </pre>
+         */
+        public Builder addPoint(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point value) {
+          if (pointBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            ensurePointIsMutable();
+            point_.add(value);
+            onChanged();
+          } else {
+            pointBuilder_.addMessage(value);
+          }
+          return this;
+        }
+        /**
+         * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+         *
+         * <pre>
+         * 要画的点数组
+         * </pre>
+         */
+        public Builder addPoint(
+            int index, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point value) {
+          if (pointBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            ensurePointIsMutable();
+            point_.add(index, value);
+            onChanged();
+          } else {
+            pointBuilder_.addMessage(index, value);
+          }
+          return this;
+        }
+        /**
+         * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+         *
+         * <pre>
+         * 要画的点数组
+         * </pre>
+         */
+        public Builder addPoint(
+            com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point.Builder builderForValue) {
+          if (pointBuilder_ == null) {
+            ensurePointIsMutable();
+            point_.add(builderForValue.build());
+            onChanged();
+          } else {
+            pointBuilder_.addMessage(builderForValue.build());
+          }
+          return this;
+        }
+        /**
+         * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+         *
+         * <pre>
+         * 要画的点数组
+         * </pre>
+         */
+        public Builder addPoint(
+            int index, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point.Builder builderForValue) {
+          if (pointBuilder_ == null) {
+            ensurePointIsMutable();
+            point_.add(index, builderForValue.build());
+            onChanged();
+          } else {
+            pointBuilder_.addMessage(index, builderForValue.build());
+          }
+          return this;
+        }
+        /**
+         * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+         *
+         * <pre>
+         * 要画的点数组
+         * </pre>
+         */
+        public Builder addAllPoint(
+            java.lang.Iterable<? extends com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point> values) {
+          if (pointBuilder_ == null) {
+            ensurePointIsMutable();
+            super.addAll(values, point_);
+            onChanged();
+          } else {
+            pointBuilder_.addAllMessages(values);
+          }
+          return this;
+        }
+        /**
+         * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+         *
+         * <pre>
+         * 要画的点数组
+         * </pre>
+         */
+        public Builder clearPoint() {
+          if (pointBuilder_ == null) {
+            point_ = java.util.Collections.emptyList();
+            bitField0_ = (bitField0_ & ~0x00000004);
+            onChanged();
+          } else {
+            pointBuilder_.clear();
+          }
+          return this;
+        }
+        /**
+         * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+         *
+         * <pre>
+         * 要画的点数组
+         * </pre>
+         */
+        public Builder removePoint(int index) {
+          if (pointBuilder_ == null) {
+            ensurePointIsMutable();
+            point_.remove(index);
+            onChanged();
+          } else {
+            pointBuilder_.remove(index);
+          }
+          return this;
+        }
+        /**
+         * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+         *
+         * <pre>
+         * 要画的点数组
+         * </pre>
+         */
+        public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point.Builder getPointBuilder(
+            int index) {
+          return getPointFieldBuilder().getBuilder(index);
+        }
+        /**
+         * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+         *
+         * <pre>
+         * 要画的点数组
+         * </pre>
+         */
+        public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.PointOrBuilder getPointOrBuilder(
+            int index) {
+          if (pointBuilder_ == null) {
+            return point_.get(index);  } else {
+            return pointBuilder_.getMessageOrBuilder(index);
+          }
+        }
+        /**
+         * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+         *
+         * <pre>
+         * 要画的点数组
+         * </pre>
+         */
+        public java.util.List<? extends com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.PointOrBuilder> 
+             getPointOrBuilderList() {
+          if (pointBuilder_ != null) {
+            return pointBuilder_.getMessageOrBuilderList();
+          } else {
+            return java.util.Collections.unmodifiableList(point_);
+          }
+        }
+        /**
+         * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+         *
+         * <pre>
+         * 要画的点数组
+         * </pre>
+         */
+        public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point.Builder addPointBuilder() {
+          return getPointFieldBuilder().addBuilder(
+              com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point.getDefaultInstance());
+        }
+        /**
+         * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+         *
+         * <pre>
+         * 要画的点数组
+         * </pre>
+         */
+        public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point.Builder addPointBuilder(
+            int index) {
+          return getPointFieldBuilder().addBuilder(
+              index, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point.getDefaultInstance());
+        }
+        /**
+         * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint.Point point = 3;</code>
+         *
+         * <pre>
+         * 要画的点数组
+         * </pre>
+         */
+        public java.util.List<com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point.Builder> 
+             getPointBuilderList() {
+          return getPointFieldBuilder().getBuilderList();
+        }
+        private com.google.protobuf.RepeatedFieldBuilder<
+            com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point.Builder, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.PointOrBuilder> 
+            getPointFieldBuilder() {
+          if (pointBuilder_ == null) {
+            pointBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+                com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point.Builder, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.PointOrBuilder>(
+                    point_,
+                    ((bitField0_ & 0x00000004) == 0x00000004),
+                    getParentForChildren(),
+                    isClean());
+            point_ = null;
+          }
+          return pointBuilder_;
+        }
+
+        // @@protoc_insertion_point(builder_scope:com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint)
       }
 
       static {
-        defaultInstance = new Point(true);
+        defaultInstance = new DrawPoint(true);
         defaultInstance.initFields();
       }
 
-      // @@protoc_insertion_point(class_scope:com.hengqian.whiteboard.msg.WhiteBoardMsg.Point)
+      // @@protoc_insertion_point(class_scope:com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint)
     }
 
     private int bitField0_;
@@ -990,12 +3455,20 @@ public final class Whiteboardmsg {
     private com.hengqian.whiteboard.msg.Whiteboardmsg.TypeCommand type_;
     /**
      * <code>required .com.hengqian.whiteboard.msg.TypeCommand type = 1;</code>
+     *
+     * <pre>
+     * 消息类型，由TypeCommand定义
+     * </pre>
      */
     public boolean hasType() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required .com.hengqian.whiteboard.msg.TypeCommand type = 1;</code>
+     *
+     * <pre>
+     * 消息类型，由TypeCommand定义
+     * </pre>
      */
     public com.hengqian.whiteboard.msg.Whiteboardmsg.TypeCommand getType() {
       return type_;
@@ -1006,12 +3479,20 @@ public final class Whiteboardmsg {
     private java.lang.Object uid_;
     /**
      * <code>required string uid = 2;</code>
+     *
+     * <pre>
+     * 发送者uid
+     * </pre>
      */
     public boolean hasUid() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
      * <code>required string uid = 2;</code>
+     *
+     * <pre>
+     * 发送者uid
+     * </pre>
      */
     public java.lang.String getUid() {
       java.lang.Object ref = uid_;
@@ -1029,6 +3510,10 @@ public final class Whiteboardmsg {
     }
     /**
      * <code>required string uid = 2;</code>
+     *
+     * <pre>
+     * 发送者uid
+     * </pre>
      */
     public com.google.protobuf.ByteString
         getUidBytes() {
@@ -1044,114 +3529,67 @@ public final class Whiteboardmsg {
       }
     }
 
-    // optional .com.hengqian.whiteboard.msg.TouchEvent touchEvent = 3;
-    public static final int TOUCHEVENT_FIELD_NUMBER = 3;
-    private com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent touchEvent_;
+    // required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;
+    public static final int SIZE_FIELD_NUMBER = 3;
+    private com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size size_;
     /**
-     * <code>optional .com.hengqian.whiteboard.msg.TouchEvent touchEvent = 3;</code>
+     * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
+     *
+     * <pre>
+     * 屏幕画布尺寸
+     * </pre>
      */
-    public boolean hasTouchEvent() {
+    public boolean hasSize() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
-     * <code>optional .com.hengqian.whiteboard.msg.TouchEvent touchEvent = 3;</code>
+     * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
+     *
+     * <pre>
+     * 屏幕画布尺寸
+     * </pre>
      */
-    public com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent getTouchEvent() {
-      return touchEvent_;
+    public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size getSize() {
+      return size_;
+    }
+    /**
+     * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
+     *
+     * <pre>
+     * 屏幕画布尺寸
+     * </pre>
+     */
+    public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.SizeOrBuilder getSizeOrBuilder() {
+      return size_;
     }
 
-    // optional int32 paintColor = 4;
-    public static final int PAINTCOLOR_FIELD_NUMBER = 4;
-    private int paintColor_;
+    // optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;
+    public static final int DRAWPOINT_FIELD_NUMBER = 4;
+    private com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint drawPoint_;
     /**
-     * <code>optional int32 paintColor = 4;</code>
+     * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
      */
-    public boolean hasPaintColor() {
+    public boolean hasDrawPoint() {
       return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
-     * <code>optional int32 paintColor = 4;</code>
+     * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
      */
-    public int getPaintColor() {
-      return paintColor_;
-    }
-
-    // optional int32 paintAlpha = 5;
-    public static final int PAINTALPHA_FIELD_NUMBER = 5;
-    private int paintAlpha_;
-    /**
-     * <code>optional int32 paintAlpha = 5;</code>
-     */
-    public boolean hasPaintAlpha() {
-      return ((bitField0_ & 0x00000010) == 0x00000010);
+    public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint getDrawPoint() {
+      return drawPoint_;
     }
     /**
-     * <code>optional int32 paintAlpha = 5;</code>
+     * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
      */
-    public int getPaintAlpha() {
-      return paintAlpha_;
-    }
-
-    // optional int32 paintWidth = 6;
-    public static final int PAINTWIDTH_FIELD_NUMBER = 6;
-    private int paintWidth_;
-    /**
-     * <code>optional int32 paintWidth = 6;</code>
-     */
-    public boolean hasPaintWidth() {
-      return ((bitField0_ & 0x00000020) == 0x00000020);
-    }
-    /**
-     * <code>optional int32 paintWidth = 6;</code>
-     */
-    public int getPaintWidth() {
-      return paintWidth_;
-    }
-
-    // repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;
-    public static final int POINT_FIELD_NUMBER = 7;
-    private java.util.List<com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point> point_;
-    /**
-     * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-     */
-    public java.util.List<com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point> getPointList() {
-      return point_;
-    }
-    /**
-     * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-     */
-    public java.util.List<? extends com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.PointOrBuilder> 
-        getPointOrBuilderList() {
-      return point_;
-    }
-    /**
-     * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-     */
-    public int getPointCount() {
-      return point_.size();
-    }
-    /**
-     * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-     */
-    public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point getPoint(int index) {
-      return point_.get(index);
-    }
-    /**
-     * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-     */
-    public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.PointOrBuilder getPointOrBuilder(
-        int index) {
-      return point_.get(index);
+    public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPointOrBuilder getDrawPointOrBuilder() {
+      return drawPoint_;
     }
 
     private void initFields() {
-      type_ = com.hengqian.whiteboard.msg.Whiteboardmsg.TypeCommand.DrawPoint;
+      type_ = com.hengqian.whiteboard.msg.Whiteboardmsg.TypeCommand.DrawUndo;
       uid_ = "";
-      touchEvent_ = com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent.DOWN;
-      paintColor_ = 0;
-      paintAlpha_ = 0;
-      paintWidth_ = 0;
-      point_ = java.util.Collections.emptyList();
+      size_ = com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size.getDefaultInstance();
+      drawPoint_ = com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.getDefaultInstance();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -1166,8 +3604,16 @@ public final class Whiteboardmsg {
         memoizedIsInitialized = 0;
         return false;
       }
-      for (int i = 0; i < getPointCount(); i++) {
-        if (!getPoint(i).isInitialized()) {
+      if (!hasSize()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!getSize().isInitialized()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (hasDrawPoint()) {
+        if (!getDrawPoint().isInitialized()) {
           memoizedIsInitialized = 0;
           return false;
         }
@@ -1186,19 +3632,10 @@ public final class Whiteboardmsg {
         output.writeBytes(2, getUidBytes());
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeEnum(3, touchEvent_.getNumber());
+        output.writeMessage(3, size_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        output.writeInt32(4, paintColor_);
-      }
-      if (((bitField0_ & 0x00000010) == 0x00000010)) {
-        output.writeInt32(5, paintAlpha_);
-      }
-      if (((bitField0_ & 0x00000020) == 0x00000020)) {
-        output.writeInt32(6, paintWidth_);
-      }
-      for (int i = 0; i < point_.size(); i++) {
-        output.writeMessage(7, point_.get(i));
+        output.writeMessage(4, drawPoint_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -1219,23 +3656,11 @@ public final class Whiteboardmsg {
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(3, touchEvent_.getNumber());
+          .computeMessageSize(3, size_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(4, paintColor_);
-      }
-      if (((bitField0_ & 0x00000010) == 0x00000010)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(5, paintAlpha_);
-      }
-      if (((bitField0_ & 0x00000020) == 0x00000020)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(6, paintWidth_);
-      }
-      for (int i = 0; i < point_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(7, point_.get(i));
+          .computeMessageSize(4, drawPoint_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -1345,7 +3770,8 @@ public final class Whiteboardmsg {
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-          getPointFieldBuilder();
+          getSizeFieldBuilder();
+          getDrawPointFieldBuilder();
         }
       }
       private static Builder create() {
@@ -1354,24 +3780,22 @@ public final class Whiteboardmsg {
 
       public Builder clear() {
         super.clear();
-        type_ = com.hengqian.whiteboard.msg.Whiteboardmsg.TypeCommand.DrawPoint;
+        type_ = com.hengqian.whiteboard.msg.Whiteboardmsg.TypeCommand.DrawUndo;
         bitField0_ = (bitField0_ & ~0x00000001);
         uid_ = "";
         bitField0_ = (bitField0_ & ~0x00000002);
-        touchEvent_ = com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent.DOWN;
-        bitField0_ = (bitField0_ & ~0x00000004);
-        paintColor_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000008);
-        paintAlpha_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000010);
-        paintWidth_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000020);
-        if (pointBuilder_ == null) {
-          point_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000040);
+        if (sizeBuilder_ == null) {
+          size_ = com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size.getDefaultInstance();
         } else {
-          pointBuilder_.clear();
+          sizeBuilder_.clear();
         }
+        bitField0_ = (bitField0_ & ~0x00000004);
+        if (drawPointBuilder_ == null) {
+          drawPoint_ = com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.getDefaultInstance();
+        } else {
+          drawPointBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
 
@@ -1411,27 +3835,18 @@ public final class Whiteboardmsg {
         if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
-        result.touchEvent_ = touchEvent_;
+        if (sizeBuilder_ == null) {
+          result.size_ = size_;
+        } else {
+          result.size_ = sizeBuilder_.build();
+        }
         if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
           to_bitField0_ |= 0x00000008;
         }
-        result.paintColor_ = paintColor_;
-        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
-          to_bitField0_ |= 0x00000010;
-        }
-        result.paintAlpha_ = paintAlpha_;
-        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
-          to_bitField0_ |= 0x00000020;
-        }
-        result.paintWidth_ = paintWidth_;
-        if (pointBuilder_ == null) {
-          if (((bitField0_ & 0x00000040) == 0x00000040)) {
-            point_ = java.util.Collections.unmodifiableList(point_);
-            bitField0_ = (bitField0_ & ~0x00000040);
-          }
-          result.point_ = point_;
+        if (drawPointBuilder_ == null) {
+          result.drawPoint_ = drawPoint_;
         } else {
-          result.point_ = pointBuilder_.build();
+          result.drawPoint_ = drawPointBuilder_.build();
         }
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -1457,43 +3872,11 @@ public final class Whiteboardmsg {
           uid_ = other.uid_;
           onChanged();
         }
-        if (other.hasTouchEvent()) {
-          setTouchEvent(other.getTouchEvent());
+        if (other.hasSize()) {
+          mergeSize(other.getSize());
         }
-        if (other.hasPaintColor()) {
-          setPaintColor(other.getPaintColor());
-        }
-        if (other.hasPaintAlpha()) {
-          setPaintAlpha(other.getPaintAlpha());
-        }
-        if (other.hasPaintWidth()) {
-          setPaintWidth(other.getPaintWidth());
-        }
-        if (pointBuilder_ == null) {
-          if (!other.point_.isEmpty()) {
-            if (point_.isEmpty()) {
-              point_ = other.point_;
-              bitField0_ = (bitField0_ & ~0x00000040);
-            } else {
-              ensurePointIsMutable();
-              point_.addAll(other.point_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.point_.isEmpty()) {
-            if (pointBuilder_.isEmpty()) {
-              pointBuilder_.dispose();
-              pointBuilder_ = null;
-              point_ = other.point_;
-              bitField0_ = (bitField0_ & ~0x00000040);
-              pointBuilder_ = 
-                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
-                   getPointFieldBuilder() : null;
-            } else {
-              pointBuilder_.addAllMessages(other.point_);
-            }
-          }
+        if (other.hasDrawPoint()) {
+          mergeDrawPoint(other.getDrawPoint());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -1508,8 +3891,16 @@ public final class Whiteboardmsg {
           
           return false;
         }
-        for (int i = 0; i < getPointCount(); i++) {
-          if (!getPoint(i).isInitialized()) {
+        if (!hasSize()) {
+          
+          return false;
+        }
+        if (!getSize().isInitialized()) {
+          
+          return false;
+        }
+        if (hasDrawPoint()) {
+          if (!getDrawPoint().isInitialized()) {
             
             return false;
           }
@@ -1537,21 +3928,33 @@ public final class Whiteboardmsg {
       private int bitField0_;
 
       // required .com.hengqian.whiteboard.msg.TypeCommand type = 1;
-      private com.hengqian.whiteboard.msg.Whiteboardmsg.TypeCommand type_ = com.hengqian.whiteboard.msg.Whiteboardmsg.TypeCommand.DrawPoint;
+      private com.hengqian.whiteboard.msg.Whiteboardmsg.TypeCommand type_ = com.hengqian.whiteboard.msg.Whiteboardmsg.TypeCommand.DrawUndo;
       /**
        * <code>required .com.hengqian.whiteboard.msg.TypeCommand type = 1;</code>
+       *
+       * <pre>
+       * 消息类型，由TypeCommand定义
+       * </pre>
        */
       public boolean hasType() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required .com.hengqian.whiteboard.msg.TypeCommand type = 1;</code>
+       *
+       * <pre>
+       * 消息类型，由TypeCommand定义
+       * </pre>
        */
       public com.hengqian.whiteboard.msg.Whiteboardmsg.TypeCommand getType() {
         return type_;
       }
       /**
        * <code>required .com.hengqian.whiteboard.msg.TypeCommand type = 1;</code>
+       *
+       * <pre>
+       * 消息类型，由TypeCommand定义
+       * </pre>
        */
       public Builder setType(com.hengqian.whiteboard.msg.Whiteboardmsg.TypeCommand value) {
         if (value == null) {
@@ -1564,10 +3967,14 @@ public final class Whiteboardmsg {
       }
       /**
        * <code>required .com.hengqian.whiteboard.msg.TypeCommand type = 1;</code>
+       *
+       * <pre>
+       * 消息类型，由TypeCommand定义
+       * </pre>
        */
       public Builder clearType() {
         bitField0_ = (bitField0_ & ~0x00000001);
-        type_ = com.hengqian.whiteboard.msg.Whiteboardmsg.TypeCommand.DrawPoint;
+        type_ = com.hengqian.whiteboard.msg.Whiteboardmsg.TypeCommand.DrawUndo;
         onChanged();
         return this;
       }
@@ -1576,12 +3983,20 @@ public final class Whiteboardmsg {
       private java.lang.Object uid_ = "";
       /**
        * <code>required string uid = 2;</code>
+       *
+       * <pre>
+       * 发送者uid
+       * </pre>
        */
       public boolean hasUid() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
        * <code>required string uid = 2;</code>
+       *
+       * <pre>
+       * 发送者uid
+       * </pre>
        */
       public java.lang.String getUid() {
         java.lang.Object ref = uid_;
@@ -1596,6 +4011,10 @@ public final class Whiteboardmsg {
       }
       /**
        * <code>required string uid = 2;</code>
+       *
+       * <pre>
+       * 发送者uid
+       * </pre>
        */
       public com.google.protobuf.ByteString
           getUidBytes() {
@@ -1612,6 +4031,10 @@ public final class Whiteboardmsg {
       }
       /**
        * <code>required string uid = 2;</code>
+       *
+       * <pre>
+       * 发送者uid
+       * </pre>
        */
       public Builder setUid(
           java.lang.String value) {
@@ -1625,6 +4048,10 @@ public final class Whiteboardmsg {
       }
       /**
        * <code>required string uid = 2;</code>
+       *
+       * <pre>
+       * 发送者uid
+       * </pre>
        */
       public Builder clearUid() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -1634,6 +4061,10 @@ public final class Whiteboardmsg {
       }
       /**
        * <code>required string uid = 2;</code>
+       *
+       * <pre>
+       * 发送者uid
+       * </pre>
        */
       public Builder setUidBytes(
           com.google.protobuf.ByteString value) {
@@ -1646,379 +4077,274 @@ public final class Whiteboardmsg {
         return this;
       }
 
-      // optional .com.hengqian.whiteboard.msg.TouchEvent touchEvent = 3;
-      private com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent touchEvent_ = com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent.DOWN;
+      // required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;
+      private com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size size_ = com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size.Builder, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.SizeOrBuilder> sizeBuilder_;
       /**
-       * <code>optional .com.hengqian.whiteboard.msg.TouchEvent touchEvent = 3;</code>
+       * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
+       *
+       * <pre>
+       * 屏幕画布尺寸
+       * </pre>
        */
-      public boolean hasTouchEvent() {
+      public boolean hasSize() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
-       * <code>optional .com.hengqian.whiteboard.msg.TouchEvent touchEvent = 3;</code>
+       * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
+       *
+       * <pre>
+       * 屏幕画布尺寸
+       * </pre>
        */
-      public com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent getTouchEvent() {
-        return touchEvent_;
+      public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size getSize() {
+        if (sizeBuilder_ == null) {
+          return size_;
+        } else {
+          return sizeBuilder_.getMessage();
+        }
       }
       /**
-       * <code>optional .com.hengqian.whiteboard.msg.TouchEvent touchEvent = 3;</code>
+       * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
+       *
+       * <pre>
+       * 屏幕画布尺寸
+       * </pre>
        */
-      public Builder setTouchEvent(com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent value) {
-        if (value == null) {
-          throw new NullPointerException();
+      public Builder setSize(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size value) {
+        if (sizeBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          size_ = value;
+          onChanged();
+        } else {
+          sizeBuilder_.setMessage(value);
         }
         bitField0_ |= 0x00000004;
-        touchEvent_ = value;
-        onChanged();
         return this;
       }
       /**
-       * <code>optional .com.hengqian.whiteboard.msg.TouchEvent touchEvent = 3;</code>
+       * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
+       *
+       * <pre>
+       * 屏幕画布尺寸
+       * </pre>
        */
-      public Builder clearTouchEvent() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        touchEvent_ = com.hengqian.whiteboard.msg.Whiteboardmsg.TouchEvent.DOWN;
-        onChanged();
+      public Builder setSize(
+          com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size.Builder builderForValue) {
+        if (sizeBuilder_ == null) {
+          size_ = builderForValue.build();
+          onChanged();
+        } else {
+          sizeBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000004;
         return this;
+      }
+      /**
+       * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
+       *
+       * <pre>
+       * 屏幕画布尺寸
+       * </pre>
+       */
+      public Builder mergeSize(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size value) {
+        if (sizeBuilder_ == null) {
+          if (((bitField0_ & 0x00000004) == 0x00000004) &&
+              size_ != com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size.getDefaultInstance()) {
+            size_ =
+              com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size.newBuilder(size_).mergeFrom(value).buildPartial();
+          } else {
+            size_ = value;
+          }
+          onChanged();
+        } else {
+          sizeBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000004;
+        return this;
+      }
+      /**
+       * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
+       *
+       * <pre>
+       * 屏幕画布尺寸
+       * </pre>
+       */
+      public Builder clearSize() {
+        if (sizeBuilder_ == null) {
+          size_ = com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size.getDefaultInstance();
+          onChanged();
+        } else {
+          sizeBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000004);
+        return this;
+      }
+      /**
+       * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
+       *
+       * <pre>
+       * 屏幕画布尺寸
+       * </pre>
+       */
+      public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size.Builder getSizeBuilder() {
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return getSizeFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
+       *
+       * <pre>
+       * 屏幕画布尺寸
+       * </pre>
+       */
+      public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.SizeOrBuilder getSizeOrBuilder() {
+        if (sizeBuilder_ != null) {
+          return sizeBuilder_.getMessageOrBuilder();
+        } else {
+          return size_;
+        }
+      }
+      /**
+       * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
+       *
+       * <pre>
+       * 屏幕画布尺寸
+       * </pre>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size.Builder, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.SizeOrBuilder> 
+          getSizeFieldBuilder() {
+        if (sizeBuilder_ == null) {
+          sizeBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size.Builder, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.SizeOrBuilder>(
+                  size_,
+                  getParentForChildren(),
+                  isClean());
+          size_ = null;
+        }
+        return sizeBuilder_;
       }
 
-      // optional int32 paintColor = 4;
-      private int paintColor_ ;
+      // optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;
+      private com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint drawPoint_ = com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Builder, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPointOrBuilder> drawPointBuilder_;
       /**
-       * <code>optional int32 paintColor = 4;</code>
+       * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
        */
-      public boolean hasPaintColor() {
+      public boolean hasDrawPoint() {
         return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
-       * <code>optional int32 paintColor = 4;</code>
+       * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
        */
-      public int getPaintColor() {
-        return paintColor_;
+      public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint getDrawPoint() {
+        if (drawPointBuilder_ == null) {
+          return drawPoint_;
+        } else {
+          return drawPointBuilder_.getMessage();
+        }
       }
       /**
-       * <code>optional int32 paintColor = 4;</code>
+       * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
        */
-      public Builder setPaintColor(int value) {
+      public Builder setDrawPoint(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint value) {
+        if (drawPointBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          drawPoint_ = value;
+          onChanged();
+        } else {
+          drawPointBuilder_.setMessage(value);
+        }
         bitField0_ |= 0x00000008;
-        paintColor_ = value;
-        onChanged();
         return this;
       }
       /**
-       * <code>optional int32 paintColor = 4;</code>
+       * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
        */
-      public Builder clearPaintColor() {
+      public Builder setDrawPoint(
+          com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Builder builderForValue) {
+        if (drawPointBuilder_ == null) {
+          drawPoint_ = builderForValue.build();
+          onChanged();
+        } else {
+          drawPointBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000008;
+        return this;
+      }
+      /**
+       * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
+       */
+      public Builder mergeDrawPoint(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint value) {
+        if (drawPointBuilder_ == null) {
+          if (((bitField0_ & 0x00000008) == 0x00000008) &&
+              drawPoint_ != com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.getDefaultInstance()) {
+            drawPoint_ =
+              com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.newBuilder(drawPoint_).mergeFrom(value).buildPartial();
+          } else {
+            drawPoint_ = value;
+          }
+          onChanged();
+        } else {
+          drawPointBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000008;
+        return this;
+      }
+      /**
+       * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
+       */
+      public Builder clearDrawPoint() {
+        if (drawPointBuilder_ == null) {
+          drawPoint_ = com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.getDefaultInstance();
+          onChanged();
+        } else {
+          drawPointBuilder_.clear();
+        }
         bitField0_ = (bitField0_ & ~0x00000008);
-        paintColor_ = 0;
+        return this;
+      }
+      /**
+       * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
+       */
+      public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Builder getDrawPointBuilder() {
+        bitField0_ |= 0x00000008;
         onChanged();
-        return this;
-      }
-
-      // optional int32 paintAlpha = 5;
-      private int paintAlpha_ ;
-      /**
-       * <code>optional int32 paintAlpha = 5;</code>
-       */
-      public boolean hasPaintAlpha() {
-        return ((bitField0_ & 0x00000010) == 0x00000010);
+        return getDrawPointFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional int32 paintAlpha = 5;</code>
+       * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
        */
-      public int getPaintAlpha() {
-        return paintAlpha_;
-      }
-      /**
-       * <code>optional int32 paintAlpha = 5;</code>
-       */
-      public Builder setPaintAlpha(int value) {
-        bitField0_ |= 0x00000010;
-        paintAlpha_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional int32 paintAlpha = 5;</code>
-       */
-      public Builder clearPaintAlpha() {
-        bitField0_ = (bitField0_ & ~0x00000010);
-        paintAlpha_ = 0;
-        onChanged();
-        return this;
-      }
-
-      // optional int32 paintWidth = 6;
-      private int paintWidth_ ;
-      /**
-       * <code>optional int32 paintWidth = 6;</code>
-       */
-      public boolean hasPaintWidth() {
-        return ((bitField0_ & 0x00000020) == 0x00000020);
-      }
-      /**
-       * <code>optional int32 paintWidth = 6;</code>
-       */
-      public int getPaintWidth() {
-        return paintWidth_;
-      }
-      /**
-       * <code>optional int32 paintWidth = 6;</code>
-       */
-      public Builder setPaintWidth(int value) {
-        bitField0_ |= 0x00000020;
-        paintWidth_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional int32 paintWidth = 6;</code>
-       */
-      public Builder clearPaintWidth() {
-        bitField0_ = (bitField0_ & ~0x00000020);
-        paintWidth_ = 0;
-        onChanged();
-        return this;
-      }
-
-      // repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;
-      private java.util.List<com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point> point_ =
-        java.util.Collections.emptyList();
-      private void ensurePointIsMutable() {
-        if (!((bitField0_ & 0x00000040) == 0x00000040)) {
-          point_ = new java.util.ArrayList<com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point>(point_);
-          bitField0_ |= 0x00000040;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilder<
-          com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point.Builder, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.PointOrBuilder> pointBuilder_;
-
-      /**
-       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-       */
-      public java.util.List<com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point> getPointList() {
-        if (pointBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(point_);
+      public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPointOrBuilder getDrawPointOrBuilder() {
+        if (drawPointBuilder_ != null) {
+          return drawPointBuilder_.getMessageOrBuilder();
         } else {
-          return pointBuilder_.getMessageList();
+          return drawPoint_;
         }
       }
       /**
-       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
+       * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
        */
-      public int getPointCount() {
-        if (pointBuilder_ == null) {
-          return point_.size();
-        } else {
-          return pointBuilder_.getCount();
-        }
-      }
-      /**
-       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-       */
-      public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point getPoint(int index) {
-        if (pointBuilder_ == null) {
-          return point_.get(index);
-        } else {
-          return pointBuilder_.getMessage(index);
-        }
-      }
-      /**
-       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-       */
-      public Builder setPoint(
-          int index, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point value) {
-        if (pointBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensurePointIsMutable();
-          point_.set(index, value);
-          onChanged();
-        } else {
-          pointBuilder_.setMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-       */
-      public Builder setPoint(
-          int index, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point.Builder builderForValue) {
-        if (pointBuilder_ == null) {
-          ensurePointIsMutable();
-          point_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          pointBuilder_.setMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-       */
-      public Builder addPoint(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point value) {
-        if (pointBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensurePointIsMutable();
-          point_.add(value);
-          onChanged();
-        } else {
-          pointBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-       */
-      public Builder addPoint(
-          int index, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point value) {
-        if (pointBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensurePointIsMutable();
-          point_.add(index, value);
-          onChanged();
-        } else {
-          pointBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-       */
-      public Builder addPoint(
-          com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point.Builder builderForValue) {
-        if (pointBuilder_ == null) {
-          ensurePointIsMutable();
-          point_.add(builderForValue.build());
-          onChanged();
-        } else {
-          pointBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-       */
-      public Builder addPoint(
-          int index, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point.Builder builderForValue) {
-        if (pointBuilder_ == null) {
-          ensurePointIsMutable();
-          point_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          pointBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-       */
-      public Builder addAllPoint(
-          java.lang.Iterable<? extends com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point> values) {
-        if (pointBuilder_ == null) {
-          ensurePointIsMutable();
-          super.addAll(values, point_);
-          onChanged();
-        } else {
-          pointBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-       */
-      public Builder clearPoint() {
-        if (pointBuilder_ == null) {
-          point_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000040);
-          onChanged();
-        } else {
-          pointBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-       */
-      public Builder removePoint(int index) {
-        if (pointBuilder_ == null) {
-          ensurePointIsMutable();
-          point_.remove(index);
-          onChanged();
-        } else {
-          pointBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-       */
-      public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point.Builder getPointBuilder(
-          int index) {
-        return getPointFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-       */
-      public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.PointOrBuilder getPointOrBuilder(
-          int index) {
-        if (pointBuilder_ == null) {
-          return point_.get(index);  } else {
-          return pointBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-       */
-      public java.util.List<? extends com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.PointOrBuilder> 
-           getPointOrBuilderList() {
-        if (pointBuilder_ != null) {
-          return pointBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(point_);
-        }
-      }
-      /**
-       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-       */
-      public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point.Builder addPointBuilder() {
-        return getPointFieldBuilder().addBuilder(
-            com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-       */
-      public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point.Builder addPointBuilder(
-          int index) {
-        return getPointFieldBuilder().addBuilder(
-            index, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .com.hengqian.whiteboard.msg.WhiteBoardMsg.Point point = 7;</code>
-       */
-      public java.util.List<com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point.Builder> 
-           getPointBuilderList() {
-        return getPointFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilder<
-          com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point.Builder, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.PointOrBuilder> 
-          getPointFieldBuilder() {
-        if (pointBuilder_ == null) {
-          pointBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-              com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Point.Builder, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.PointOrBuilder>(
-                  point_,
-                  ((bitField0_ & 0x00000040) == 0x00000040),
+      private com.google.protobuf.SingleFieldBuilder<
+          com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Builder, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPointOrBuilder> 
+          getDrawPointFieldBuilder() {
+        if (drawPointBuilder_ == null) {
+          drawPointBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Builder, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPointOrBuilder>(
+                  drawPoint_,
                   getParentForChildren(),
                   isClean());
-          point_ = null;
+          drawPoint_ = null;
         }
-        return pointBuilder_;
+        return drawPointBuilder_;
       }
 
       // @@protoc_insertion_point(builder_scope:com.hengqian.whiteboard.msg.WhiteBoardMsg)
@@ -2038,10 +4364,25 @@ public final class Whiteboardmsg {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_Point_descriptor;
+    internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_Size_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_Point_fieldAccessorTable;
+      internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_Size_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_Paint_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_Paint_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_Point_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_Point_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -2052,17 +4393,23 @@ public final class Whiteboardmsg {
   static {
     java.lang.String[] descriptorData = {
       "\n\023whiteboardmsg.proto\022\033com.hengqian.whit" +
-      "eboard.msg\"\255\002\n\rWhiteBoardMsg\0226\n\004type\030\001 \002" +
+      "eboard.msg\"\260\004\n\rWhiteBoardMsg\0226\n\004type\030\001 \002" +
       "(\0162(.com.hengqian.whiteboard.msg.TypeCom" +
-      "mand\022\013\n\003uid\030\002 \002(\t\022;\n\ntouchEvent\030\003 \001(\0162\'." +
-      "com.hengqian.whiteboard.msg.TouchEvent\022\022" +
-      "\n\npaintColor\030\004 \001(\005\022\022\n\npaintAlpha\030\005 \001(\005\022\022" +
-      "\n\npaintWidth\030\006 \001(\005\022?\n\005point\030\007 \003(\01320.com." +
-      "hengqian.whiteboard.msg.WhiteBoardMsg.Po" +
-      "int\032\035\n\005Point\022\t\n\001x\030\001 \002(\005\022\t\n\001y\030\002 \002(\005*N\n\013Ty" +
-      "peCommand\022\016\n\tDrawPoint\020\221N\022\r\n\010DrawUndo\020\222N",
-      "\022\021\n\014DrawClearAll\020\223N\022\r\n\010DrawQuit\020\224N*(\n\nTo" +
-      "uchEvent\022\010\n\004DOWN\020\000\022\010\n\004MOVE\020\001\022\006\n\002UP\020\002"
+      "mand\022\013\n\003uid\030\002 \002(\t\022=\n\004size\030\003 \002(\0132/.com.he" +
+      "ngqian.whiteboard.msg.WhiteBoardMsg.Size" +
+      "\022G\n\tdrawPoint\030\004 \001(\01324.com.hengqian.white" +
+      "board.msg.WhiteBoardMsg.DrawPoint\032\034\n\004Siz" +
+      "e\022\t\n\001w\030\001 \002(\005\022\t\n\001h\030\002 \002(\005\032\263\002\n\tDrawPoint\022;\n" +
+      "\ntouchEvent\030\001 \002(\0162\'.com.hengqian.whitebo" +
+      "ard.msg.TouchEvent\022I\n\005paint\030\002 \002(\0132:.com.",
+      "hengqian.whiteboard.msg.WhiteBoardMsg.Dr" +
+      "awPoint.Paint\022I\n\005point\030\003 \003(\0132:.com.hengq" +
+      "ian.whiteboard.msg.WhiteBoardMsg.DrawPoi" +
+      "nt.Point\0324\n\005Paint\022\r\n\005color\030\001 \002(\005\022\r\n\005alph" +
+      "a\030\002 \002(\005\022\r\n\005width\030\003 \002(\005\032\035\n\005Point\022\t\n\001x\030\001 \002" +
+      "(\005\022\t\n\001y\030\002 \002(\005*?\n\013TypeCommand\022\r\n\010DrawUndo" +
+      "\020\220N\022\021\n\014DrawClearAll\020\221N\022\016\n\tDrawPoint\020\364N*(" +
+      "\n\nTouchEvent\022\010\n\004DOWN\020\000\022\010\n\004MOVE\020\001\022\006\n\002UP\020\002"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -2074,12 +4421,30 @@ public final class Whiteboardmsg {
           internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_descriptor,
-              new java.lang.String[] { "Type", "Uid", "TouchEvent", "PaintColor", "PaintAlpha", "PaintWidth", "Point", });
-          internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_Point_descriptor =
+              new java.lang.String[] { "Type", "Uid", "Size", "DrawPoint", });
+          internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_Size_descriptor =
             internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_descriptor.getNestedTypes().get(0);
-          internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_Point_fieldAccessorTable = new
+          internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_Size_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_Point_descriptor,
+              internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_Size_descriptor,
+              new java.lang.String[] { "W", "H", });
+          internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_descriptor =
+            internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_descriptor.getNestedTypes().get(1);
+          internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_descriptor,
+              new java.lang.String[] { "TouchEvent", "Paint", "Point", });
+          internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_Paint_descriptor =
+            internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_descriptor.getNestedTypes().get(0);
+          internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_Paint_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_Paint_descriptor,
+              new java.lang.String[] { "Color", "Alpha", "Width", });
+          internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_Point_descriptor =
+            internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_descriptor.getNestedTypes().get(1);
+          internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_Point_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_DrawPoint_Point_descriptor,
               new java.lang.String[] { "X", "Y", });
           return null;
         }

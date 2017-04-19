@@ -243,7 +243,7 @@ public class ActivityDraw extends AppCompatActivity
                 return;
             }
             Whiteboardmsg.WhiteBoardMsg wmsg = wbm.newMsg(type, points, touchEvent, paintWidth,
-                    paintColor, paintAlpha);
+                    paintColor, paintAlpha, mFreeDrawView.getWidth(), mFreeDrawView.getHeight());
 
             wbm.addMessage(wmsg);
 
@@ -264,7 +264,7 @@ public class ActivityDraw extends AppCompatActivity
     public void onUndoLast() {
         WhiteBoardManager wbm = WhiteBoardManager.getInst();
         Whiteboardmsg.TypeCommand type = Whiteboardmsg.TypeCommand.DrawUndo;
-        Whiteboardmsg.WhiteBoardMsg wmsg = wbm.newMsg(type);
+        Whiteboardmsg.WhiteBoardMsg wmsg = wbm.newMsg(type, mFreeDrawView.getWidth(), mFreeDrawView.getHeight());
         wbm.addMessage(wmsg);
     }
 
@@ -272,7 +272,7 @@ public class ActivityDraw extends AppCompatActivity
     public void onUndoAll() {
         WhiteBoardManager wbm = WhiteBoardManager.getInst();
         Whiteboardmsg.TypeCommand type = Whiteboardmsg.TypeCommand.DrawClearAll;
-        Whiteboardmsg.WhiteBoardMsg wmsg = wbm.newMsg(type);
+        Whiteboardmsg.WhiteBoardMsg wmsg = wbm.newMsg(type, mFreeDrawView.getWidth(), mFreeDrawView.getHeight());
         wbm.addMessage(wmsg);
     }
 
@@ -310,14 +310,14 @@ public class ActivityDraw extends AppCompatActivity
                 Whiteboardmsg.WhiteBoardMsg wmsg = wbm.byte2Msg(bundle.getByteArray(WhiteBoardManager.MsgWhatRecvWhiteMsgBundle));
                 Whiteboardmsg.TypeCommand type = wmsg.getType();
                 if (type == Whiteboardmsg.TypeCommand.DrawPoint) {
-                    int count = wmsg.getPointCount();
+                    int count = wmsg.getDrawPoint().getPointCount();
                     ArrayList<android.graphics.Point> points = new ArrayList<>();
                     for (int i = 0; i < count; i++) {
-                        Whiteboardmsg.WhiteBoardMsg.Point wbp = wmsg.getPoint(i);
+                        Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point wbp = wmsg.getDrawPoint().getPoint(i);
                         points.add(new android.graphics.Point(wbp.getX(), wbp.getY()));
                     }
                     int action;
-                    Whiteboardmsg.TouchEvent touchEvent = wmsg.getTouchEvent();
+                    Whiteboardmsg.TouchEvent touchEvent = wmsg.getDrawPoint().getTouchEvent();
                     if (touchEvent == Whiteboardmsg.TouchEvent.DOWN) {
                         action = MotionEvent.ACTION_DOWN;
                     } else if (touchEvent == Whiteboardmsg.TouchEvent.MOVE) {
@@ -327,16 +327,12 @@ public class ActivityDraw extends AppCompatActivity
                     } else {
                         return;
                     }
-                    mFreeDrawView.onTouch(msg.arg1, action, points, wmsg.getPaintWidth(),
-                            wmsg.getPaintColor(), wmsg.getPaintAlpha());
+                    mFreeDrawView.onTouch(msg.arg1, action, points, wmsg.getDrawPoint().getPaint().getWidth(),
+                            wmsg.getDrawPoint().getPaint().getColor(), wmsg.getDrawPoint().getPaint().getAlpha());
                 } else if (type == Whiteboardmsg.TypeCommand.DrawUndo) {
                     mFreeDrawView.undoOtherLast();
                 } else if (type == Whiteboardmsg.TypeCommand.DrawClearAll) {
                     mFreeDrawView.undoOtherAll();
-                } else if (type == Whiteboardmsg.TypeCommand.DrawQuit) {
-                    if (!wmsg.getUid().equals(wbm.getUserId())) {
-                        finish();
-                    }
                 }
             }
         }
