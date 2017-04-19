@@ -34,12 +34,14 @@ public class WhiteBoardManager {
     private Handler handler;
     private boolean isStoped = false;
     private Object lock = new Object();
-    private String userId;
+    private int user;
     private String send_user;
     private String send_pass;
     private String recv_user;
     private String recv_pass;
     private String exchangeName;
+    private String exchangeType;
+    private String routingKey = "";
 
     public static WhiteBoardManager getInst() {
         if (gInst == null) {
@@ -58,6 +60,7 @@ public class WhiteBoardManager {
         send_pass = "123";
         recv_user = "recv";
         recv_pass = "123";
+        setUser(1);
     }
 
     public void setHandler(Handler handler) {
@@ -120,12 +123,11 @@ public class WhiteBoardManager {
                         connection = recvFactory.newConnection();
                         //创建一个通道
                         channel = connection.createChannel();
-                        channel.exchangeDeclare(exchangeName, "fanout");
-                        // channel.queueDeclare(recv_mqname, durable, false, false, null);
+                        channel.exchangeDeclare(exchangeName, exchangeType);
                         String queueName = channel.queueDeclare().getQueue();
                         System.out.println("queueName: " + queueName);
 
-                        channel.queueBind(queueName, exchangeName, "");
+                        channel.queueBind(queueName, exchangeName, routingKey);
 
                         //创建消费者
                         QueueingConsumer consumer = new QueueingConsumer(channel);
@@ -216,7 +218,7 @@ public class WhiteBoardManager {
                         connection = factory.newConnection();
                         channel = connection.createChannel();
 
-                        channel.exchangeDeclare(exchangeName, "fanout");
+                        channel.exchangeDeclare(exchangeName, exchangeType);
                         // channel.queueDeclare(send_mqname, durable, false, false, null);
 
                         while (true) {
@@ -229,7 +231,7 @@ public class WhiteBoardManager {
                                     Whiteboardmsg.WhiteBoardMsg msg = msgArrayList.get(0);
                                     msgArrayList.remove(0);
                                     Log.i(TAG, "send thread send message. msg: " + msg.toString());
-                                    channel.basicPublish(exchangeName, "", null, msg.toByteArray());
+                                    channel.basicPublish(exchangeName, routingKey, null, msg.toByteArray());
                                 } else {
                                     // 等待新的消息加入
                                     lock.wait();
@@ -344,13 +346,22 @@ public class WhiteBoardManager {
         return msg;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getTitle(int user) {
+        return "多人互动" + user + "\n(" + getExchangeName(user) + " " + getExchangeType(user) + ")";
+    }
+
+    private String getExchangeName(int user) {
+        return EXCHANGE_NAME + user;
+    }
+
+    private String getExchangeType(int user) {
+        return "fanout";
     }
 
     public void setUser(int user) {
-        userId = "多人互动" + user;
-        exchangeName = EXCHANGE_NAME + user;
+        this.user = user;
+        exchangeName = getExchangeName(user);
+        exchangeType = getExchangeType(user);
     }
 
     private String deviceId;

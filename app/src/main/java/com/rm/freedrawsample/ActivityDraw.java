@@ -85,11 +85,12 @@ public class ActivityDraw extends AppCompatActivity
 
         Intent intent = getIntent();
         int user = intent.getIntExtra("user", 1);
-        WhiteBoardManager.getInst().setUser(user);
-        WhiteBoardManager.getInst().setHandler(handler);
-        WhiteBoardManager.getInst().start();
+        WhiteBoardManager wbm = WhiteBoardManager.getInst();
+        wbm.setUser(user);
+        wbm.setHandler(handler);
+        wbm.start();
 
-        setTitle(WhiteBoardManager.getInst().getUserId());
+        setTitle(wbm.getTitle(user));
 
         changeColor();
     }

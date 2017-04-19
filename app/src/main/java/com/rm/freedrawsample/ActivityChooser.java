@@ -30,7 +30,12 @@ public class ActivityChooser extends AppCompatActivity implements View.OnClickLi
         mBtnMutilActive2.setOnClickListener(this);
         mBtnMutilActive3.setOnClickListener(this);
 
-        WhiteBoardManager.getInst().initData(this.getApplicationContext());
+        WhiteBoardManager wbm = WhiteBoardManager.getInst();
+        wbm.initData(this.getApplicationContext());
+
+        mBtnMutilActive1.setText(wbm.getTitle(1));
+        mBtnMutilActive2.setText(wbm.getTitle(2));
+        mBtnMutilActive3.setText(wbm.getTitle(3));
     }
 
     @Override
