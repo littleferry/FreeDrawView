@@ -450,11 +450,11 @@ public class FreeDrawView extends View implements View.OnTouchListener {
     // Move去重
     private void addPoint(int action, ArrayList<android.graphics.Point> points, float x, float y) {
         //if (lastAction != action || lastPoint == null || lastPoint.x != x || lastPoint.y != y) {
-            android.graphics.Point point;
-            point = new android.graphics.Point();
-            point.x = (int) x;
-            point.y = (int) y;
-            points.add(point);
+        android.graphics.Point point;
+        point = new android.graphics.Point();
+        point.x = (int) x;
+        point.y = (int) y;
+        points.add(point);
 //            if (action == MotionEvent.ACTION_MOVE) {
 //                lastPoint = point;
 //            } else {
@@ -632,17 +632,20 @@ public class FreeDrawView extends View implements View.OnTouchListener {
     }
 
     public synchronized void onTouch(int selfDraw, int touchEvent, ArrayList<android.graphics.Point> points, int paintWidth,
-                                     int paintColor, int paintAlpha) {
+                                     int paintColor, int paintAlpha, int width, int height) {
         Log.d(TAG, "onTouch() called begin with: selfDraw = [" + selfDraw + "], touchEvent = [" + touchEvent + "]");
 
+        int w = getWidth();
+        int h = getHeight();
         // 先把点保存到数组
         ArrayList<Point> pointList = new ArrayList<>();
         if (points.size() > 0) {
             for (int i = 0; i < points.size(); i++) {
                 Point point = new Point();
                 point.selfDraw = (selfDraw == 1);
-                point.x = points.get(i).x;
-                point.y = points.get(i).y;
+                // 转换一下缩放坐标
+                point.x = (points.get(i).x * w) / width;
+                point.y = (points.get(i).y * h) / height;
                 pointList.add(point);
             }
         }

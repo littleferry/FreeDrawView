@@ -328,7 +328,8 @@ public class ActivityDraw extends AppCompatActivity
                         return;
                     }
                     mFreeDrawView.onTouch(msg.arg1, action, points, wmsg.getDrawPoint().getPaint().getWidth(),
-                            wmsg.getDrawPoint().getPaint().getColor(), wmsg.getDrawPoint().getPaint().getAlpha());
+                            wmsg.getDrawPoint().getPaint().getColor(), wmsg.getDrawPoint().getPaint().getAlpha(),
+                            wmsg.getSize().getW(), wmsg.getSize().getH());
                 } else if (type == Whiteboardmsg.TypeCommand.DrawUndo) {
                     mFreeDrawView.undoOtherLast();
                 } else if (type == Whiteboardmsg.TypeCommand.DrawClearAll) {
