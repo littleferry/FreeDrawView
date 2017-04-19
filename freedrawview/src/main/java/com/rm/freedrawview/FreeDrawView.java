@@ -13,12 +13,14 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.FloatRange;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Riccardo Moro on 9/10/2016.
@@ -51,7 +53,17 @@ public class FreeDrawView extends View implements View.OnTouchListener {
 
     private PathDrawnListener mPathDrawnListener;
     private PathRedoUndoCountChangeListener mPathRedoUndoCountChangeListener;
-    private HistoryPath[] mDrawPath = new HistoryPath[2];
+    private HashMap<String, HistoryPath> mDrawPathArray = new HashMap<>();
+    private String deviceId;
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    private HistoryPath getHistoryPath(String uid) {
+        HistoryPath hp = mDrawPathArray.get(uid);
+        return hp;
+    }
 
     public FreeDrawView(Context context) {
         this(context, null);
@@ -631,7 +643,7 @@ public class FreeDrawView extends View implements View.OnTouchListener {
         }
     }
 
-    public synchronized void onTouch(int selfDraw, int touchEvent, ArrayList<android.graphics.Point> points, int paintWidth,
+    public synchronized void onTouch(String uid, int touchEvent, ArrayList<android.graphics.Point> points, int paintWidth,
                                      int paintColor, int paintAlpha, int width, int height) {
         int w = getWidth();
         int h = getHeight();
@@ -640,23 +652,17 @@ public class FreeDrawView extends View implements View.OnTouchListener {
         if (points.size() > 0) {
             for (int i = 0; i < points.size(); i++) {
                 Point point = new Point();
-                point.selfDraw = (selfDraw == 1);
                 // 转换一下缩放坐标
                 point.x = (points.get(i).x * w) / width;
                 point.y = (points.get(i).y * h) / height;
                 pointList.add(point);
             }
         }
-        if (selfDraw == 1) {
-            mCurrentPaint.setColor(mPaintColor);
-            mCurrentPaint.setAlpha(mPaintAlpha);
-            mCurrentPaint.setStrokeWidth(FreeDrawHelper.convertDpToPixels(mPaintWidth));
-        } else {
-            mCurrentPaint.setColor(paintColor);
-            mCurrentPaint.setAlpha(paintAlpha);
-            mCurrentPaint.setStrokeWidth(FreeDrawHelper.convertDpToPixels(paintWidth));
-        }
-        if (selfDraw == 1 && touchEvent == MotionEvent.ACTION_DOWN) {
+        mCurrentPaint.setColor(paintColor);
+        mCurrentPaint.setAlpha(paintAlpha);
+        mCurrentPaint.setStrokeWidth(FreeDrawHelper.convertDpToPixels(paintWidth));
+        boolean selfDraw = isSelfDraw(uid);
+        if (selfDraw && touchEvent == MotionEvent.ACTION_DOWN) {
             notifyPathStart();
             if (getParent() != null) {
                 getParent().requestDisallowInterceptTouchEvent(true);
@@ -664,14 +670,14 @@ public class FreeDrawView extends View implements View.OnTouchListener {
         }
 
         if (touchEvent == MotionEvent.ACTION_DOWN) {
-            mDrawPath[selfDraw] = null;
-            addPoint(selfDraw, pointList);
+            mDrawPathArray.put(uid, null);
+            addPoint(selfDraw, uid, pointList);
         } else if (touchEvent == MotionEvent.ACTION_MOVE) {
-            addPoint(selfDraw, pointList);
+            addPoint(selfDraw, uid, pointList);
         } else if (touchEvent == MotionEvent.ACTION_UP) {
             if (pointList.size() > 0) {
-                addPoint(selfDraw, pointList);
-                mDrawPath[selfDraw] = null;
+                addPoint(selfDraw, uid, pointList);
+                mDrawPathArray.put(uid, null);
             }
         }
         invalidate();
@@ -679,16 +685,28 @@ public class FreeDrawView extends View implements View.OnTouchListener {
         Log.d(TAG, "onTouch() called end with: selfDraw = [" + selfDraw + "], touchEvent = [" + touchEvent + "]");
     }
 
-    private void addPoint(int selfDraw, ArrayList<Point> points) {
-        if (mDrawPath[selfDraw] == null) {
-            mDrawPath[selfDraw] = new HistoryPath(new SerializablePaint(mCurrentPaint), points, selfDraw == 1);
-            mPaths.add(mDrawPath[selfDraw]);
-            if (selfDraw == 1) {
+    private boolean isSelfDraw(String uid) {
+        if (TextUtils.isEmpty(uid)) {
+            return false;
+        }
+        if (TextUtils.isEmpty(deviceId)) {
+            return false;
+        }
+        return uid.equals(deviceId);
+    }
+
+    private void addPoint(boolean selfDraw, String uid, ArrayList<Point> points) {
+        HistoryPath hp = getHistoryPath(uid);
+        if (hp == null) {
+            hp = new HistoryPath(new SerializablePaint(mCurrentPaint), points, selfDraw);
+            mPaths.add(hp);
+            mDrawPathArray.put(uid, hp);
+            if (selfDraw) {
                 notifyPathDrawn();
                 notifyRedoUndoCountChanged();
             }
         } else {
-            mDrawPath[selfDraw].addPoint(points);
+            hp.addPoint(points);
         }
     }
 }

@@ -86,6 +86,7 @@ public class ActivityDraw extends AppCompatActivity
         Intent intent = getIntent();
         int user = intent.getIntExtra("user", 1);
         WhiteBoardManager wbm = WhiteBoardManager.getInst();
+        mFreeDrawView.setDeviceId(wbm.getDeviceId());
         wbm.setUser(user);
         wbm.setHandler(handler);
         wbm.start();
@@ -327,8 +328,7 @@ public class ActivityDraw extends AppCompatActivity
                     } else {
                         return;
                     }
-                    mFreeDrawView.onTouch(wmsg.getUid().equals(wbm.getDeviceId()) ? 1 : 0,
-                            action, points, wmsg.getDrawPoint().getPaint().getWidth(),
+                    mFreeDrawView.onTouch(wmsg.getUid(), action, points, wmsg.getDrawPoint().getPaint().getWidth(),
                             wmsg.getDrawPoint().getPaint().getColor(), wmsg.getDrawPoint().getPaint().getAlpha(),
                             wmsg.getSize().getW(), wmsg.getSize().getH());
                 } else if (type == Whiteboardmsg.TypeCommand.DrawUndo) {

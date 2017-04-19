@@ -9,7 +9,6 @@ import android.os.Parcelable;
 
 class Point implements Parcelable {
     float x, y;
-    boolean selfDraw; // 自己画的还是别人画的
 
     Point() {
         x = y = -1;
