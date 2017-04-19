@@ -1,7 +1,4 @@
 <resources>
-    <string name="app_name">FreeDrawSample</string>
-    <string name="show_screenshot">Take  Screenshot</string>
-    <string name="signature_hint">First and last name</string>
-    <string name="age_hint">Age</string>
-    <string name="signature_label">Insert your signature here</string>
+    <string name="app_name">互动白板演示</string>
+    <string name="show_screenshot">屏幕快照</string>
 </resources>

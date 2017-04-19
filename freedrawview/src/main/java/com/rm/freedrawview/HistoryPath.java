@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
+
 /**
  * Created by Riccardo Moro on 9/27/2016.
  */
@@ -12,21 +14,49 @@ class HistoryPath implements Parcelable {
     private SerializablePath path;
     private SerializablePaint paint;
     private float originX, originY;
-    private boolean isPoint;
+    private boolean isSelfDraw;
+    private ArrayList<Point> points;
 
-    HistoryPath(@NonNull SerializablePath path, @NonNull SerializablePaint paint,
-                       float originX, float originY, boolean isPoint) {
-        this.path = path;
+    HistoryPath(@NonNull SerializablePaint paint, ArrayList<Point> points, boolean isSelfDraw) {
         this.paint = paint;
-        this.originX = originX;
-        this.originY = originY;
-        this.isPoint = isPoint;
+        this.isSelfDraw = isSelfDraw;
+        this.points = new ArrayList<>();
+        if (points.size() > 0) {
+            Point point;
+            point = points.get(0);
+            this.originX = point.x;
+            this.originY = point.y;
+            this.points.addAll(points);
+            resetPath();
+        }
     }
 
     private HistoryPath(Parcel in) {
         originX = in.readFloat();
         originY = in.readFloat();
-        isPoint = in.readByte() != 0;
+        isSelfDraw = in.readByte() != 0;
+    }
+
+    public void addPoint(ArrayList<Point> points) {
+        if (points.size() > 0) {
+            this.points.addAll(points);
+            resetPath();
+        }
+    }
+
+    private void resetPath() {
+        path = new SerializablePath();
+        boolean first = true;
+        ArrayList<Point> mPoints = points;
+        for (int i = 0; i < mPoints.size(); i++) {
+            Point point = points.get(i);
+            if (first) {
+                path.moveTo(point.x, point.y);
+                first = false;
+            } else {
+                path.lineTo(point.x, point.y);
+            }
+        }
     }
 
     public SerializablePath getPath() {
@@ -46,11 +76,15 @@ class HistoryPath implements Parcelable {
     }
 
     public boolean isPoint() {
-        return isPoint;
+        return FreeDrawHelper.isAPoint(points);
     }
 
-    public void setPoint(boolean point) {
-        isPoint = point;
+    public boolean isSelfDraw() {
+        return isSelfDraw;
+    }
+
+    public void setSelfDraw(boolean selfDraw) {
+        isSelfDraw = selfDraw;
     }
 
     public float getOriginX() {
@@ -69,7 +103,6 @@ class HistoryPath implements Parcelable {
         this.originY = originY;
     }
 
-
     // Parcelable stuff
     @Override
     public int describeContents() {
@@ -82,7 +115,7 @@ class HistoryPath implements Parcelable {
         dest.writeSerializable(paint);
         dest.writeFloat(originX);
         dest.writeFloat(originY);
-        dest.writeByte((byte) (isPoint ? 1 : 0));
+        dest.writeByte((byte) (isSelfDraw ? 1 : 0));
     }
 
     // Parcelable CREATOR class

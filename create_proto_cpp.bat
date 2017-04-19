@@ -1,0 +1,1 @@
+E:\tools\protoc-2.5.0-win32\protoc.exe -I=./ --cpp_out=./ ./whiteboardmsg.proto  

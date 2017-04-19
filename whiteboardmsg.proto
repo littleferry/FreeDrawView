@@ -1,0 +1,29 @@
+package com.hengqian.whiteboard.msg;
+
+enum TypeCommand {
+    DrawPoint = 10001;  // 画点
+    DrawUndo = 10002;   // 撤销一步
+    DrawClearAll = 10003; // 清屏
+    DrawQuit = 10004; // 退出
+}
+
+enum TouchEvent {
+    DOWN = 0;  // 点按下
+    MOVE = 1;   // 点按下后移动
+    UP = 2; // 点抬起
+}
+
+message WhiteBoardMsg {
+    required TypeCommand type = 1;
+    required string      uid = 2;
+    optional TouchEvent  touchEvent = 3;
+    optional int32       paintColor = 4;
+    optional int32       paintAlpha = 5;
+    optional int32       paintWidth = 6;
+    message Point
+    {
+        required int32    x = 1;
+        required int32    y = 2;
+    }
+    repeated Point   point = 7;
+}

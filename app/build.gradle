@@ -24,4 +24,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile project(path: ':freedrawview')
     compile "com.android.support:design:$library_version"
+    compile 'com.google.protobuf:protobuf-java:2.5.0'
+    compile files('libs/rabbitmq-client.jar')
 }

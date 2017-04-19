@@ -9,17 +9,16 @@ import android.graphics.ComposePathEffect;
 import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
 import android.os.AsyncTask;
-import android.os.Parcelable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.FloatRange;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * Created by Riccardo Moro on 9/10/2016.
@@ -31,30 +30,28 @@ public class FreeDrawView extends View implements View.OnTouchListener {
     private static final int DEFAULT_COLOR = Color.BLACK;
     private static final int DEFAULT_ALPHA = 255;
 
-    private SerializablePaint mCurrentPaint;
-    private SerializablePath mCurrentPath;
-
     private ResizeBehaviour mResizeBehaviour;
-
-    private ArrayList<Point> mPoints = new ArrayList<>();
     private ArrayList<HistoryPath> mPaths = new ArrayList<>();
     private ArrayList<HistoryPath> mCanceledPaths = new ArrayList<>();
 
+    // 自己画的
+    private SerializablePaint mCurrentPaint;
     @ColorInt
     private int mPaintColor = DEFAULT_COLOR;
     @IntRange(from = 0, to = 255)
     private int mPaintAlpha = DEFAULT_ALPHA;
+    private float mPaintWidth = DEFAULT_STROKE_WIDTH;
+    private boolean mFinishPath = false;
 
     private int mLastDimensionW = -1;
     private int mLastDimensionH = -1;
-
-    private boolean mFinishPath = false;
 
     // Needed to draw points
     private Paint mFillPaint;
 
     private PathDrawnListener mPathDrawnListener;
     private PathRedoUndoCountChangeListener mPathRedoUndoCountChangeListener;
+    private HistoryPath[] mDrawPath = new HistoryPath[2];
 
     public FreeDrawView(Context context) {
         this(context, null);
@@ -83,54 +80,6 @@ public class FreeDrawView extends View implements View.OnTouchListener {
                 a.recycle();
             }
         }
-    }
-
-    @Override
-    protected Parcelable onSaveInstanceState() {
-
-        // Get the superclass parcelable state
-        Parcelable superState = super.onSaveInstanceState();
-
-        if (mPoints.size() > 0) {// Currently doing a line, save it's current path
-            createHistoryPathFromPoints();
-        }
-
-        return new FreeDrawSavedState(superState, mPaths, mCanceledPaths,
-                mCurrentPaint, mPaintColor, mPaintAlpha, mResizeBehaviour,
-                mLastDimensionW, mLastDimensionH);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Parcelable state) {
-
-        // If not instance of my state, let the superclass handle it
-        if (!(state instanceof FreeDrawSavedState)) {
-            super.onRestoreInstanceState(state);
-            return;
-        }
-
-        FreeDrawSavedState savedState = (FreeDrawSavedState) state;
-        // Superclass restore state
-        super.onRestoreInstanceState(savedState.getSuperState());
-
-        // My state restore
-        mPaths = savedState.getPaths();
-        mCanceledPaths = savedState.getCanceledPaths();
-        mCurrentPaint = savedState.getCurrentPaint();
-
-        initFillPaint();
-
-        mResizeBehaviour = savedState.getResizeBehaviour();
-
-        mPaintColor = savedState.getPaintColor();
-        mPaintAlpha = savedState.getPaintAlpha();
-        // Restore the last dimensions, so that in onSizeChanged i can calculate the
-        // height and width change factor and multiply every point x or y to it, so that if the
-        // View is resized, it adapt automatically it's points to the new width/height
-        mLastDimensionW = savedState.getLastDimensionW();
-        mLastDimensionH = savedState.getLastDimensionH();
-
-        notifyRedoUndoCountChanged();
     }
 
     /**
@@ -171,7 +120,7 @@ public class FreeDrawView extends View implements View.OnTouchListener {
      *
      * @param widthPx The new weight in px, must be > 0
      */
-    public void setPaintWidthPx(@FloatRange(from = 0) float widthPx) {
+    private void setPaintWidthPx(@FloatRange(from = 0) float widthPx) {
         if (widthPx > 0) {
             mFinishPath = true;
 
@@ -187,6 +136,7 @@ public class FreeDrawView extends View implements View.OnTouchListener {
      * @param dp The new weight in dp, must be > 0
      */
     public void setPaintWidthDp(float dp) {
+        mPaintWidth = dp;
         setPaintWidthPx(FreeDrawHelper.convertDpToPixels(dp));
     }
 
@@ -255,18 +205,43 @@ public class FreeDrawView extends View implements View.OnTouchListener {
      * Cancel the last drawn segment
      */
     public void undoLast() {
-
         if (mPaths.size() > 0) {
-            // End current path
-            mFinishPath = true;
-            invalidate();
+            for (int i = mPaths.size() - 1; i >= 0; i--) {
+                HistoryPath path = mPaths.get(i);
+                if (path.isSelfDraw()) {
+                    // End current path
+                    mFinishPath = true;
+                    invalidate();
 
-            // Cancel the last one and redraw
-            mCanceledPaths.add(mPaths.get(mPaths.size() - 1));
-            mPaths.remove(mPaths.size() - 1);
-            invalidate();
+                    // Cancel the last one and redraw
+                    mCanceledPaths.add(path);
+                    mPaths.remove(i);
+                    invalidate();
 
-            notifyRedoUndoCountChanged();
+                    notifyRedoUndoCountChanged();
+
+                    mPathDrawnListener.onUndoLast();
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * Cancel the other last drawn segment
+     */
+    public void undoOtherLast() {
+        for (int i = mPaths.size() - 1; i >= 0; i--) {
+            HistoryPath path = mPaths.get(i);
+            if (!path.isSelfDraw()) {
+                // End current path
+                mFinishPath = true;
+                invalidate();
+                // Cancel the last one and redraw
+                mPaths.remove(i);
+                invalidate();
+                break;
+            }
         }
     }
 
@@ -288,12 +263,38 @@ public class FreeDrawView extends View implements View.OnTouchListener {
      * Remove all the paths and redraw (can be undone with {@link #redoLast()})
      */
     public void undoAll() {
-        Collections.reverse(mPaths);
-        mCanceledPaths.addAll(mPaths);
-        mPaths.clear();
-        invalidate();
+        boolean isRemove = false;
+        ArrayList<HistoryPath> path = new ArrayList<>();
+        for (int i = mPaths.size() - 1; i >= 0; i--) {
+            if (mPaths.get(i).isSelfDraw()) {
+                path.add(mPaths.get(i));
+                mPaths.remove(i);
+                isRemove = true;
+            }
+        }
+        if (isRemove) {
+            mCanceledPaths.addAll(path);
+            invalidate();
 
-        notifyRedoUndoCountChanged();
+            notifyRedoUndoCountChanged();
+            mPathDrawnListener.onUndoAll();
+        }
+    }
+
+    /**
+     * Remove all the paths and redraw (can be undone with {@link #redoLast()})
+     */
+    public void undoOtherAll() {
+        boolean isRemove = false;
+        for (int i = mPaths.size() - 1; i >= 0; i--) {
+            if (!mPaths.get(i).isSelfDraw()) {
+                mPaths.remove(i);
+                isRemove = true;
+            }
+        }
+        if (isRemove) {
+            invalidate();
+        }
     }
 
     /**
@@ -314,7 +315,13 @@ public class FreeDrawView extends View implements View.OnTouchListener {
      * Get how many undo operations are available
      */
     public int getUndoCount() {
-        return mPaths.size();
+        int count = 0;
+        for (int i = 0; i < mPaths.size(); i++) {
+            if (mPaths.get(i).isSelfDraw()) {
+                count++;
+            }
+        }
+        return count;
     }
 
     /**
@@ -425,108 +432,62 @@ public class FreeDrawView extends View implements View.OnTouchListener {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (mPaths.size() == 0 && mPoints.size() == 0) {
-            return;
-        }
-
-        // Avoid concurrency errors by first setting the finished path variable to false
-        final boolean finishedPath = mFinishPath;
-        mFinishPath = false;
-
+        Log.d(TAG, "onDraw() called begin paths: " + mPaths.size());
         for (int i = 0; i < mPaths.size(); i++) {
             HistoryPath currentPath = mPaths.get(i);
-
             // If the path is just a single point, draw as a point
             if (currentPath.isPoint()) {
-
                 setupFillPaint(currentPath.getPaint());
                 canvas.drawCircle(currentPath.getOriginX(), currentPath.getOriginY(),
                         currentPath.getPaint().getStrokeWidth() / 2, mFillPaint);
             } else {// Else draw the complete path
-
                 canvas.drawPath(currentPath.getPath(), currentPath.getPaint());
             }
         }
-
-        // Initialize the current path
-        if (mCurrentPath == null)
-            mCurrentPath = new SerializablePath();
-        else
-            mCurrentPath.rewind();
-
-        // If a single point, add a circle to the path
-        if (mPoints.size() == 1 || FreeDrawHelper.isAPoint(mPoints)) {
-
-            setupFillPaint(mCurrentPaint);
-            canvas.drawCircle(mPoints.get(0).x, mPoints.get(0).y,
-                    mCurrentPaint.getStrokeWidth() / 2, mFillPaint);
-        } else if (mPoints.size() != 0) {// Else draw the complete series of points
-
-            boolean first = true;
-
-            for (int i = 0; i < mPoints.size(); i++) {
-
-                Point point = mPoints.get(i);
-
-                if (first) {
-                    mCurrentPath.moveTo(point.x, point.y);
-                    first = false;
-                } else {
-                    mCurrentPath.lineTo(point.x, point.y);
-                }
-            }
-
-            canvas.drawPath(mCurrentPath, mCurrentPaint);
-        }
-
-        // If the path is finished, add it to the history
-        if (finishedPath && mPoints.size() > 0) {
-            createHistoryPathFromPoints();
-        }
+        Log.d(TAG, "onDraw() called end");
     }
 
-    // Create a path from the current points
-    private void createHistoryPathFromPoints() {
-        mPaths.add(new HistoryPath(
-                new SerializablePath(mCurrentPath), new SerializablePaint(mCurrentPaint),
-                mPoints.get(0).x, mPoints.get(0).y, FreeDrawHelper.isAPoint(mPoints)));
-
-        mPoints.clear();
-
-        notifyPathDrawn();
-        notifyRedoUndoCountChanged();
+    // Move去重
+    private void addPoint(int action, ArrayList<android.graphics.Point> points, float x, float y) {
+        //if (lastAction != action || lastPoint == null || lastPoint.x != x || lastPoint.y != y) {
+            android.graphics.Point point;
+            point = new android.graphics.Point();
+            point.x = (int) x;
+            point.y = (int) y;
+            points.add(point);
+//            if (action == MotionEvent.ACTION_MOVE) {
+//                lastPoint = point;
+//            } else {
+//                lastPoint = null;
+//            }
+//            lastAction = action;
+//        } else {
+//            Log.i(TAG, "point is same " + x + "," + y);
+//        }
     }
+
+    android.graphics.Point lastPoint;
+    int lastAction;
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
-
-        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-            notifyPathStart();
-        }
-        if (getParent() != null) {
-            getParent().requestDisallowInterceptTouchEvent(true);
-        }
-
-        // Clear all the history when restarting to draw
-        mCanceledPaths.clear();
-
+        ArrayList<android.graphics.Point> points = new ArrayList<>();
         if ((motionEvent.getAction() != MotionEvent.ACTION_UP) &&
                 (motionEvent.getAction() != MotionEvent.ACTION_CANCEL)) {
-            Point point;
             for (int i = 0; i < motionEvent.getHistorySize(); i++) {
-                point = new Point();
-                point.x = motionEvent.getHistoricalX(i);
-                point.y = motionEvent.getHistoricalY(i);
-                mPoints.add(point);
+                addPoint(motionEvent.getAction(), points, motionEvent.getHistoricalX(i), motionEvent.getHistoricalY(i));
             }
-            point = new Point();
-            point.x = motionEvent.getX();
-            point.y = motionEvent.getY();
-            mPoints.add(point);
-        } else
-            mFinishPath = true;
+            addPoint(motionEvent.getAction(), points, motionEvent.getX(), motionEvent.getY());
+            if (points.size() > 0) {
+                mPathDrawnListener.onTouch(motionEvent.getAction(), points, (int) mPaintWidth,
+                        getPaintColor(), getPaintAlpha());
+            }
+        } else {
+            mPathDrawnListener.onTouch(motionEvent.getAction(), points, (int) mPaintWidth,
+                    getPaintColor(), getPaintAlpha());
+        }
 
-        invalidate();
+        // onTouch(true, motionEvent.getAction(), points, (int) mPaintWidth, getPaintColor(), getPaintAlpha());
         return true;
     }
 
@@ -566,14 +527,13 @@ public class FreeDrawView extends View implements View.OnTouchListener {
         // If both factors == 1 or <= 0 or no paths/points to apply things, just return
         if ((xMultiplyFactor == 1 && yMultiplyFactor == 1)
                 || (xMultiplyFactor <= 0 || yMultiplyFactor <= 0) ||
-                (mPaths.size() == 0 && mCanceledPaths.size() == 0 && mPoints.size() == 0)) {
+                (mPaths.size() == 0 && mCanceledPaths.size() == 0)) {
             return;
         }
 
         if (mResizeBehaviour == ResizeBehaviour.CLEAR) {// If clear, clear all and return
             mPaths.clear();
             mCanceledPaths.clear();
-            mPoints.clear();
             return;
         } else if (mResizeBehaviour == ResizeBehaviour.CROP) {
             xMultiplyFactor = yMultiplyFactor = 1;
@@ -589,12 +549,6 @@ public class FreeDrawView extends View implements View.OnTouchListener {
         for (HistoryPath historyPath : mCanceledPaths) {
 
             multiplySinglePath(historyPath, xMultiplyFactor, yMultiplyFactor);
-        }
-
-        // Adapt drawn points
-        for (Point point : mPoints) {
-            point.x *= xMultiplyFactor;
-            point.y *= yMultiplyFactor;
         }
     }
 
@@ -674,6 +628,66 @@ public class FreeDrawView extends View implements View.OnTouchListener {
             if (mListener != null) {
                 mListener.onDrawCreated(mBitmap);
             }
+        }
+    }
+
+    public synchronized void onTouch(int selfDraw, int touchEvent, ArrayList<android.graphics.Point> points, int paintWidth,
+                                     int paintColor, int paintAlpha) {
+        Log.d(TAG, "onTouch() called begin with: selfDraw = [" + selfDraw + "], touchEvent = [" + touchEvent + "]");
+
+        // 先把点保存到数组
+        ArrayList<Point> pointList = new ArrayList<>();
+        if (points.size() > 0) {
+            for (int i = 0; i < points.size(); i++) {
+                Point point = new Point();
+                point.selfDraw = (selfDraw == 1);
+                point.x = points.get(i).x;
+                point.y = points.get(i).y;
+                pointList.add(point);
+            }
+        }
+        if (selfDraw == 1) {
+            mCurrentPaint.setColor(mPaintColor);
+            mCurrentPaint.setAlpha(mPaintAlpha);
+            mCurrentPaint.setStrokeWidth(FreeDrawHelper.convertDpToPixels(mPaintWidth));
+        } else {
+            mCurrentPaint.setColor(paintColor);
+            mCurrentPaint.setAlpha(paintAlpha);
+            mCurrentPaint.setStrokeWidth(FreeDrawHelper.convertDpToPixels(paintWidth));
+        }
+        if (selfDraw == 1 && touchEvent == MotionEvent.ACTION_DOWN) {
+            notifyPathStart();
+            if (getParent() != null) {
+                getParent().requestDisallowInterceptTouchEvent(true);
+            }
+        }
+
+        if (touchEvent == MotionEvent.ACTION_DOWN) {
+            mDrawPath[selfDraw] = null;
+            addPoint(selfDraw, pointList);
+        } else if (touchEvent == MotionEvent.ACTION_MOVE) {
+            addPoint(selfDraw, pointList);
+        } else if (touchEvent == MotionEvent.ACTION_UP) {
+            if (pointList.size() > 0) {
+                addPoint(selfDraw, pointList);
+                mDrawPath[selfDraw] = null;
+            }
+        }
+        invalidate();
+
+        Log.d(TAG, "onTouch() called end with: selfDraw = [" + selfDraw + "], touchEvent = [" + touchEvent + "]");
+    }
+
+    private void addPoint(int selfDraw, ArrayList<Point> points) {
+        if (mDrawPath[selfDraw] == null) {
+            mDrawPath[selfDraw] = new HistoryPath(new SerializablePaint(mCurrentPaint), points, selfDraw == 1);
+            mPaths.add(mDrawPath[selfDraw]);
+            if (selfDraw == 1) {
+                notifyPathDrawn();
+                notifyRedoUndoCountChanged();
+            }
+        } else {
+            mDrawPath[selfDraw].addPoint(points);
         }
     }
 }

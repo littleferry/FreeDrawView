@@ -30,13 +30,14 @@ public class ActivityChooser extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         int id = v.getId();
-
-        if (id == mBtnDraw.getId()) {
-            startActivity(new Intent(this, ActivityDraw.class));
-        }
-
-        if (id == mBtnScrollable.getId()) {
-            startActivity(new Intent(this, ActivityScrollable.class));
+        if (id == mBtnDraw.getId() || id == mBtnScrollable.getId()) {
+            Intent intent = new Intent(this, ActivityDraw.class);
+            if (id == mBtnDraw.getId()) {
+                intent.putExtra("user", 1);
+            } else if (id == mBtnScrollable.getId()) {
+                intent.putExtra("user", 2);
+            }
+            startActivity(intent);
         }
     }
 }
