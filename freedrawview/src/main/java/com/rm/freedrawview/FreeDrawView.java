@@ -460,42 +460,30 @@ public class FreeDrawView extends View implements View.OnTouchListener {
     }
 
     // Move去重
-    private void addPoint(int action, ArrayList<android.graphics.Point> points, float x, float y) {
-        //if (lastAction != action || lastPoint == null || lastPoint.x != x || lastPoint.y != y) {
+    private void addPoint(ArrayList<android.graphics.Point> points, float x, float y) {
         android.graphics.Point point;
         point = new android.graphics.Point();
         point.x = (int) x;
         point.y = (int) y;
         points.add(point);
-//            if (action == MotionEvent.ACTION_MOVE) {
-//                lastPoint = point;
-//            } else {
-//                lastPoint = null;
-//            }
-//            lastAction = action;
-//        } else {
-//            Log.i(TAG, "point is same " + x + "," + y);
-//        }
     }
-
-    android.graphics.Point lastPoint;
-    int lastAction;
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         ArrayList<android.graphics.Point> points = new ArrayList<>();
+        int paintWidth = (int) FreeDrawHelper.convertDpToPixels(mPaintWidth);
         if ((motionEvent.getAction() != MotionEvent.ACTION_UP) &&
                 (motionEvent.getAction() != MotionEvent.ACTION_CANCEL)) {
             for (int i = 0; i < motionEvent.getHistorySize(); i++) {
-                addPoint(motionEvent.getAction(), points, motionEvent.getHistoricalX(i), motionEvent.getHistoricalY(i));
+                addPoint(points, motionEvent.getHistoricalX(i), motionEvent.getHistoricalY(i));
             }
-            addPoint(motionEvent.getAction(), points, motionEvent.getX(), motionEvent.getY());
+            addPoint(points, motionEvent.getX(), motionEvent.getY());
             if (points.size() > 0) {
-                mPathDrawnListener.onTouch(motionEvent.getAction(), points, (int) mPaintWidth,
+                mPathDrawnListener.onTouch(motionEvent.getAction(), points, paintWidth,
                         getPaintColor(), getPaintAlpha());
             }
         } else {
-            mPathDrawnListener.onTouch(motionEvent.getAction(), points, (int) mPaintWidth,
+            mPathDrawnListener.onTouch(motionEvent.getAction(), points, paintWidth,
                     getPaintColor(), getPaintAlpha());
         }
 
@@ -660,7 +648,7 @@ public class FreeDrawView extends View implements View.OnTouchListener {
         }
         mCurrentPaint.setColor(paintColor);
         mCurrentPaint.setAlpha(paintAlpha);
-        mCurrentPaint.setStrokeWidth(FreeDrawHelper.convertDpToPixels(paintWidth));
+        mCurrentPaint.setStrokeWidth(paintWidth * w / width);
         boolean selfDraw = isSelfDraw(uid);
         if (selfDraw && touchEvent == MotionEvent.ACTION_DOWN) {
             notifyPathStart();

@@ -22,14 +22,14 @@ message WhiteBoardMsg {
         required int32 w = 1; // 屏幕画布宽度，单位像素
         required int32 h = 2; // 屏幕画布高度，单位像素
     }
-    required Size size = 3; // 屏幕画布尺寸
+    required Size size = 3; // 屏幕画布尺寸，接收方需要根据次区域和自己画布尺寸进行比例换算每一个Point坐标
 
     message DrawPoint {
         required TouchEvent touchEvent = 1; // 触摸事件，由TouchEvent定义
         message Paint {
             required int32 color = 1; // 画笔颜色
             required int32 alpha = 2; // 透明度
-            required int32 width = 3; // 线宽
+            required int32 width = 3; // 线宽，单位：像素，接收方基于屏幕宽度的比例换算
         }
         required Paint paint = 2; // 画笔设置
         message Point {
