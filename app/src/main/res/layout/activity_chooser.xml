@@ -1,26 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dp">
 
     <Button
-        android:id="@+id/draw_sample"
+        android:id="@+id/btn_multi_active1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:backgroundTint="@color/colorPrimaryDark"
-        android:text="用户1"
+        android:text="多人互动1\n发布/订阅模式"
         android:textColor="@color/white"
-        android:textSize="24sp"/>
+        android:textSize="24sp" />
 
     <Button
-        android:id="@+id/scrollable_sample"
+        android:id="@+id/btn_multi_active2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:backgroundTint="@color/colorPrimary"
-        android:text="用户2"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="多人互动2\n发布/订阅模式"
         android:textColor="@color/white"
-        android:textSize="24dp"/>
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/btn_multi_active3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="多人互动3\n发布/订阅模式"
+        android:textColor="@color/white"
+        android:textSize="24sp" />
+
+
 </LinearLayout>

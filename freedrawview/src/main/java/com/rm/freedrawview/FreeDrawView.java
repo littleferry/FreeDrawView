@@ -633,8 +633,6 @@ public class FreeDrawView extends View implements View.OnTouchListener {
 
     public synchronized void onTouch(int selfDraw, int touchEvent, ArrayList<android.graphics.Point> points, int paintWidth,
                                      int paintColor, int paintAlpha, int width, int height) {
-        Log.d(TAG, "onTouch() called begin with: selfDraw = [" + selfDraw + "], touchEvent = [" + touchEvent + "]");
-
         int w = getWidth();
         int h = getHeight();
         // 先把点保存到数组

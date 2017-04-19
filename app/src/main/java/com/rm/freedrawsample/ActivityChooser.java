@@ -6,13 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.hengqian.whiteboard.msg.WhiteBoardManager;
+
 /**
  * Created by Riccardo on 01/12/16.
  */
 
 public class ActivityChooser extends AppCompatActivity implements View.OnClickListener {
 
-    private Button mBtnDraw, mBtnScrollable;
+    private Button mBtnMutilActive1, mBtnMutilActive2, mBtnMutilActive3;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -20,24 +22,28 @@ public class ActivityChooser extends AppCompatActivity implements View.OnClickLi
 
         setContentView(R.layout.activity_chooser);
 
-        mBtnDraw = (Button) findViewById(R.id.draw_sample);
-        mBtnScrollable = (Button) findViewById(R.id.scrollable_sample);
+        mBtnMutilActive1 = (Button) findViewById(R.id.btn_multi_active1);
+        mBtnMutilActive2 = (Button) findViewById(R.id.btn_multi_active2);
+        mBtnMutilActive3 = (Button) findViewById(R.id.btn_multi_active3);
 
-        mBtnDraw.setOnClickListener(this);
-        mBtnScrollable.setOnClickListener(this);
+        mBtnMutilActive1.setOnClickListener(this);
+        mBtnMutilActive2.setOnClickListener(this);
+        mBtnMutilActive3.setOnClickListener(this);
+
+        WhiteBoardManager.getInst().initData(this.getApplicationContext());
     }
 
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if (id == mBtnDraw.getId() || id == mBtnScrollable.getId()) {
-            Intent intent = new Intent(this, ActivityDraw.class);
-            if (id == mBtnDraw.getId()) {
-                intent.putExtra("user", 1);
-            } else if (id == mBtnScrollable.getId()) {
-                intent.putExtra("user", 2);
-            }
-            startActivity(intent);
+        Intent intent = new Intent(this, ActivityDraw.class);
+        if (id == mBtnMutilActive1.getId()) {
+            intent.putExtra("user", 1);
+        } else if (id == mBtnMutilActive2.getId()) {
+            intent.putExtra("user", 2);
+        } else if (id == mBtnMutilActive3.getId()) {
+            intent.putExtra("user", 3);
         }
+        startActivity(intent);
     }
 }
