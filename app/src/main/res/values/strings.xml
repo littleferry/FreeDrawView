@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">互动白板演示</string>
-    <string name="show_screenshot">屏幕快照</string>
+    <string name="playback">回放</string>
 </resources>

@@ -3,6 +3,9 @@ package com.rm.freedrawview;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -14,12 +17,12 @@ class HistoryPath implements Parcelable {
     private SerializablePath path;
     private SerializablePaint paint;
     private float originX, originY;
-    private boolean isSelfDraw;
+    private String userId;
     private ArrayList<Point> points;
 
-    HistoryPath(@NonNull SerializablePaint paint, ArrayList<Point> points, boolean isSelfDraw) {
+    HistoryPath(@NonNull SerializablePaint paint, ArrayList<Point> points, String userId) {
         this.paint = paint;
-        this.isSelfDraw = isSelfDraw;
+        this.userId = userId;
         this.points = new ArrayList<>();
         if (points.size() > 0) {
             Point point;
@@ -34,7 +37,7 @@ class HistoryPath implements Parcelable {
     private HistoryPath(Parcel in) {
         originX = in.readFloat();
         originY = in.readFloat();
-        isSelfDraw = in.readByte() != 0;
+        userId = in.readString();
     }
 
     public void addPoint(ArrayList<Point> points) {
@@ -79,14 +82,6 @@ class HistoryPath implements Parcelable {
         return FreeDrawHelper.isAPoint(points);
     }
 
-    public boolean isSelfDraw() {
-        return isSelfDraw;
-    }
-
-    public void setSelfDraw(boolean selfDraw) {
-        isSelfDraw = selfDraw;
-    }
-
     public float getOriginX() {
         return originX;
     }
@@ -103,6 +98,10 @@ class HistoryPath implements Parcelable {
         this.originY = originY;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
     // Parcelable stuff
     @Override
     public int describeContents() {
@@ -115,7 +114,7 @@ class HistoryPath implements Parcelable {
         dest.writeSerializable(paint);
         dest.writeFloat(originX);
         dest.writeFloat(originY);
-        dest.writeByte((byte) (isSelfDraw ? 1 : 0));
+        dest.writeString(userId);
     }
 
     // Parcelable CREATOR class
@@ -130,4 +129,14 @@ class HistoryPath implements Parcelable {
             return new HistoryPath[size];
         }
     };
+
+    public boolean equalsUid(String uid) {
+        if (TextUtils.isEmpty(uid)) {
+            return false;
+        }
+        if (TextUtils.isEmpty(userId)) {
+            return false;
+        }
+        return userId.equals(uid);
+    }
 }

@@ -46,12 +46,13 @@ public class ActivityDraw extends AppCompatActivity
 
     private ImageView mImgScreen;
     private Menu mMenu;
+    private int user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_draw);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mImgScreen = (ImageView) findViewById(R.id.img_screen);
 
         mTxtUndoCount = (TextView) findViewById(R.id.txt_undo_count);
@@ -84,7 +85,7 @@ public class ActivityDraw extends AppCompatActivity
         mThicknessBar.setProgress((int) mFreeDrawView.getPaintWidth());
 
         Intent intent = getIntent();
-        int user = intent.getIntExtra("user", 1);
+        user = intent.getIntExtra("user", 1);
         WhiteBoardManager wbm = WhiteBoardManager.getInst();
         mFreeDrawView.setDeviceId(wbm.getDeviceId());
         wbm.setUser(user);
@@ -99,6 +100,7 @@ public class ActivityDraw extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mFreeDrawView.stopPlayback();
         WhiteBoardManager.getInst().stop();
     }
 
@@ -109,13 +111,15 @@ public class ActivityDraw extends AppCompatActivity
 
         mMenu = menu;
 
+        updateMenuItem();
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId() == R.id.menu_screen) {
+        if (item.getItemId() == R.id.menu_playback) {
             takeAndShowScreenshot();
             return true;
         }
@@ -130,9 +134,26 @@ public class ActivityDraw extends AppCompatActivity
 
     private void takeAndShowScreenshot() {
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//
+//        mFreeDrawView.getDrawScreenshot(this);
+        if (mFreeDrawView.isPlaybacking()) {
+            mFreeDrawView.stopPlayback();
+        } else {
+            mFreeDrawView.startPlayback();
+        }
+        updateMenuItem();
+    }
 
-        mFreeDrawView.getDrawScreenshot(this);
+    private void updateMenuItem() {
+        MenuItem playback = mMenu.findItem(R.id.menu_playback);
+        if (mFreeDrawView.isPlaybacking()) {
+            playback.setTitle("停止回放");
+            setTitle("正在回放");
+        } else {
+            playback.setTitle("开始回放");
+            setTitle(WhiteBoardManager.getInst().getTitle(user));
+        }
     }
 
     @Override
@@ -194,22 +215,6 @@ public class ActivityDraw extends AppCompatActivity
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
 
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (mImgScreen.getVisibility() == View.VISIBLE) {
-            mMenu.findItem(R.id.menu_screen).setVisible(true);
-            mImgScreen.setImageBitmap(null);
-            mImgScreen.setVisibility(View.GONE);
-
-            mFreeDrawView.setVisibility(View.VISIBLE);
-            mSideView.setVisibility(View.VISIBLE);
-
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        } else {
-            super.onBackPressed();
-        }
     }
 
     // PathRedoUndoCountChangeListener.
@@ -289,7 +294,7 @@ public class ActivityDraw extends AppCompatActivity
         mSideView.setVisibility(View.GONE);
         mFreeDrawView.setVisibility(View.GONE);
 
-        mMenu.findItem(R.id.menu_screen).setVisible(false);
+        mMenu.findItem(R.id.menu_playback).setVisible(false);
 
         mImgScreen.setVisibility(View.VISIBLE);
 
@@ -332,9 +337,9 @@ public class ActivityDraw extends AppCompatActivity
                             wmsg.getDrawPoint().getPaint().getColor(), wmsg.getDrawPoint().getPaint().getAlpha(),
                             wmsg.getSize().getW(), wmsg.getSize().getH());
                 } else if (type == Whiteboardmsg.TypeCommand.DrawUndo) {
-                    mFreeDrawView.undoOtherLast();
+                    mFreeDrawView.undoOtherLast(wmsg.getUid());
                 } else if (type == Whiteboardmsg.TypeCommand.DrawClearAll) {
-                    mFreeDrawView.undoOtherAll();
+                    mFreeDrawView.undoOtherAll(wmsg.getUid());
                 }
             }
         }
