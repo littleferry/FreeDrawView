@@ -6,7 +6,7 @@
     android:padding="5dp">
 
     <Button
-        android:id="@+id/btn_multi_active1"
+        android:id="@+id/btn_muilt_active1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -16,7 +16,7 @@
         android:textSize="24sp" />
 
     <Button
-        android:id="@+id/btn_multi_active2"
+        android:id="@+id/btn_muilt_active2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -26,7 +26,7 @@
         android:textSize="24sp" />
 
     <Button
-        android:id="@+id/btn_multi_active3"
+        android:id="@+id/btn_muilt_active3"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

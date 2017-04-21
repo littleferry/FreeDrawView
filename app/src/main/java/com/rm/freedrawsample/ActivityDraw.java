@@ -1,7 +1,6 @@
 package com.rm.freedrawsample;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -28,7 +27,10 @@ import java.util.ArrayList;
 
 public class ActivityDraw extends AppCompatActivity
         implements View.OnClickListener, SeekBar.OnSeekBarChangeListener,
-        PathRedoUndoCountChangeListener, FreeDrawView.DrawCreatorListener, PathDrawnListener {
+        PathRedoUndoCountChangeListener, PathDrawnListener {
+
+    private static final int MsgWhatExitWhiteBoard = 0;
+    public static final String UserID = "user";
 
     private static final int THICKNESS_STEP = 1;
     private static final int THICKNESS_MAX = 30;
@@ -85,23 +87,28 @@ public class ActivityDraw extends AppCompatActivity
         mThicknessBar.setProgress((int) mFreeDrawView.getPaintWidth());
 
         Intent intent = getIntent();
-        user = intent.getIntExtra("user", 1);
+        user = intent.getIntExtra(UserID, 1);
         WhiteBoardManager wbm = WhiteBoardManager.getInst();
         mFreeDrawView.setDeviceId(wbm.getDeviceId());
         wbm.setUser(user);
         wbm.setHandler(handler);
         wbm.start();
 
-        setTitle(wbm.getTitle(user));
+        setTitle(wbm.getDeviceId());
 
         changeColor();
+
+        WhiteBoardManager.getInst().addMessage(Whiteboardmsg.TypeCommand.Join,
+                mFreeDrawView.getMeasuredWidth(), mFreeDrawView.getMeasuredHeight());
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        WhiteBoardManager.getInst().addMessage(Whiteboardmsg.TypeCommand.Exit,
+                mFreeDrawView.getMeasuredWidth(), mFreeDrawView.getMeasuredHeight());
         mFreeDrawView.stopPlayback();
-        WhiteBoardManager.getInst().stop();
+        handler.sendEmptyMessageDelayed(MsgWhatExitWhiteBoard, 500);
     }
 
     @Override
@@ -120,7 +127,7 @@ public class ActivityDraw extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.menu_playback) {
-            takeAndShowScreenshot();
+            playback();
             return true;
         }
 
@@ -132,11 +139,7 @@ public class ActivityDraw extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    private void takeAndShowScreenshot() {
-
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//
-//        mFreeDrawView.getDrawScreenshot(this);
+    private void playback() {
         if (mFreeDrawView.isPlaybacking()) {
             mFreeDrawView.stopPlayback();
         } else {
@@ -152,7 +155,7 @@ public class ActivityDraw extends AppCompatActivity
             setTitle("正在回放");
         } else {
             playback.setTitle("开始回放");
-            setTitle(WhiteBoardManager.getInst().getTitle(user));
+            setTitle("当前用户: " + WhiteBoardManager.getInst().getDeviceId());
         }
     }
 
@@ -223,11 +226,6 @@ public class ActivityDraw extends AppCompatActivity
         mTxtUndoCount.setText(String.valueOf(undoCount));
     }
 
-    @Override
-    public void onRedoCountChanged(int redoCount) {
-        // mTxtRedoCount.setText(String.valueOf(redoCount));
-    }
-
     // PathDrawnListener
     @Override
     public void onNewPathDrawn() {
@@ -268,42 +266,19 @@ public class ActivityDraw extends AppCompatActivity
 
     @Override
     public void onUndoLast() {
-        WhiteBoardManager wbm = WhiteBoardManager.getInst();
-        Whiteboardmsg.TypeCommand type = Whiteboardmsg.TypeCommand.DrawUndo;
-        Whiteboardmsg.WhiteBoardMsg wmsg = wbm.newMsg(type, mFreeDrawView.getWidth(), mFreeDrawView.getHeight());
-        wbm.addMessage(wmsg);
+        WhiteBoardManager.getInst().addMessage(Whiteboardmsg.TypeCommand.DrawUndo,
+                mFreeDrawView.getWidth(), mFreeDrawView.getHeight());
     }
 
     @Override
     public void onUndoAll() {
-        WhiteBoardManager wbm = WhiteBoardManager.getInst();
-        Whiteboardmsg.TypeCommand type = Whiteboardmsg.TypeCommand.DrawClearAll;
-        Whiteboardmsg.WhiteBoardMsg wmsg = wbm.newMsg(type, mFreeDrawView.getWidth(), mFreeDrawView.getHeight());
-        wbm.addMessage(wmsg);
+        WhiteBoardManager.getInst().addMessage(Whiteboardmsg.TypeCommand.DrawClearAll,
+                mFreeDrawView.getWidth(), mFreeDrawView.getHeight());
     }
 
     @Override
     public void onPathStart() {
         // The user has started drawing a path
-    }
-
-
-    // DrawCreatorListener
-    @Override
-    public void onDrawCreated(Bitmap draw) {
-        mSideView.setVisibility(View.GONE);
-        mFreeDrawView.setVisibility(View.GONE);
-
-        mMenu.findItem(R.id.menu_playback).setVisible(false);
-
-        mImgScreen.setVisibility(View.VISIBLE);
-
-        mImgScreen.setImageBitmap(draw);
-    }
-
-    @Override
-    public void onDrawCreationError() {
-        Toast.makeText(this, "Error, cannot create bitmap", Toast.LENGTH_SHORT).show();
     }
 
     private Handler handler = new Handler() {
@@ -315,31 +290,50 @@ public class ActivityDraw extends AppCompatActivity
                 WhiteBoardManager wbm = WhiteBoardManager.getInst();
                 Whiteboardmsg.WhiteBoardMsg wmsg = wbm.byte2Msg(bundle.getByteArray(WhiteBoardManager.MsgWhatRecvWhiteMsgBundle));
                 Whiteboardmsg.TypeCommand type = wmsg.getType();
-                if (type == Whiteboardmsg.TypeCommand.DrawPoint) {
-                    int count = wmsg.getDrawPoint().getPointCount();
-                    ArrayList<android.graphics.Point> points = new ArrayList<>();
-                    for (int i = 0; i < count; i++) {
-                        Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point wbp = wmsg.getDrawPoint().getPoint(i);
-                        points.add(new android.graphics.Point(wbp.getX(), wbp.getY()));
+                switch (type.getNumber()) {
+                    case Whiteboardmsg.TypeCommand.DrawPoint_VALUE: {
+                        int count = wmsg.getDrawPoint().getPointCount();
+                        ArrayList<android.graphics.Point> points = new ArrayList<>();
+                        for (int i = 0; i < count; i++) {
+                            Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point wbp = wmsg.getDrawPoint().getPoint(i);
+                            points.add(new android.graphics.Point(wbp.getX(), wbp.getY()));
+                        }
+                        int action;
+                        Whiteboardmsg.TouchEvent touchEvent = wmsg.getDrawPoint().getTouchEvent();
+                        if (touchEvent == Whiteboardmsg.TouchEvent.DOWN) {
+                            action = MotionEvent.ACTION_DOWN;
+                        } else if (touchEvent == Whiteboardmsg.TouchEvent.MOVE) {
+                            action = MotionEvent.ACTION_MOVE;
+                        } else if (touchEvent == Whiteboardmsg.TouchEvent.UP) {
+                            action = MotionEvent.ACTION_UP;
+                        } else {
+                            return;
+                        }
+                        mFreeDrawView.onTouch(wmsg.getUid(), action, points, wmsg.getDrawPoint().getPaint().getWidth(),
+                                wmsg.getDrawPoint().getPaint().getColor(), wmsg.getDrawPoint().getPaint().getAlpha(),
+                                wmsg.getSize().getW(), wmsg.getSize().getH());
+                        break;
                     }
-                    int action;
-                    Whiteboardmsg.TouchEvent touchEvent = wmsg.getDrawPoint().getTouchEvent();
-                    if (touchEvent == Whiteboardmsg.TouchEvent.DOWN) {
-                        action = MotionEvent.ACTION_DOWN;
-                    } else if (touchEvent == Whiteboardmsg.TouchEvent.MOVE) {
-                        action = MotionEvent.ACTION_MOVE;
-                    } else if (touchEvent == Whiteboardmsg.TouchEvent.UP) {
-                        action = MotionEvent.ACTION_UP;
-                    } else {
-                        return;
+                    case Whiteboardmsg.TypeCommand.DrawUndo_VALUE: {
+                        mFreeDrawView.undoLast(wmsg.getUid());
+                        break;
                     }
-                    mFreeDrawView.onTouch(wmsg.getUid(), action, points, wmsg.getDrawPoint().getPaint().getWidth(),
-                            wmsg.getDrawPoint().getPaint().getColor(), wmsg.getDrawPoint().getPaint().getAlpha(),
-                            wmsg.getSize().getW(), wmsg.getSize().getH());
-                } else if (type == Whiteboardmsg.TypeCommand.DrawUndo) {
-                    mFreeDrawView.undoOtherLast(wmsg.getUid());
-                } else if (type == Whiteboardmsg.TypeCommand.DrawClearAll) {
-                    mFreeDrawView.undoOtherAll(wmsg.getUid());
+                    case Whiteboardmsg.TypeCommand.DrawClearAll_VALUE: {
+                        mFreeDrawView.undoAll(wmsg.getUid());
+                        break;
+                    }
+                    case Whiteboardmsg.TypeCommand.Join_VALUE: {
+                        Toast.makeText(ActivityDraw.this, wmsg.getUid() + " 已加入白板", Toast.LENGTH_LONG).show();
+                        break;
+                    }
+                    case Whiteboardmsg.TypeCommand.Exit_VALUE: {
+                        Toast.makeText(ActivityDraw.this, wmsg.getUid() + " 已退出白板", Toast.LENGTH_LONG).show();
+                        break;
+                    }
+                    case MsgWhatExitWhiteBoard: {
+                        WhiteBoardManager.getInst().stop();
+                        break;
+                    }
                 }
             }
         }

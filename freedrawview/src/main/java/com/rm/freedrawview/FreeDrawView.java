@@ -24,9 +24,6 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Created by Riccardo Moro on 9/10/2016.
- */
 public class FreeDrawView extends View implements View.OnTouchListener {
     private static final String TAG = FreeDrawView.class.getSimpleName();
 
@@ -36,16 +33,13 @@ public class FreeDrawView extends View implements View.OnTouchListener {
 
     private ResizeBehaviour mResizeBehaviour;
     private ArrayList<HistoryPath> mPaths = new ArrayList<>();
-    private ArrayList<HistoryPath> mCanceledPaths = new ArrayList<>();
 
-    // 自己画的
     private SerializablePaint mCurrentPaint;
     @ColorInt
     private int mPaintColor = DEFAULT_COLOR;
     @IntRange(from = 0, to = 255)
     private int mPaintAlpha = DEFAULT_ALPHA;
     private float mPaintWidth = DEFAULT_STROKE_WIDTH;
-    private boolean mFinishPath = false;
 
     private int mLastDimensionW = -1;
     private int mLastDimensionH = -1;
@@ -63,8 +57,7 @@ public class FreeDrawView extends View implements View.OnTouchListener {
     }
 
     private HistoryPath getHistoryPath(String uid) {
-        HistoryPath hp = mDrawPathArray.get(uid);
-        return hp;
+        return mDrawPathArray.get(uid);
     }
 
     public FreeDrawView(Context context) {
@@ -102,12 +95,7 @@ public class FreeDrawView extends View implements View.OnTouchListener {
      * @param color The now color to be applied to the
      */
     public void setPaintColor(@ColorInt int color) {
-        mFinishPath = true;
-
-        invalidate();
-
         mPaintColor = color;
-
         mCurrentPaint.setColor(mPaintColor);
         mCurrentPaint.setAlpha(mPaintAlpha);// Restore the previous alpha
     }
@@ -121,25 +109,12 @@ public class FreeDrawView extends View implements View.OnTouchListener {
     }
 
     /**
-     * Get the current color with the current alpha
-     */
-    @ColorInt
-    public int getPaintColorWithAlpha() {
-        return mCurrentPaint.getColor();
-    }
-
-
-    /**
      * Set the paint width in px
      *
      * @param widthPx The new weight in px, must be > 0
      */
     private void setPaintWidthPx(@FloatRange(from = 0) float widthPx) {
         if (widthPx > 0) {
-            mFinishPath = true;
-
-            invalidate();
-
             mCurrentPaint.setStrokeWidth(widthPx);
         }
     }
@@ -181,11 +156,7 @@ public class FreeDrawView extends View implements View.OnTouchListener {
      * @param alpha The alpha to apply to the paint
      */
     public void setPaintAlpha(@IntRange(from = 0, to = 255) int alpha) {
-
-        // Finish current path and redraw, so that the new setting is applied only to the next path
-        mFinishPath = true;
-        invalidate();
-
+        // Finish current path, so that the new setting is applied only to the next path
         mPaintAlpha = alpha;
         mCurrentPaint.setAlpha(mPaintAlpha);
     }
@@ -198,26 +169,10 @@ public class FreeDrawView extends View implements View.OnTouchListener {
         return mPaintAlpha;
     }
 
-
-    /**
-     * Set what to do when the view is resized (on rotation if its dimensions are not fixed)
-     * {@link ResizeBehaviour}
-     */
-    public void setResizeBehaviour(ResizeBehaviour newBehaviour) {
-        mResizeBehaviour = newBehaviour;
-    }
-
-    /**
-     * Get the current behaviour on view resize
-     */
-    public ResizeBehaviour getResizeBehaviour() {
-        return mResizeBehaviour;
-    }
-
-
     public void undoLast() {
         undoLast(deviceId);
     }
+
     /**
      * Cancel the last drawn segment
      */
@@ -226,17 +181,10 @@ public class FreeDrawView extends View implements View.OnTouchListener {
             for (int i = mPaths.size() - 1; i >= 0; i--) {
                 HistoryPath path = mPaths.get(i);
                 if (path.getUserId().equals(uid)) {
-                    // End current path
-                    mFinishPath = true;
-                    invalidate();
-
-                    // Cancel the last one and redraw
-                    mCanceledPaths.add(path);
+                    // Cancel the last one
                     mPaths.remove(i);
                     invalidate();
-
                     notifyRedoUndoCountChanged();
-
                     mPathDrawnListener.onUndoLast();
                     break;
                 }
@@ -248,55 +196,16 @@ public class FreeDrawView extends View implements View.OnTouchListener {
     }
 
     /**
-     * Cancel the other last drawn segment
-     */
-    public void undoOtherLast(String uid) {
-        for (int i = mPaths.size() - 1; i >= 0; i--) {
-            HistoryPath path = mPaths.get(i);
-            if (path.equalsUid(uid)) {
-                // End current path
-                mFinishPath = true;
-                invalidate();
-                // Cancel the last one and redraw
-                mPaths.remove(i);
-                invalidate();
-                break;
-            }
-            if (!playbacking) {
-                frameIndex = mPaths.size();
-            }
-        }
-    }
-
-    /**
-     * Remove all the paths and redraw (can be undone with {@link #redoLast()})
+     * Remove all the paths
      */
     public void undoAll() {
-        boolean isRemove = false;
-        ArrayList<HistoryPath> path = new ArrayList<>();
-        for (int i = mPaths.size() - 1; i >= 0; i--) {
-            if (mPaths.get(i).equalsUid(deviceId)) {
-                path.add(mPaths.get(i));
-                mPaths.remove(i);
-                isRemove = true;
-            }
-        }
-        if (!playbacking) {
-            frameIndex = mPaths.size();
-        }
-        if (isRemove) {
-            mCanceledPaths.addAll(path);
-            invalidate();
-
-            notifyRedoUndoCountChanged();
-            mPathDrawnListener.onUndoAll();
-        }
+        undoAll(deviceId);
     }
 
     /**
-     * Remove all the paths and redraw (can be undone with {@link #redoLast()})
+     * Remove all the paths
      */
-    public void undoOtherAll(String uid) {
+    public void undoAll(String uid) {
         boolean isRemove = false;
         for (int i = mPaths.size() - 1; i >= 0; i--) {
             if (mPaths.get(i).equalsUid(uid)) {
@@ -309,6 +218,8 @@ public class FreeDrawView extends View implements View.OnTouchListener {
         }
         if (isRemove) {
             invalidate();
+            notifyRedoUndoCountChanged();
+            mPathDrawnListener.onUndoAll();
         }
     }
 
@@ -323,13 +234,6 @@ public class FreeDrawView extends View implements View.OnTouchListener {
             }
         }
         return count;
-    }
-
-    /**
-     * Get how many redo operations are available
-     */
-    public int getRedoCount() {
-        return mCanceledPaths.size();
     }
 
     /**
@@ -361,14 +265,6 @@ public class FreeDrawView extends View implements View.OnTouchListener {
         mPathRedoUndoCountChangeListener = null;
     }
 
-    /**
-     * Create a Bitmap with the content drawn inside the view
-     */
-    public void getDrawScreenshot(@NonNull final DrawCreatorListener listener) {
-        new TakeScreenShotAsyncTask(listener).execute();
-    }
-
-
     // Internal methods
     private void notifyPathStart() {
         if (mPathDrawnListener != null) {
@@ -384,7 +280,6 @@ public class FreeDrawView extends View implements View.OnTouchListener {
 
     private void notifyRedoUndoCountChanged() {
         if (mPathRedoUndoCountChangeListener != null) {
-            mPathRedoUndoCountChangeListener.onRedoCountChanged(getRedoCount());
             mPathRedoUndoCountChangeListener.onUndoCountChanged(getUndoCount());
         }
     }
@@ -516,13 +411,12 @@ public class FreeDrawView extends View implements View.OnTouchListener {
         // If both factors == 1 or <= 0 or no paths/points to apply things, just return
         if ((xMultiplyFactor == 1 && yMultiplyFactor == 1)
                 || (xMultiplyFactor <= 0 || yMultiplyFactor <= 0) ||
-                (mPaths.size() == 0 && mCanceledPaths.size() == 0)) {
+                (mPaths.size() == 0)) {
             return;
         }
 
         if (mResizeBehaviour == ResizeBehaviour.CLEAR) {// If clear, clear all and return
             mPaths.clear();
-            mCanceledPaths.clear();
             return;
         } else if (mResizeBehaviour == ResizeBehaviour.CROP) {
             xMultiplyFactor = yMultiplyFactor = 1;
@@ -530,12 +424,6 @@ public class FreeDrawView extends View implements View.OnTouchListener {
 
         // Adapt drawn paths
         for (HistoryPath historyPath : mPaths) {
-
-            multiplySinglePath(historyPath, xMultiplyFactor, yMultiplyFactor);
-        }
-
-        // Adapt canceled paths
-        for (HistoryPath historyPath : mCanceledPaths) {
 
             multiplySinglePath(historyPath, xMultiplyFactor, yMultiplyFactor);
         }
@@ -578,6 +466,9 @@ public class FreeDrawView extends View implements View.OnTouchListener {
         }
     }
 
+    /**
+     * 停止回放
+     */
     public void stopPlayback() {
         if (playbacking) {
             playbacking = false;
@@ -604,67 +495,7 @@ public class FreeDrawView extends View implements View.OnTouchListener {
         }
     };
 
-    public interface DrawCreatorListener {
-        void onDrawCreated(Bitmap draw);
-
-        void onDrawCreationError();
-    }
-
-
-    class TakeScreenShotAsyncTask extends AsyncTask<Void, Void, Void> {
-        private int mWidth, mHeight;
-        private Canvas mCanvas;
-        private Bitmap mBitmap;
-        private DrawCreatorListener mListener;
-
-        public TakeScreenShotAsyncTask(@NonNull DrawCreatorListener listener) {
-            mListener = listener;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mWidth = getWidth();
-            mHeight = getHeight();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            try {
-                mBitmap = Bitmap.createBitmap(
-                        mWidth, mHeight, Bitmap.Config.ARGB_8888);
-                mCanvas = new Canvas(mBitmap);
-            } catch (Exception e) {
-                e.printStackTrace();
-                cancel(true);
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onCancelled() {
-            super.onCancelled();
-
-            if (mListener != null) {
-                mListener.onDrawCreationError();
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-            draw(mCanvas);
-
-            if (mListener != null) {
-                mListener.onDrawCreated(mBitmap);
-            }
-        }
-    }
-
-    public synchronized void onTouch(String uid, int touchEvent, ArrayList<android.graphics.Point> points, int paintWidth,
+    public void onTouch(String uid, int touchEvent, ArrayList<android.graphics.Point> points, int paintWidth,
                                      int paintColor, int paintAlpha, int width, int height) {
         int w = getWidth();
         int h = getHeight();

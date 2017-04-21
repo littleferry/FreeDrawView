@@ -4,6 +4,8 @@ package com.hengqian.whiteboard.msg;
 enum TypeCommand {
     DrawUndo = 10000; // 撤销一步
     DrawClearAll = 10001; // 清屏
+    Join = 10002; // 加入白板
+    Exit = 10003; // 退出白板
     DrawPoint = 10100; // 画点
 }
 

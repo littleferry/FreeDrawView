@@ -382,4 +382,8 @@ public class WhiteBoardManager {
             sharedata.commit();
         }
     }
+
+    public void addMessage(Whiteboardmsg.TypeCommand type, int width, int height) {
+        addMessage(newMsg(type, width, height));
+    }
 }

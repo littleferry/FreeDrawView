@@ -10,6 +10,10 @@ public final class Whiteboardmsg {
   }
   /**
    * Protobuf enum {@code com.hengqian.whiteboard.msg.TypeCommand}
+   *
+   * <pre>
+   * 消息命令类型枚举，可扩展
+   * </pre>
    */
   public enum TypeCommand
       implements com.google.protobuf.ProtocolMessageEnum {
@@ -30,13 +34,29 @@ public final class Whiteboardmsg {
      */
     DrawClearAll(1, 10001),
     /**
+     * <code>Join = 10002;</code>
+     *
+     * <pre>
+     * 加入白板
+     * </pre>
+     */
+    Join(2, 10002),
+    /**
+     * <code>Exit = 10003;</code>
+     *
+     * <pre>
+     * 退出白板
+     * </pre>
+     */
+    Exit(3, 10003),
+    /**
      * <code>DrawPoint = 10100;</code>
      *
      * <pre>
      * 画点
      * </pre>
      */
-    DrawPoint(2, 10100),
+    DrawPoint(4, 10100),
     ;
 
     /**
@@ -56,6 +76,22 @@ public final class Whiteboardmsg {
      */
     public static final int DrawClearAll_VALUE = 10001;
     /**
+     * <code>Join = 10002;</code>
+     *
+     * <pre>
+     * 加入白板
+     * </pre>
+     */
+    public static final int Join_VALUE = 10002;
+    /**
+     * <code>Exit = 10003;</code>
+     *
+     * <pre>
+     * 退出白板
+     * </pre>
+     */
+    public static final int Exit_VALUE = 10003;
+    /**
      * <code>DrawPoint = 10100;</code>
      *
      * <pre>
@@ -71,6 +107,8 @@ public final class Whiteboardmsg {
       switch (value) {
         case 10000: return DrawUndo;
         case 10001: return DrawClearAll;
+        case 10002: return Join;
+        case 10003: return Exit;
         case 10100: return DrawPoint;
         default: return null;
       }
@@ -125,6 +163,10 @@ public final class Whiteboardmsg {
 
   /**
    * Protobuf enum {@code com.hengqian.whiteboard.msg.TouchEvent}
+   *
+   * <pre>
+   * 触摸事件定义枚举
+   * </pre>
    */
   public enum TouchEvent
       implements com.google.protobuf.ProtocolMessageEnum {
@@ -291,7 +333,7 @@ public final class Whiteboardmsg {
      * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
      *
      * <pre>
-     * 屏幕画布尺寸
+     * 屏幕画布尺寸，接收方需要根据次区域和自己画布尺寸进行比例换算每一个Point坐标
      * </pre>
      */
     boolean hasSize();
@@ -299,7 +341,7 @@ public final class Whiteboardmsg {
      * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
      *
      * <pre>
-     * 屏幕画布尺寸
+     * 屏幕画布尺寸，接收方需要根据次区域和自己画布尺寸进行比例换算每一个Point坐标
      * </pre>
      */
     com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size getSize();
@@ -307,7 +349,7 @@ public final class Whiteboardmsg {
      * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
      *
      * <pre>
-     * 屏幕画布尺寸
+     * 屏幕画布尺寸，接收方需要根据次区域和自己画布尺寸进行比例换算每一个Point坐标
      * </pre>
      */
     com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.SizeOrBuilder getSizeOrBuilder();
@@ -315,19 +357,35 @@ public final class Whiteboardmsg {
     // optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;
     /**
      * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
+     *
+     * <pre>
+     * 画点的数据对象
+     * </pre>
      */
     boolean hasDrawPoint();
     /**
      * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
+     *
+     * <pre>
+     * 画点的数据对象
+     * </pre>
      */
     com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint getDrawPoint();
     /**
      * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
+     *
+     * <pre>
+     * 画点的数据对象
+     * </pre>
      */
     com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPointOrBuilder getDrawPointOrBuilder();
   }
   /**
    * Protobuf type {@code com.hengqian.whiteboard.msg.WhiteBoardMsg}
+   *
+   * <pre>
+   * 通用白板消息定义
+   * </pre>
    */
   public static final class WhiteBoardMsg extends
       com.google.protobuf.GeneratedMessage
@@ -1276,7 +1334,7 @@ public final class Whiteboardmsg {
          * <code>required int32 width = 3;</code>
          *
          * <pre>
-         * 线宽
+         * 线宽，单位：像素，接收方基于屏幕宽度的比例换算
          * </pre>
          */
         boolean hasWidth();
@@ -1284,7 +1342,7 @@ public final class Whiteboardmsg {
          * <code>required int32 width = 3;</code>
          *
          * <pre>
-         * 线宽
+         * 线宽，单位：像素，接收方基于屏幕宽度的比例换算
          * </pre>
          */
         int getWidth();
@@ -1450,7 +1508,7 @@ public final class Whiteboardmsg {
          * <code>required int32 width = 3;</code>
          *
          * <pre>
-         * 线宽
+         * 线宽，单位：像素，接收方基于屏幕宽度的比例换算
          * </pre>
          */
         public boolean hasWidth() {
@@ -1460,7 +1518,7 @@ public final class Whiteboardmsg {
          * <code>required int32 width = 3;</code>
          *
          * <pre>
-         * 线宽
+         * 线宽，单位：像素，接收方基于屏幕宽度的比例换算
          * </pre>
          */
         public int getWidth() {
@@ -1856,7 +1914,7 @@ public final class Whiteboardmsg {
            * <code>required int32 width = 3;</code>
            *
            * <pre>
-           * 线宽
+           * 线宽，单位：像素，接收方基于屏幕宽度的比例换算
            * </pre>
            */
           public boolean hasWidth() {
@@ -1866,7 +1924,7 @@ public final class Whiteboardmsg {
            * <code>required int32 width = 3;</code>
            *
            * <pre>
-           * 线宽
+           * 线宽，单位：像素，接收方基于屏幕宽度的比例换算
            * </pre>
            */
           public int getWidth() {
@@ -1876,7 +1934,7 @@ public final class Whiteboardmsg {
            * <code>required int32 width = 3;</code>
            *
            * <pre>
-           * 线宽
+           * 线宽，单位：像素，接收方基于屏幕宽度的比例换算
            * </pre>
            */
           public Builder setWidth(int value) {
@@ -1889,7 +1947,7 @@ public final class Whiteboardmsg {
            * <code>required int32 width = 3;</code>
            *
            * <pre>
-           * 线宽
+           * 线宽，单位：像素，接收方基于屏幕宽度的比例换算
            * </pre>
            */
           public Builder clearWidth() {
@@ -3536,7 +3594,7 @@ public final class Whiteboardmsg {
      * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
      *
      * <pre>
-     * 屏幕画布尺寸
+     * 屏幕画布尺寸，接收方需要根据次区域和自己画布尺寸进行比例换算每一个Point坐标
      * </pre>
      */
     public boolean hasSize() {
@@ -3546,7 +3604,7 @@ public final class Whiteboardmsg {
      * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
      *
      * <pre>
-     * 屏幕画布尺寸
+     * 屏幕画布尺寸，接收方需要根据次区域和自己画布尺寸进行比例换算每一个Point坐标
      * </pre>
      */
     public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size getSize() {
@@ -3556,7 +3614,7 @@ public final class Whiteboardmsg {
      * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
      *
      * <pre>
-     * 屏幕画布尺寸
+     * 屏幕画布尺寸，接收方需要根据次区域和自己画布尺寸进行比例换算每一个Point坐标
      * </pre>
      */
     public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.SizeOrBuilder getSizeOrBuilder() {
@@ -3568,18 +3626,30 @@ public final class Whiteboardmsg {
     private com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint drawPoint_;
     /**
      * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
+     *
+     * <pre>
+     * 画点的数据对象
+     * </pre>
      */
     public boolean hasDrawPoint() {
       return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
      * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
+     *
+     * <pre>
+     * 画点的数据对象
+     * </pre>
      */
     public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint getDrawPoint() {
       return drawPoint_;
     }
     /**
      * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
+     *
+     * <pre>
+     * 画点的数据对象
+     * </pre>
      */
     public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPointOrBuilder getDrawPointOrBuilder() {
       return drawPoint_;
@@ -3742,6 +3812,10 @@ public final class Whiteboardmsg {
     }
     /**
      * Protobuf type {@code com.hengqian.whiteboard.msg.WhiteBoardMsg}
+     *
+     * <pre>
+     * 通用白板消息定义
+     * </pre>
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
@@ -4085,7 +4159,7 @@ public final class Whiteboardmsg {
        * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
        *
        * <pre>
-       * 屏幕画布尺寸
+       * 屏幕画布尺寸，接收方需要根据次区域和自己画布尺寸进行比例换算每一个Point坐标
        * </pre>
        */
       public boolean hasSize() {
@@ -4095,7 +4169,7 @@ public final class Whiteboardmsg {
        * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
        *
        * <pre>
-       * 屏幕画布尺寸
+       * 屏幕画布尺寸，接收方需要根据次区域和自己画布尺寸进行比例换算每一个Point坐标
        * </pre>
        */
       public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size getSize() {
@@ -4109,7 +4183,7 @@ public final class Whiteboardmsg {
        * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
        *
        * <pre>
-       * 屏幕画布尺寸
+       * 屏幕画布尺寸，接收方需要根据次区域和自己画布尺寸进行比例换算每一个Point坐标
        * </pre>
        */
       public Builder setSize(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size value) {
@@ -4129,7 +4203,7 @@ public final class Whiteboardmsg {
        * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
        *
        * <pre>
-       * 屏幕画布尺寸
+       * 屏幕画布尺寸，接收方需要根据次区域和自己画布尺寸进行比例换算每一个Point坐标
        * </pre>
        */
       public Builder setSize(
@@ -4147,7 +4221,7 @@ public final class Whiteboardmsg {
        * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
        *
        * <pre>
-       * 屏幕画布尺寸
+       * 屏幕画布尺寸，接收方需要根据次区域和自己画布尺寸进行比例换算每一个Point坐标
        * </pre>
        */
       public Builder mergeSize(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size value) {
@@ -4170,7 +4244,7 @@ public final class Whiteboardmsg {
        * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
        *
        * <pre>
-       * 屏幕画布尺寸
+       * 屏幕画布尺寸，接收方需要根据次区域和自己画布尺寸进行比例换算每一个Point坐标
        * </pre>
        */
       public Builder clearSize() {
@@ -4187,7 +4261,7 @@ public final class Whiteboardmsg {
        * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
        *
        * <pre>
-       * 屏幕画布尺寸
+       * 屏幕画布尺寸，接收方需要根据次区域和自己画布尺寸进行比例换算每一个Point坐标
        * </pre>
        */
       public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size.Builder getSizeBuilder() {
@@ -4199,7 +4273,7 @@ public final class Whiteboardmsg {
        * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
        *
        * <pre>
-       * 屏幕画布尺寸
+       * 屏幕画布尺寸，接收方需要根据次区域和自己画布尺寸进行比例换算每一个Point坐标
        * </pre>
        */
       public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.SizeOrBuilder getSizeOrBuilder() {
@@ -4213,7 +4287,7 @@ public final class Whiteboardmsg {
        * <code>required .com.hengqian.whiteboard.msg.WhiteBoardMsg.Size size = 3;</code>
        *
        * <pre>
-       * 屏幕画布尺寸
+       * 屏幕画布尺寸，接收方需要根据次区域和自己画布尺寸进行比例换算每一个Point坐标
        * </pre>
        */
       private com.google.protobuf.SingleFieldBuilder<
@@ -4236,12 +4310,20 @@ public final class Whiteboardmsg {
           com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Builder, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPointOrBuilder> drawPointBuilder_;
       /**
        * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
+       *
+       * <pre>
+       * 画点的数据对象
+       * </pre>
        */
       public boolean hasDrawPoint() {
         return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
        * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
+       *
+       * <pre>
+       * 画点的数据对象
+       * </pre>
        */
       public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint getDrawPoint() {
         if (drawPointBuilder_ == null) {
@@ -4252,6 +4334,10 @@ public final class Whiteboardmsg {
       }
       /**
        * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
+       *
+       * <pre>
+       * 画点的数据对象
+       * </pre>
        */
       public Builder setDrawPoint(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint value) {
         if (drawPointBuilder_ == null) {
@@ -4268,6 +4354,10 @@ public final class Whiteboardmsg {
       }
       /**
        * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
+       *
+       * <pre>
+       * 画点的数据对象
+       * </pre>
        */
       public Builder setDrawPoint(
           com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Builder builderForValue) {
@@ -4282,6 +4372,10 @@ public final class Whiteboardmsg {
       }
       /**
        * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
+       *
+       * <pre>
+       * 画点的数据对象
+       * </pre>
        */
       public Builder mergeDrawPoint(com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint value) {
         if (drawPointBuilder_ == null) {
@@ -4301,6 +4395,10 @@ public final class Whiteboardmsg {
       }
       /**
        * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
+       *
+       * <pre>
+       * 画点的数据对象
+       * </pre>
        */
       public Builder clearDrawPoint() {
         if (drawPointBuilder_ == null) {
@@ -4314,6 +4412,10 @@ public final class Whiteboardmsg {
       }
       /**
        * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
+       *
+       * <pre>
+       * 画点的数据对象
+       * </pre>
        */
       public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Builder getDrawPointBuilder() {
         bitField0_ |= 0x00000008;
@@ -4322,6 +4424,10 @@ public final class Whiteboardmsg {
       }
       /**
        * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
+       *
+       * <pre>
+       * 画点的数据对象
+       * </pre>
        */
       public com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPointOrBuilder getDrawPointOrBuilder() {
         if (drawPointBuilder_ != null) {
@@ -4332,6 +4438,10 @@ public final class Whiteboardmsg {
       }
       /**
        * <code>optional .com.hengqian.whiteboard.msg.WhiteBoardMsg.DrawPoint drawPoint = 4;</code>
+       *
+       * <pre>
+       * 画点的数据对象
+       * </pre>
        */
       private com.google.protobuf.SingleFieldBuilder<
           com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.Builder, com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPointOrBuilder> 
@@ -4407,9 +4517,10 @@ public final class Whiteboardmsg {
       "ian.whiteboard.msg.WhiteBoardMsg.DrawPoi" +
       "nt.Point\0324\n\005Paint\022\r\n\005color\030\001 \002(\005\022\r\n\005alph" +
       "a\030\002 \002(\005\022\r\n\005width\030\003 \002(\005\032\035\n\005Point\022\t\n\001x\030\001 \002" +
-      "(\005\022\t\n\001y\030\002 \002(\005*?\n\013TypeCommand\022\r\n\010DrawUndo" +
-      "\020\220N\022\021\n\014DrawClearAll\020\221N\022\016\n\tDrawPoint\020\364N*(" +
-      "\n\nTouchEvent\022\010\n\004DOWN\020\000\022\010\n\004MOVE\020\001\022\006\n\002UP\020\002"
+      "(\005\022\t\n\001y\030\002 \002(\005*U\n\013TypeCommand\022\r\n\010DrawUndo" +
+      "\020\220N\022\021\n\014DrawClearAll\020\221N\022\t\n\004Join\020\222N\022\t\n\004Exi" +
+      "t\020\223N\022\016\n\tDrawPoint\020\364N*(\n\nTouchEvent\022\010\n\004DO" +
+      "WN\020\000\022\010\n\004MOVE\020\001\022\006\n\002UP\020\002"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {

@@ -6,6 +6,4 @@ package com.rm.freedrawview;
 
 public interface PathRedoUndoCountChangeListener {
     void onUndoCountChanged(int undoCount);
-
-    void onRedoCountChanged(int redoCount);
 }

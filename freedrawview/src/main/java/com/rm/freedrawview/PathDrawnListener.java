@@ -1,7 +1,5 @@
 package com.rm.freedrawview;
 
-import android.graphics.*;
-
 import java.util.ArrayList;
 
 /**

@@ -14,7 +14,7 @@ import com.hengqian.whiteboard.msg.WhiteBoardManager;
 
 public class ActivityChooser extends AppCompatActivity implements View.OnClickListener {
 
-    private Button mBtnMutilActive1, mBtnMutilActive2, mBtnMutilActive3;
+    private Button mBtnMuiltActive1, mBtnMuiltActive2, mBtnMuiltActive3;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -22,32 +22,32 @@ public class ActivityChooser extends AppCompatActivity implements View.OnClickLi
 
         setContentView(R.layout.activity_chooser);
 
-        mBtnMutilActive1 = (Button) findViewById(R.id.btn_multi_active1);
-        mBtnMutilActive2 = (Button) findViewById(R.id.btn_multi_active2);
-        mBtnMutilActive3 = (Button) findViewById(R.id.btn_multi_active3);
+        mBtnMuiltActive1 = (Button) findViewById(R.id.btn_muilt_active1);
+        mBtnMuiltActive2 = (Button) findViewById(R.id.btn_muilt_active2);
+        mBtnMuiltActive3 = (Button) findViewById(R.id.btn_muilt_active3);
 
-        mBtnMutilActive1.setOnClickListener(this);
-        mBtnMutilActive2.setOnClickListener(this);
-        mBtnMutilActive3.setOnClickListener(this);
+        mBtnMuiltActive1.setOnClickListener(this);
+        mBtnMuiltActive2.setOnClickListener(this);
+        mBtnMuiltActive3.setOnClickListener(this);
 
         WhiteBoardManager wbm = WhiteBoardManager.getInst();
         wbm.initData(this.getApplicationContext());
 
-        mBtnMutilActive1.setText(wbm.getTitle(1));
-        mBtnMutilActive2.setText(wbm.getTitle(2));
-        mBtnMutilActive3.setText(wbm.getTitle(3));
+        mBtnMuiltActive1.setText(wbm.getTitle(1));
+        mBtnMuiltActive2.setText(wbm.getTitle(2));
+        mBtnMuiltActive3.setText(wbm.getTitle(3));
     }
 
     @Override
     public void onClick(View v) {
         int id = v.getId();
         Intent intent = new Intent(this, ActivityDraw.class);
-        if (id == mBtnMutilActive1.getId()) {
-            intent.putExtra("user", 1);
-        } else if (id == mBtnMutilActive2.getId()) {
-            intent.putExtra("user", 2);
-        } else if (id == mBtnMutilActive3.getId()) {
-            intent.putExtra("user", 3);
+        if (id == mBtnMuiltActive1.getId()) {
+            intent.putExtra(ActivityDraw.UserID, 1);
+        } else if (id == mBtnMuiltActive2.getId()) {
+            intent.putExtra(ActivityDraw.UserID, 2);
+        } else if (id == mBtnMuiltActive3.getId()) {
+            intent.putExtra(ActivityDraw.UserID, 3);
         }
         startActivity(intent);
     }
