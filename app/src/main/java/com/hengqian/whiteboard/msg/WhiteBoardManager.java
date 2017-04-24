@@ -393,6 +393,6 @@ public class WhiteBoardManager {
     }
 
     public String getUserInfo() {
-        return android.os.Build.BRAND;
+        return android.os.Build.BRAND + " " + android.os.Build.MODEL;
     }
 }
