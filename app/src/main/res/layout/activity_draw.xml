@@ -123,6 +123,15 @@
                     android:layout_weight="1"
                     android:text="随机颜色"
                     android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/btn_user_list"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="用户"
+                    android:textColor="@android:color/white" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

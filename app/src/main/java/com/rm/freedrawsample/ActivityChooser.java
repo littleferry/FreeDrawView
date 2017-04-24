@@ -40,7 +40,7 @@ public class ActivityChooser extends AppCompatActivity implements View.OnClickLi
         mBtnMuiltActive2.setVisibility(View.GONE);
         mBtnMuiltActive3.setVisibility(View.GONE);
 
-        setTitle("当前用户： " + wbm.getDeviceId());
+        setTitle("用户:" + wbm.getDeviceId());
     }
 
     @Override

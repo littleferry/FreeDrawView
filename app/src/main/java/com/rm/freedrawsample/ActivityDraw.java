@@ -6,6 +6,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,12 +25,16 @@ import com.rm.freedrawview.PathDrawnListener;
 import com.rm.freedrawview.PathRedoUndoCountChangeListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 public class ActivityDraw extends AppCompatActivity
         implements View.OnClickListener, SeekBar.OnSeekBarChangeListener,
         PathRedoUndoCountChangeListener, PathDrawnListener {
 
     private static final int MsgWhatExitWhiteBoard = 0;
+    private static final int MsgWhatHeartbeat = 1;
     public static final String UserID = "user";
 
     private static final int THICKNESS_STEP = 1;
@@ -42,13 +47,15 @@ public class ActivityDraw extends AppCompatActivity
 
     private FreeDrawView mFreeDrawView;
     private View mSideView;
-    private Button mBtnRandomColor, mBtnUndo, mBtnClearAll, mBtnSend;
+    private Button mBtnRandomColor, mBtnUndo, mBtnClearAll, mBtnUserList;
     private SeekBar mThicknessBar, mAlphaBar;
     private TextView mTxtUndoCount;
 
     private ImageView mImgScreen;
     private Menu mMenu;
     private int user;
+
+    private HashMap<String, User> mUserList = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,14 +76,14 @@ public class ActivityDraw extends AppCompatActivity
         mSideView = mBtnRandomColor;
         mBtnUndo = (Button) findViewById(R.id.btn_undo);
         mBtnClearAll = (Button) findViewById(R.id.btn_clear_all);
-        mBtnSend = (Button) findViewById(R.id.btn_clear_all);
+        mBtnUserList = (Button) findViewById(R.id.btn_user_list);
         mThicknessBar = (SeekBar) findViewById(R.id.slider_thickness);
         mAlphaBar = (SeekBar) findViewById(R.id.slider_alpha);
 
         mBtnRandomColor.setOnClickListener(this);
         mBtnUndo.setOnClickListener(this);
         mBtnClearAll.setOnClickListener(this);
-        mBtnSend.setOnClickListener(this);
+        mBtnUserList.setOnClickListener(this);
 
         mAlphaBar.setMax((ALPHA_MAX - ALPHA_MIN) / ALPHA_STEP);
         mAlphaBar.setProgress(mFreeDrawView.getPaintAlpha());
@@ -96,8 +103,11 @@ public class ActivityDraw extends AppCompatActivity
 
         changeColor();
 
-        WhiteBoardManager.getInst().addMessage(Whiteboardmsg.TypeCommand.Join,
+        wbm.addMessage(Whiteboardmsg.TypeCommand.Join,
                 mFreeDrawView.getMeasuredWidth(), mFreeDrawView.getMeasuredHeight());
+
+        mUserList.put(wbm.getDeviceId(), new User(System.currentTimeMillis(), wbm.getUserInfo()));
+        handler.sendEmptyMessage(MsgWhatHeartbeat);
     }
 
     @Override
@@ -153,7 +163,7 @@ public class ActivityDraw extends AppCompatActivity
             setTitle("正在回放");
         } else {
             playback.setTitle("开始回放");
-            setTitle("当前用户: " + WhiteBoardManager.getInst().getDeviceId());
+            setTitle("用户:" + WhiteBoardManager.getInst().getDeviceId());
         }
     }
 
@@ -188,14 +198,31 @@ public class ActivityDraw extends AppCompatActivity
             mFreeDrawView.undoAll();
         }
 
-        if (id == mBtnSend.getId()) {
-            send();
+        if (id == mBtnUserList.getId()) {
+            showUserListDialog();
         }
     }
 
-    private void send() {
-        WhiteBoardManager wbm = WhiteBoardManager.getInst();
-        wbm.setHandler(handler);
+    private void showUserListDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("当前用户列表");
+        StringBuffer sb = new StringBuffer();
+        Set<String> keys = mUserList.keySet();
+        Iterator<String> iterator = keys.iterator();
+        int i = 1;
+        while (iterator.hasNext()) {
+            String str = iterator.next();
+            sb.append(i);
+            sb.append(" ");
+            sb.append(str);
+            sb.append(" ");
+            sb.append(mUserList.get(str).getInfo());
+            sb.append("\n");
+            i++;
+        }
+        builder.setMessage(sb.toString());
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     // SliderListener
@@ -283,57 +310,101 @@ public class ActivityDraw extends AppCompatActivity
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (msg.what == WhiteBoardManager.MsgWhatRecvWhiteMsg) {
-                Bundle bundle = msg.getData();
-                WhiteBoardManager wbm = WhiteBoardManager.getInst();
-                Whiteboardmsg.WhiteBoardMsg wmsg = wbm.byte2Msg(bundle.getByteArray(WhiteBoardManager.MsgWhatRecvWhiteMsgBundle));
-                Whiteboardmsg.TypeCommand type = wmsg.getType();
-                switch (type.getNumber()) {
-                    case Whiteboardmsg.TypeCommand.DrawPoint_VALUE: {
-                        int count = wmsg.getDrawPoint().getPointCount();
-                        ArrayList<android.graphics.Point> points = new ArrayList<>();
-                        for (int i = 0; i < count; i++) {
-                            Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point wbp = wmsg.getDrawPoint().getPoint(i);
-                            points.add(new android.graphics.Point(wbp.getX(), wbp.getY()));
+            WhiteBoardManager wbm = WhiteBoardManager.getInst();
+            switch (msg.what) {
+                case WhiteBoardManager.MsgWhatRecvWhiteMsg: {
+                    Bundle bundle = msg.getData();
+                    Whiteboardmsg.WhiteBoardMsg wmsg = wbm.byte2Msg(bundle.getByteArray(WhiteBoardManager.MsgWhatRecvWhiteMsgBundle));
+                    Whiteboardmsg.TypeCommand type = wmsg.getType();
+                    switch (type.getNumber()) {
+                        case Whiteboardmsg.TypeCommand.DrawPoint_VALUE: {
+                            int count = wmsg.getDrawPoint().getPointCount();
+                            ArrayList<android.graphics.Point> points = new ArrayList<>();
+                            for (int i = 0; i < count; i++) {
+                                Whiteboardmsg.WhiteBoardMsg.DrawPoint.Point wbp = wmsg.getDrawPoint().getPoint(i);
+                                points.add(new android.graphics.Point(wbp.getX(), wbp.getY()));
+                            }
+                            int action;
+                            Whiteboardmsg.TouchEvent touchEvent = wmsg.getDrawPoint().getTouchEvent();
+                            if (touchEvent == Whiteboardmsg.TouchEvent.DOWN) {
+                                action = MotionEvent.ACTION_DOWN;
+                            } else if (touchEvent == Whiteboardmsg.TouchEvent.MOVE) {
+                                action = MotionEvent.ACTION_MOVE;
+                            } else if (touchEvent == Whiteboardmsg.TouchEvent.UP) {
+                                action = MotionEvent.ACTION_UP;
+                            } else {
+                                return;
+                            }
+                            mFreeDrawView.onTouch(wmsg.getUid(), action, points, wmsg.getDrawPoint().getPaint().getWidth(),
+                                    wmsg.getDrawPoint().getPaint().getColor(), wmsg.getDrawPoint().getPaint().getAlpha(),
+                                    wmsg.getSize().getW(), wmsg.getSize().getH());
+                            mUserList.put(wmsg.getUid(), new User(System.currentTimeMillis(), wmsg.getUserInfo()));
+                            notifyUserListChanged();
+                            break;
                         }
-                        int action;
-                        Whiteboardmsg.TouchEvent touchEvent = wmsg.getDrawPoint().getTouchEvent();
-                        if (touchEvent == Whiteboardmsg.TouchEvent.DOWN) {
-                            action = MotionEvent.ACTION_DOWN;
-                        } else if (touchEvent == Whiteboardmsg.TouchEvent.MOVE) {
-                            action = MotionEvent.ACTION_MOVE;
-                        } else if (touchEvent == Whiteboardmsg.TouchEvent.UP) {
-                            action = MotionEvent.ACTION_UP;
-                        } else {
-                            return;
+                        case Whiteboardmsg.TypeCommand.DrawUndo_VALUE: {
+                            mFreeDrawView.undoLast(wmsg.getUid());
+                            mUserList.put(wmsg.getUid(), new User(System.currentTimeMillis(), wmsg.getUserInfo()));
+                            notifyUserListChanged();
+                            break;
                         }
-                        mFreeDrawView.onTouch(wmsg.getUid(), action, points, wmsg.getDrawPoint().getPaint().getWidth(),
-                                wmsg.getDrawPoint().getPaint().getColor(), wmsg.getDrawPoint().getPaint().getAlpha(),
-                                wmsg.getSize().getW(), wmsg.getSize().getH());
-                        break;
+                        case Whiteboardmsg.TypeCommand.DrawClearAll_VALUE: {
+                            mFreeDrawView.undoAll(wmsg.getUid());
+                            mUserList.put(wmsg.getUid(), new User(System.currentTimeMillis(), wmsg.getUserInfo()));
+                            notifyUserListChanged();
+                            break;
+                        }
+                        case Whiteboardmsg.TypeCommand.Join_VALUE: {
+                            Toast.makeText(ActivityDraw.this, wmsg.getUid() + "\n" + wmsg.getUserInfo() +
+                                    " 已加入", Toast.LENGTH_LONG).show();
+                            mUserList.put(wmsg.getUid(), new User(System.currentTimeMillis(), wmsg.getUserInfo()));
+                            notifyUserListChanged();
+                            break;
+                        }
+                        case Whiteboardmsg.TypeCommand.Exit_VALUE: {
+                            Toast.makeText(ActivityDraw.this, wmsg.getUid() + "\n" + wmsg.getUserInfo() +
+                                    " 已退出", Toast.LENGTH_LONG).show();
+                            mUserList.remove(wmsg.getUid());
+                            notifyUserListChanged();
+                            break;
+                        }
+                        case Whiteboardmsg.TypeCommand.Heartbeat_VALUE: {
+                            // 心跳协议
+                            mUserList.put(wmsg.getUid(), new User(System.currentTimeMillis(), wmsg.getUserInfo()));
+                            notifyUserListChanged();
+                            break;
+                        }
                     }
-                    case Whiteboardmsg.TypeCommand.DrawUndo_VALUE: {
-                        mFreeDrawView.undoLast(wmsg.getUid());
-                        break;
-                    }
-                    case Whiteboardmsg.TypeCommand.DrawClearAll_VALUE: {
-                        mFreeDrawView.undoAll(wmsg.getUid());
-                        break;
-                    }
-                    case Whiteboardmsg.TypeCommand.Join_VALUE: {
-                        Toast.makeText(ActivityDraw.this, wmsg.getUid() + " 已加入白板", Toast.LENGTH_LONG).show();
-                        break;
-                    }
-                    case Whiteboardmsg.TypeCommand.Exit_VALUE: {
-                        Toast.makeText(ActivityDraw.this, wmsg.getUid() + " 已退出白板", Toast.LENGTH_LONG).show();
-                        break;
-                    }
-                    case MsgWhatExitWhiteBoard: {
-                        WhiteBoardManager.getInst().stop();
-                        break;
-                    }
+                    break;
+                }
+
+                case MsgWhatExitWhiteBoard: {
+                    WhiteBoardManager.getInst().stop();
+                    break;
+                }
+                case MsgWhatHeartbeat: {
+                    handler.sendEmptyMessageDelayed(MsgWhatHeartbeat, 5000);
+                    mUserList.put(wbm.getDeviceId(), new User(System.currentTimeMillis(), wbm.getUserInfo()));
+                    wbm.addMessage(Whiteboardmsg.TypeCommand.Heartbeat, 0, 0);
+                    notifyUserListChanged();
+                    break;
                 }
             }
         }
     };
+
+    private void notifyUserListChanged() {
+        // 检查是否有超过10秒没有心跳活动的用户，如果存在，移除
+        Set<String> keys = mUserList.keySet();
+        Iterator<String> iterator = keys.iterator();
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+            User user = mUserList.get(key);
+            if (System.currentTimeMillis() - user.getTime() > 10000) {
+                mUserList.remove(key);
+                iterator = keys.iterator();
+            }
+        }
+        mBtnUserList.setText("用户(" + mUserList.size() + ")");
+    }
 }

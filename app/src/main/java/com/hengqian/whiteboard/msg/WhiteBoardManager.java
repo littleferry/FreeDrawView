@@ -97,6 +97,9 @@ public class WhiteBoardManager {
         factory.setPort(5672);
         factory.setUsername(user);
         factory.setPassword(pass);
+        factory.setConnectionTimeout(5000);
+        factory.setHandshakeTimeout(5000);
+        factory.setShutdownTimeout(5000);
     }
 
     /**
@@ -294,6 +297,7 @@ public class WhiteBoardManager {
         Whiteboardmsg.WhiteBoardMsg.Builder b = Whiteboardmsg.WhiteBoardMsg.newBuilder();
         b.setType(type);
         b.setUid(getDeviceId());
+        b.setUserInfo(getUserInfo());
         WhiteBoardMsg.Size.Builder size = Whiteboardmsg.WhiteBoardMsg.Size.newBuilder();
         size.setW(width);
         size.setH(height);
@@ -328,6 +332,7 @@ public class WhiteBoardManager {
         Whiteboardmsg.WhiteBoardMsg.Builder b = Whiteboardmsg.WhiteBoardMsg.newBuilder();
         b.setType(type);
         b.setUid(getDeviceId());
+        b.setUserInfo(getUserInfo());
         WhiteBoardMsg.Size.Builder size = Whiteboardmsg.WhiteBoardMsg.Size.newBuilder();
         size.setW(width);
         size.setH(height);
@@ -385,5 +390,9 @@ public class WhiteBoardManager {
 
     public void addMessage(Whiteboardmsg.TypeCommand type, int width, int height) {
         addMessage(newMsg(type, width, height));
+    }
+
+    public String getUserInfo() {
+        return android.os.Build.BRAND;
     }
 }

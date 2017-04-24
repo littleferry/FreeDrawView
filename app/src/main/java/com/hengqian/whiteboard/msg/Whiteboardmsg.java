@@ -50,13 +50,21 @@ public final class Whiteboardmsg {
      */
     Exit(3, 10003),
     /**
+     * <code>Heartbeat = 10004;</code>
+     *
+     * <pre>
+     * 心跳，5秒一次
+     * </pre>
+     */
+    Heartbeat(4, 10004),
+    /**
      * <code>DrawPoint = 10100;</code>
      *
      * <pre>
      * 画点
      * </pre>
      */
-    DrawPoint(4, 10100),
+    DrawPoint(5, 10100),
     ;
 
     /**
@@ -92,6 +100,14 @@ public final class Whiteboardmsg {
      */
     public static final int Exit_VALUE = 10003;
     /**
+     * <code>Heartbeat = 10004;</code>
+     *
+     * <pre>
+     * 心跳，5秒一次
+     * </pre>
+     */
+    public static final int Heartbeat_VALUE = 10004;
+    /**
      * <code>DrawPoint = 10100;</code>
      *
      * <pre>
@@ -109,6 +125,7 @@ public final class Whiteboardmsg {
         case 10001: return DrawClearAll;
         case 10002: return Join;
         case 10003: return Exit;
+        case 10004: return Heartbeat;
         case 10100: return DrawPoint;
         default: return null;
       }
@@ -379,6 +396,33 @@ public final class Whiteboardmsg {
      * </pre>
      */
     com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPointOrBuilder getDrawPointOrBuilder();
+
+    // optional string userInfo = 5;
+    /**
+     * <code>optional string userInfo = 5;</code>
+     *
+     * <pre>
+     * ... 以后可扩展画矩形，圆，椭圆，等扩展图形
+     * </pre>
+     */
+    boolean hasUserInfo();
+    /**
+     * <code>optional string userInfo = 5;</code>
+     *
+     * <pre>
+     * ... 以后可扩展画矩形，圆，椭圆，等扩展图形
+     * </pre>
+     */
+    java.lang.String getUserInfo();
+    /**
+     * <code>optional string userInfo = 5;</code>
+     *
+     * <pre>
+     * ... 以后可扩展画矩形，圆，椭圆，等扩展图形
+     * </pre>
+     */
+    com.google.protobuf.ByteString
+        getUserInfoBytes();
   }
   /**
    * Protobuf type {@code com.hengqian.whiteboard.msg.WhiteBoardMsg}
@@ -475,6 +519,11 @@ public final class Whiteboardmsg {
                 drawPoint_ = subBuilder.buildPartial();
               }
               bitField0_ |= 0x00000008;
+              break;
+            }
+            case 42: {
+              bitField0_ |= 0x00000010;
+              userInfo_ = input.readBytes();
               break;
             }
           }
@@ -3655,11 +3704,67 @@ public final class Whiteboardmsg {
       return drawPoint_;
     }
 
+    // optional string userInfo = 5;
+    public static final int USERINFO_FIELD_NUMBER = 5;
+    private java.lang.Object userInfo_;
+    /**
+     * <code>optional string userInfo = 5;</code>
+     *
+     * <pre>
+     * ... 以后可扩展画矩形，圆，椭圆，等扩展图形
+     * </pre>
+     */
+    public boolean hasUserInfo() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    /**
+     * <code>optional string userInfo = 5;</code>
+     *
+     * <pre>
+     * ... 以后可扩展画矩形，圆，椭圆，等扩展图形
+     * </pre>
+     */
+    public java.lang.String getUserInfo() {
+      java.lang.Object ref = userInfo_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          userInfo_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string userInfo = 5;</code>
+     *
+     * <pre>
+     * ... 以后可扩展画矩形，圆，椭圆，等扩展图形
+     * </pre>
+     */
+    public com.google.protobuf.ByteString
+        getUserInfoBytes() {
+      java.lang.Object ref = userInfo_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        userInfo_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private void initFields() {
       type_ = com.hengqian.whiteboard.msg.Whiteboardmsg.TypeCommand.DrawUndo;
       uid_ = "";
       size_ = com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.Size.getDefaultInstance();
       drawPoint_ = com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg.DrawPoint.getDefaultInstance();
+      userInfo_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -3707,6 +3812,9 @@ public final class Whiteboardmsg {
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         output.writeMessage(4, drawPoint_);
       }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeBytes(5, getUserInfoBytes());
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -3731,6 +3839,10 @@ public final class Whiteboardmsg {
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(4, drawPoint_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(5, getUserInfoBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -3870,6 +3982,8 @@ public final class Whiteboardmsg {
           drawPointBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000008);
+        userInfo_ = "";
+        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
 
@@ -3922,6 +4036,10 @@ public final class Whiteboardmsg {
         } else {
           result.drawPoint_ = drawPointBuilder_.build();
         }
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.userInfo_ = userInfo_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -3951,6 +4069,11 @@ public final class Whiteboardmsg {
         }
         if (other.hasDrawPoint()) {
           mergeDrawPoint(other.getDrawPoint());
+        }
+        if (other.hasUserInfo()) {
+          bitField0_ |= 0x00000010;
+          userInfo_ = other.userInfo_;
+          onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -4457,6 +4580,104 @@ public final class Whiteboardmsg {
         return drawPointBuilder_;
       }
 
+      // optional string userInfo = 5;
+      private java.lang.Object userInfo_ = "";
+      /**
+       * <code>optional string userInfo = 5;</code>
+       *
+       * <pre>
+       * ... 以后可扩展画矩形，圆，椭圆，等扩展图形
+       * </pre>
+       */
+      public boolean hasUserInfo() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      /**
+       * <code>optional string userInfo = 5;</code>
+       *
+       * <pre>
+       * ... 以后可扩展画矩形，圆，椭圆，等扩展图形
+       * </pre>
+       */
+      public java.lang.String getUserInfo() {
+        java.lang.Object ref = userInfo_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          userInfo_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string userInfo = 5;</code>
+       *
+       * <pre>
+       * ... 以后可扩展画矩形，圆，椭圆，等扩展图形
+       * </pre>
+       */
+      public com.google.protobuf.ByteString
+          getUserInfoBytes() {
+        java.lang.Object ref = userInfo_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          userInfo_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string userInfo = 5;</code>
+       *
+       * <pre>
+       * ... 以后可扩展画矩形，圆，椭圆，等扩展图形
+       * </pre>
+       */
+      public Builder setUserInfo(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        userInfo_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string userInfo = 5;</code>
+       *
+       * <pre>
+       * ... 以后可扩展画矩形，圆，椭圆，等扩展图形
+       * </pre>
+       */
+      public Builder clearUserInfo() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        userInfo_ = getDefaultInstance().getUserInfo();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string userInfo = 5;</code>
+       *
+       * <pre>
+       * ... 以后可扩展画矩形，圆，椭圆，等扩展图形
+       * </pre>
+       */
+      public Builder setUserInfoBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        userInfo_ = value;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:com.hengqian.whiteboard.msg.WhiteBoardMsg)
     }
 
@@ -4503,24 +4724,25 @@ public final class Whiteboardmsg {
   static {
     java.lang.String[] descriptorData = {
       "\n\023whiteboardmsg.proto\022\033com.hengqian.whit" +
-      "eboard.msg\"\260\004\n\rWhiteBoardMsg\0226\n\004type\030\001 \002" +
+      "eboard.msg\"\302\004\n\rWhiteBoardMsg\0226\n\004type\030\001 \002" +
       "(\0162(.com.hengqian.whiteboard.msg.TypeCom" +
       "mand\022\013\n\003uid\030\002 \002(\t\022=\n\004size\030\003 \002(\0132/.com.he" +
       "ngqian.whiteboard.msg.WhiteBoardMsg.Size" +
       "\022G\n\tdrawPoint\030\004 \001(\01324.com.hengqian.white" +
-      "board.msg.WhiteBoardMsg.DrawPoint\032\034\n\004Siz" +
-      "e\022\t\n\001w\030\001 \002(\005\022\t\n\001h\030\002 \002(\005\032\263\002\n\tDrawPoint\022;\n" +
-      "\ntouchEvent\030\001 \002(\0162\'.com.hengqian.whitebo" +
-      "ard.msg.TouchEvent\022I\n\005paint\030\002 \002(\0132:.com.",
-      "hengqian.whiteboard.msg.WhiteBoardMsg.Dr" +
-      "awPoint.Paint\022I\n\005point\030\003 \003(\0132:.com.hengq" +
-      "ian.whiteboard.msg.WhiteBoardMsg.DrawPoi" +
-      "nt.Point\0324\n\005Paint\022\r\n\005color\030\001 \002(\005\022\r\n\005alph" +
-      "a\030\002 \002(\005\022\r\n\005width\030\003 \002(\005\032\035\n\005Point\022\t\n\001x\030\001 \002" +
-      "(\005\022\t\n\001y\030\002 \002(\005*U\n\013TypeCommand\022\r\n\010DrawUndo" +
-      "\020\220N\022\021\n\014DrawClearAll\020\221N\022\t\n\004Join\020\222N\022\t\n\004Exi" +
-      "t\020\223N\022\016\n\tDrawPoint\020\364N*(\n\nTouchEvent\022\010\n\004DO" +
-      "WN\020\000\022\010\n\004MOVE\020\001\022\006\n\002UP\020\002"
+      "board.msg.WhiteBoardMsg.DrawPoint\022\020\n\010use" +
+      "rInfo\030\005 \001(\t\032\034\n\004Size\022\t\n\001w\030\001 \002(\005\022\t\n\001h\030\002 \002(" +
+      "\005\032\263\002\n\tDrawPoint\022;\n\ntouchEvent\030\001 \002(\0162\'.co" +
+      "m.hengqian.whiteboard.msg.TouchEvent\022I\n\005",
+      "paint\030\002 \002(\0132:.com.hengqian.whiteboard.ms" +
+      "g.WhiteBoardMsg.DrawPoint.Paint\022I\n\005point" +
+      "\030\003 \003(\0132:.com.hengqian.whiteboard.msg.Whi" +
+      "teBoardMsg.DrawPoint.Point\0324\n\005Paint\022\r\n\005c" +
+      "olor\030\001 \002(\005\022\r\n\005alpha\030\002 \002(\005\022\r\n\005width\030\003 \002(\005" +
+      "\032\035\n\005Point\022\t\n\001x\030\001 \002(\005\022\t\n\001y\030\002 \002(\005*e\n\013TypeC" +
+      "ommand\022\r\n\010DrawUndo\020\220N\022\021\n\014DrawClearAll\020\221N" +
+      "\022\t\n\004Join\020\222N\022\t\n\004Exit\020\223N\022\016\n\tHeartbeat\020\224N\022\016" +
+      "\n\tDrawPoint\020\364N*(\n\nTouchEvent\022\010\n\004DOWN\020\000\022\010" +
+      "\n\004MOVE\020\001\022\006\n\002UP\020\002"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -4532,7 +4754,7 @@ public final class Whiteboardmsg {
           internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_descriptor,
-              new java.lang.String[] { "Type", "Uid", "Size", "DrawPoint", });
+              new java.lang.String[] { "Type", "Uid", "Size", "DrawPoint", "UserInfo", });
           internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_Size_descriptor =
             internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_descriptor.getNestedTypes().get(0);
           internal_static_com_hengqian_whiteboard_msg_WhiteBoardMsg_Size_fieldAccessorTable = new
