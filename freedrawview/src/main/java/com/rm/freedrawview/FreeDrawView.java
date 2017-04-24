@@ -184,8 +184,10 @@ public class FreeDrawView extends View implements View.OnTouchListener {
                     // Cancel the last one
                     mPaths.remove(i);
                     invalidate();
-                    notifyRedoUndoCountChanged();
-                    mPathDrawnListener.onUndoLast();
+                    if (deviceId.equals(uid)) {
+                        notifyRedoUndoCountChanged();
+                        mPathDrawnListener.onUndoLast();
+                    }
                     break;
                 }
             }
@@ -213,13 +215,16 @@ public class FreeDrawView extends View implements View.OnTouchListener {
                 isRemove = true;
             }
         }
+        Log.d(TAG, "undoAll() called with: uid = [" + uid + "] " + mPaths.size());
         if (!playbacking) {
             frameIndex = mPaths.size();
         }
         if (isRemove) {
             invalidate();
-            notifyRedoUndoCountChanged();
-            mPathDrawnListener.onUndoAll();
+            if (deviceId.equals(uid)) {
+                notifyRedoUndoCountChanged();
+                mPathDrawnListener.onUndoAll();
+            }
         }
     }
 

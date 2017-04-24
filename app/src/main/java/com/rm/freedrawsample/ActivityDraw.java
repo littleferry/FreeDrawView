@@ -94,8 +94,6 @@ public class ActivityDraw extends AppCompatActivity
         wbm.setHandler(handler);
         wbm.start();
 
-        setTitle(wbm.getDeviceId());
-
         changeColor();
 
         WhiteBoardManager.getInst().addMessage(Whiteboardmsg.TypeCommand.Join,
