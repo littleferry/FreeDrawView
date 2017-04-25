@@ -56,6 +56,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_line_width"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="线宽度"
@@ -75,6 +76,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_alpha"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="透明度"

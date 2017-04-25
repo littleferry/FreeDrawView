@@ -60,6 +60,8 @@ public class ActivityDraw extends AppCompatActivity
     private int user;
 
     private HashMap<String, User> mUserList = new HashMap<>();
+    private TextView mTextViewLineWidth;
+    private TextView mTextViewAlpha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,8 @@ public class ActivityDraw extends AppCompatActivity
         mImgScreen = (ImageView) findViewById(R.id.img_screen);
 
         mTxtUndoCount = (TextView) findViewById(R.id.txt_undo_count);
+        mTextViewLineWidth = (TextView) findViewById(R.id.tv_line_width);
+        mTextViewAlpha = (TextView) findViewById(R.id.tv_alpha);
 
         mFreeDrawView = (FreeDrawView) findViewById(R.id.free_draw_view);
         mFreeDrawView.setOnPathDrawnListener(this);
@@ -125,6 +129,8 @@ public class ActivityDraw extends AppCompatActivity
         mSideView.setBackgroundColor(mFreeDrawView.getPaintColor());
         gallery.setSelection(index);
         adapter.setSelIndex(index);
+        mTextViewLineWidth.setText("线宽：" + mFreeDrawView.getPaintWidth());
+        mTextViewAlpha.setText("透明度：" + mFreeDrawView.getPaintAlpha());
     }
 
     @Override
@@ -249,8 +255,10 @@ public class ActivityDraw extends AppCompatActivity
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (seekBar.getId() == mThicknessBar.getId()) {
             mFreeDrawView.setPaintWidthPx(THICKNESS_MIN + (progress * THICKNESS_STEP));
+            mTextViewLineWidth.setText("线宽：" + mFreeDrawView.getPaintWidth());
         } else {
             mFreeDrawView.setPaintAlpha(ALPHA_MIN + (progress * ALPHA_STEP));
+            mTextViewAlpha.setText("透明度：" + mFreeDrawView.getPaintAlpha());
         }
     }
 

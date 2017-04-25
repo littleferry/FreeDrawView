@@ -2,19 +2,16 @@ package com.rm.freedrawview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ComposePathEffect;
 import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.ColorInt;
 import android.support.annotation.FloatRange;
 import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -27,7 +24,7 @@ import java.util.HashMap;
 public class FreeDrawView extends View implements View.OnTouchListener {
     private static final String TAG = FreeDrawView.class.getSimpleName();
 
-    private static final float DEFAULT_STROKE_WIDTH = 10;
+    private static final float DEFAULT_STROKE_WIDTH = 20;
     private static final int DEFAULT_COLOR = Color.BLACK;
     private static final int DEFAULT_ALPHA = 255;
 
@@ -290,8 +287,8 @@ public class FreeDrawView extends View implements View.OnTouchListener {
                 : mPaintAlpha);
         mCurrentPaint.setStrokeWidth(a != null ?
                 a.getDimensionPixelSize(R.styleable.FreeDrawView_paintWidth,
-                        (int) FreeDrawHelper.convertDpToPixels(DEFAULT_STROKE_WIDTH))
-                : FreeDrawHelper.convertDpToPixels(DEFAULT_STROKE_WIDTH));
+                        (int) DEFAULT_STROKE_WIDTH)
+                : DEFAULT_STROKE_WIDTH);
 
         mCurrentPaint.setStrokeJoin(Paint.Join.ROUND);
         mCurrentPaint.setStrokeCap(Paint.Cap.ROUND);
