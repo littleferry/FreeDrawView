@@ -51,12 +51,16 @@ public class ColorsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         RelativeLayout view = new RelativeLayout(parent.getContext());
         View v = new View(parent.getContext());
-        int width = (int) FreeDrawHelper.convertDpToPixels(50);
+        int pad = (int) FreeDrawHelper.convertDpToPixels(3);
+        int height = parent.getHeight() - 2 * pad;
+        int width = height;
+        if (width <= 0) {
+            width = -1;
+        }
         view.addView(v, width, -1);
         v.setBackgroundColor(colors.getColor(position, Color.BLACK));
-        int pad = (int) FreeDrawHelper.convertDpToPixels(5);
         view.setPadding(pad, pad, pad, pad);
-        view.setBackgroundColor(position==selIndex?Color.RED:Color.TRANSPARENT);
+        view.setBackgroundColor(position == selIndex ? Color.RED : Color.TRANSPARENT);
         return view; // 返回该view对象，作为key
     }
 }

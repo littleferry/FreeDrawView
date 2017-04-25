@@ -123,6 +123,8 @@ public class ActivityDraw extends AppCompatActivity
         int color = ColorHelper.getColor(index);
         mFreeDrawView.setPaintColor(color);
         mSideView.setBackgroundColor(mFreeDrawView.getPaintColor());
+        gallery.setSelection(index);
+        adapter.setSelIndex(index);
     }
 
     @Override
