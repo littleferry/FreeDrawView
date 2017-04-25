@@ -41,7 +41,6 @@ public class ActivityDraw extends AppCompatActivity
     public static final String UserID = "user";
 
     private static final int THICKNESS_STEP = 1;
-    private static final int THICKNESS_MAX = 30;
     private static final int THICKNESS_MIN = 1;
 
     private static final int ALPHA_STEP = 1;
@@ -95,7 +94,8 @@ public class ActivityDraw extends AppCompatActivity
         mAlphaBar.setProgress(mFreeDrawView.getPaintAlpha());
         mAlphaBar.setOnSeekBarChangeListener(this);
 
-        mThicknessBar.setMax((THICKNESS_MAX - THICKNESS_MIN) / THICKNESS_STEP);
+        int max = WhiteBoardManager.getScreenWidth(this) / 4;
+        mThicknessBar.setMax((max - THICKNESS_MIN) / THICKNESS_STEP);
         mThicknessBar.setOnSeekBarChangeListener(this);
         mThicknessBar.setProgress((int) mFreeDrawView.getPaintWidth());
 
@@ -119,7 +119,7 @@ public class ActivityDraw extends AppCompatActivity
 
         gallery.setOnItemClickListener(this);
 
-        int index = 0;
+        int index = ColorHelper.getRandomColorIndex();
         int color = ColorHelper.getColor(index);
         mFreeDrawView.setPaintColor(color);
         mSideView.setBackgroundColor(mFreeDrawView.getPaintColor());
@@ -248,7 +248,7 @@ public class ActivityDraw extends AppCompatActivity
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (seekBar.getId() == mThicknessBar.getId()) {
-            mFreeDrawView.setPaintWidthDp(THICKNESS_MIN + (progress * THICKNESS_STEP));
+            mFreeDrawView.setPaintWidthPx(THICKNESS_MIN + (progress * THICKNESS_STEP));
         } else {
             mFreeDrawView.setPaintAlpha(ALPHA_MIN + (progress * ALPHA_STEP));
         }

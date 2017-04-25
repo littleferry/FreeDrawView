@@ -27,7 +27,7 @@ import java.util.HashMap;
 public class FreeDrawView extends View implements View.OnTouchListener {
     private static final String TAG = FreeDrawView.class.getSimpleName();
 
-    private static final float DEFAULT_STROKE_WIDTH = 4;
+    private static final float DEFAULT_STROKE_WIDTH = 10;
     private static final int DEFAULT_COLOR = Color.BLACK;
     private static final int DEFAULT_ALPHA = 255;
 
@@ -39,7 +39,7 @@ public class FreeDrawView extends View implements View.OnTouchListener {
     private int mPaintColor = DEFAULT_COLOR;
     @IntRange(from = 0, to = 255)
     private int mPaintAlpha = DEFAULT_ALPHA;
-    private float mPaintWidth = DEFAULT_STROKE_WIDTH;
+    private float mPaintWidthPx = DEFAULT_STROKE_WIDTH;
 
     private int mLastDimensionW = -1;
     private int mLastDimensionH = -1;
@@ -113,20 +113,11 @@ public class FreeDrawView extends View implements View.OnTouchListener {
      *
      * @param widthPx The new weight in px, must be > 0
      */
-    private void setPaintWidthPx(@FloatRange(from = 0) float widthPx) {
+    public void setPaintWidthPx(@FloatRange(from = 0) float widthPx) {
         if (widthPx > 0) {
+            mPaintWidthPx = widthPx;
             mCurrentPaint.setStrokeWidth(widthPx);
         }
-    }
-
-    /**
-     * Set the paint width in dp
-     *
-     * @param dp The new weight in dp, must be > 0
-     */
-    public void setPaintWidthDp(float dp) {
-        mPaintWidth = dp;
-        setPaintWidthPx(FreeDrawHelper.convertDpToPixels(dp));
     }
 
     /**
@@ -360,7 +351,7 @@ public class FreeDrawView extends View implements View.OnTouchListener {
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         ArrayList<android.graphics.Point> points = new ArrayList<>();
-        int paintWidth = (int) FreeDrawHelper.convertDpToPixels(mPaintWidth);
+        int paintWidth = (int) mPaintWidthPx;
         if ((motionEvent.getAction() != MotionEvent.ACTION_UP) &&
                 (motionEvent.getAction() != MotionEvent.ACTION_CANCEL)) {
             for (int i = 0; i < motionEvent.getHistorySize(); i++) {

@@ -6,7 +6,9 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.WindowManager;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.hengqian.whiteboard.msg.Whiteboardmsg.WhiteBoardMsg;
@@ -395,4 +397,12 @@ public class WhiteBoardManager {
     public String getUserInfo() {
         return android.os.Build.BRAND + " " + android.os.Build.MODEL;
     }
+
+    public static int getScreenWidth(Context context) {
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();// 创建了一张白纸
+        windowManager.getDefaultDisplay().getMetrics(dm);// 给白纸设置宽高
+        return dm.widthPixels;
+    }
+
 }
