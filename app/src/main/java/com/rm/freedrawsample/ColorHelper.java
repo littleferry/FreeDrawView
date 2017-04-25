@@ -11,13 +11,29 @@ import android.support.annotation.NonNull;
  */
 
 public class ColorHelper {
+    private static TypedArray colors;
+
+    public static TypedArray getColors(@NonNull Context context) {
+        if (colors == null) {
+            colors = context.getResources().obtainTypedArray(R.array.material_colors);
+        }
+        return colors;
+    }
+
+    public static void recycleColors() {
+        if (colors != null) {
+            colors.recycle();
+            colors = null;
+        }
+    }
 
     @ColorInt
-    public static int getRandomMaterialColor(@NonNull Context context) {
-        TypedArray colors = context.getResources().obtainTypedArray(R.array.material_colors);
+    public static int getRandomColorIndex() {
         int index = (int) (Math.random() * colors.length());
-        int color = colors.getColor(index, Color.BLACK);
-        colors.recycle();
-        return color;
+        return index;
+    }
+
+    public static int getColor(int position) {
+        return colors.getColor(position, Color.BLACK);
     }
 }

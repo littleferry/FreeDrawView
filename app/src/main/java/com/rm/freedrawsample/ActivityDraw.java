@@ -6,13 +6,16 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -31,7 +34,7 @@ import java.util.Set;
 
 public class ActivityDraw extends AppCompatActivity
         implements View.OnClickListener, SeekBar.OnSeekBarChangeListener,
-        PathRedoUndoCountChangeListener, PathDrawnListener {
+        PathRedoUndoCountChangeListener, PathDrawnListener, ViewPager.OnPageChangeListener, AdapterView.OnItemClickListener {
 
     private static final int MsgWhatExitWhiteBoard = 0;
     private static final int MsgWhatHeartbeat = 1;
@@ -50,6 +53,8 @@ public class ActivityDraw extends AppCompatActivity
     private Button mBtnRandomColor, mBtnUndo, mBtnClearAll, mBtnUserList;
     private SeekBar mThicknessBar, mAlphaBar;
     private TextView mTxtUndoCount;
+    private Gallery gallery;
+    private ColorsAdapter adapter;
 
     private ImageView mImgScreen;
     private Menu mMenu;
@@ -62,6 +67,7 @@ public class ActivityDraw extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_draw);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mImgScreen = (ImageView) findViewById(R.id.img_screen);
 
         mTxtUndoCount = (TextView) findViewById(R.id.txt_undo_count);
@@ -101,13 +107,22 @@ public class ActivityDraw extends AppCompatActivity
         wbm.setHandler(handler);
         wbm.start();
 
-        changeColor();
-
         wbm.addMessage(Whiteboardmsg.TypeCommand.Join,
                 mFreeDrawView.getMeasuredWidth(), mFreeDrawView.getMeasuredHeight());
 
         mUserList.put(wbm.getDeviceId(), new User(System.currentTimeMillis(), wbm.getUserInfo()));
         handler.sendEmptyMessage(MsgWhatHeartbeat);
+
+        gallery = (Gallery) findViewById(R.id.gly_container);
+        adapter = new ColorsAdapter(this);
+        gallery.setAdapter(adapter); // 为viewpager设置adapter
+
+        gallery.setOnItemClickListener(this);
+
+        int index = 0;
+        int color = ColorHelper.getColor(index);
+        mFreeDrawView.setPaintColor(color);
+        mSideView.setBackgroundColor(mFreeDrawView.getPaintColor());
     }
 
     @Override
@@ -117,6 +132,7 @@ public class ActivityDraw extends AppCompatActivity
                 mFreeDrawView.getMeasuredWidth(), mFreeDrawView.getMeasuredHeight());
         mFreeDrawView.stopPlayback();
         handler.sendEmptyMessageDelayed(MsgWhatExitWhiteBoard, 500);
+        ColorHelper.recycleColors();
     }
 
     @Override
@@ -175,11 +191,12 @@ public class ActivityDraw extends AppCompatActivity
     }
 
     private void changeColor() {
-        int color = ColorHelper.getRandomMaterialColor(this);
-
+        int index = ColorHelper.getRandomColorIndex();
+        int color = ColorHelper.getColor(index);
         mFreeDrawView.setPaintColor(color);
-
         mSideView.setBackgroundColor(mFreeDrawView.getPaintColor());
+        adapter.setSelIndex(index);
+        gallery.setSelection(index, true);
     }
 
     @Override
@@ -406,5 +423,31 @@ public class ActivityDraw extends AppCompatActivity
             }
         }
         mBtnUserList.setText("用户(" + mUserList.size() + ")");
+    }
+
+
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        if (gallery != null) {
+            gallery.invalidate();
+        }
+    }
+
+    // 一个新页被调用时执行,仍为原来的page时，该方法不被调用
+    public void onPageSelected(int position) {
+        // tvTitle.setText(getFile(position));
+    }
+
+    /*
+     * SCROLL_STATE_IDLE: pager处于空闲状态 SCROLL_STATE_DRAGGING： pager处于正在拖拽中
+     * SCROLL_STATE_SETTLING： pager正在自动沉降，相当于松手后，pager恢复到一个完整pager的过程
+     */
+    public void onPageScrollStateChanged(int state) {
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        mFreeDrawView.setPaintColor(ColorHelper.getColor(position));
+        mSideView.setBackgroundColor(mFreeDrawView.getPaintColor());
+        adapter.setSelIndex(position);
     }
 }
